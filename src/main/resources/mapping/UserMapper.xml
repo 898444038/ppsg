@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ming.ppsg.mapper.UserMapper">
+
+	<sql id="baseColumn">
+		id,
+		name
+	</sql>
+
+	<resultMap type="com.ming.ppsg.entity.User" id="userResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+	</resultMap>
+
+	<select id="select" resultMap="userResultMap" parameterType="com.ming.ppsg.entity.User">
+		SELECT <include refid="baseColumn"></include> 
+		FROM user
+	</select>
+
+	<insert id="insert" parameterType="com.ming.ppsg.entity.User">
+		INSERT INTO user (
+			id,
+			name
+		)
+		VALUE (
+			#{id},
+			#{name}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.ming.ppsg.entity.User">
+		UPDATE user
+		<set>
+			<if test="name != null and name != ''">name = #{name},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		DELETE FROM user
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

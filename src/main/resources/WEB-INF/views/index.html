@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        th,td{
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>名称</th>
+            <th>操作</th>
+        </thead>
+        <tbody id="table">
+
+        </tbody>
+    </table>
+
+    <form>
+        <input type="text" id="username" value=""/>
+        <button id="insert">新增</button>
+    </form>
+</body>
+<script src="/static/js/jquery.min.js"></script>
+<script>
+    $(function () {
+        select();
+    })
+
+    function select() {
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: '/user/select',
+            data: {},
+            dataType: "json",
+            success: function (d) {
+                var data = d.data;
+                console.log(data);
+                var html = "";
+                for(var i=0;i<data.length;i++){
+                    html+="<tr><td>"+data[i].id+"</td><td><input name='name' value='"+data[i].name+"'>"+""+"</td><td>" +
+                        "<a href='#' id='delete' data-id='"+data[i].id+"'>删除</a>" +
+                        "<a href='#' id='update' data-id='"+data[i].id+"'>更新</a>" +
+                        "</td></tr>";
+                }
+                $("#table").html(html);
+            }
+        });
+    }
+
+    $(document).on("click","#delete",function () {
+        var $this = $(this);
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: '/user/delete/'+$this.attr("data-id"),
+            data: {},
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                select();
+            }
+        });
+    });
+
+    $(document).on("click","#update",function () {
+        var $this = $(this);
+        var name = $this.parent("td").parent("tr").find("input[name='name']").val();
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: '/user/update',
+            data: {id:$this.attr("data-id"),name:name},
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                select();
+            }
+        });
+    });
+
+    $("#insert").click(function () {
+        var name = $("#username").val();
+        if(name){
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: '/user/insert',
+                data: {name:name},
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    select();
+                }
+            });
+        }
+    });
+</script>
+
+</html>
