@@ -1,4 +1,4 @@
-package com.ming.ppsg.utils;
+package com.ming.system.utils;
 
 public class ResultMsg {
 

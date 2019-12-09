@@ -2,8 +2,8 @@ package com.ming.ppsg.controller;
 
 import com.ming.ppsg.entity.User;
 import com.ming.ppsg.service.UserService;
-import com.ming.ppsg.utils.Operate;
-import com.ming.ppsg.utils.ResultMsg;
+import com.ming.system.annotation.Log;
+import com.ming.system.utils.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +16,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
+@Log
 public class UserController {
 
     @Autowired
@@ -50,12 +51,12 @@ public class UserController {
         return ResultMsg.failed();
     }
 
-
+    @Log
     @RequestMapping("/delete/{id}")
     public ResultMsg delete(@PathVariable("id") Long id){
         int i = userService.delete(id);
         if(i>0){
-            return ResultMsg.success(Operate.DELETE.getDesc());
+            return ResultMsg.success();
         }
         return ResultMsg.failed();
     }

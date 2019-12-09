@@ -1,10 +1,11 @@
-package com.ming.ppsg.utils;
+package com.ming.system.utils;
 
 /**
  * Created by Administrator on 2019/11/6 0006.
  */
 public enum Operate {
 
+    NONE(-1,"NONE",""),
     SELECT(0,"SELECT","查询"),
     INSERT(1,"INSERT","新增"),
     UPDATE(2,"UPDATE","更新"),

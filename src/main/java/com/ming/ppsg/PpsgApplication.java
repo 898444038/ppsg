@@ -16,7 +16,8 @@ import java.io.IOException;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-	"com.ming.ppsg"
+	"com.ming.system",
+	"com.ming.ppsg",
 })
 public class PpsgApplication {
 
@@ -29,14 +30,11 @@ public class PpsgApplication {
 		BeetlGroupUtilConfiguration beetlGroupUtilConfiguration = new BeetlGroupUtilConfiguration();
 		ResourcePatternResolver patternResolver = ResourcePatternUtils.getResourcePatternResolver(new DefaultResourceLoader());
 		try {
-			// WebAppResourceLoader 配置root路径是关键
-			WebAppResourceLoader webAppResourceLoader =
-					new WebAppResourceLoader(patternResolver.getResource("classpath:/").getFile().getPath());
+			WebAppResourceLoader webAppResourceLoader = new WebAppResourceLoader(patternResolver.getResource("classpath:/").getFile().getPath());
 			beetlGroupUtilConfiguration.setResourceLoader(webAppResourceLoader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//读取配置文件信息
 		return beetlGroupUtilConfiguration;
 	}
 
