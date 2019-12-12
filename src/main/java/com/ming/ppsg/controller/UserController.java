@@ -24,14 +24,14 @@ public class UserController {
 
     @RequestMapping("/select")
     public ResultMsg select(){
-        List<User> userList = userService.select();
+        List<User> userList = userService.selectUser();
         return ResultMsg.success(userList);
     }
 
     @RequestMapping("/insert")
     public ResultMsg insert(User user){
         try {
-            int i = userService.insert(user);
+            int i = userService.insertUser(user);
             if(i>0){
                 return ResultMsg.success();
             }
@@ -44,7 +44,7 @@ public class UserController {
 
     @RequestMapping("/update")
     public ResultMsg update(User user){
-        int i = userService.update(user);
+        int i = userService.updateUser(user);
         if(i>0){
             return ResultMsg.success();
         }
@@ -54,7 +54,7 @@ public class UserController {
     @Log
     @RequestMapping("/delete/{id}")
     public ResultMsg delete(@PathVariable("id") Long id){
-        int i = userService.delete(id);
+        int i = userService.deleteUser(id);
         if(i>0){
             return ResultMsg.success();
         }

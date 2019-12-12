@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface UserService {
 
-    List<User> select();
+    List<User> selectUser();
 
-    int insert(User user);
+    int insertUser(User user);
 
-    int update(User user);
+    int updateUser(User user);
 
-    int delete(Long id);
+    int deleteUser(Long id);
 }
