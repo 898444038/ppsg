@@ -294,9 +294,11 @@ public class Main {
         System.out.println("上阵武将组合个数："+all.size());
         List<Result> resultList = new ArrayList<>();
         List<Result> resultList2 = new ArrayList<>();
+        List<Result> grilResultList = new ArrayList<>();
 
         int count = 0;
         int finalCount = all.size();
+        Integer grilCode = GeneralsEnum.Gender.gril.getCode();
 
         for(List<Generals> generalsList : all){
             count++;
@@ -307,7 +309,13 @@ public class Main {
             names.append(generalsList.get(3).getName()+"_");
             names.append(generalsList.get(4).getName());
 
-            if(generalsMapSort.get(names.toString())!=null){
+            boolean isGril = generalsList.get(0).getGender().equals(grilCode)
+                    && generalsList.get(1).getGender().equals(grilCode)
+                    && generalsList.get(2).getGender().equals(grilCode)
+                    && generalsList.get(3).getGender().equals(grilCode)
+                    && generalsList.get(4).getGender().equals(grilCode);
+
+            if(generalsMapSort.get(names.toString())!=null && !isGril){
                 continue;
             }
 
@@ -344,6 +352,18 @@ public class Main {
             Double d = b1.divide(b2, 2, BigDecimal.ROUND_HALF_UP).doubleValue()*100;
             System.out.println(count+" / "+finalCount + "  " + (d.intValue())+"%");
 
+            //女队
+            if(
+                generalsList.get(0).getGender().toString().equals(grilCode.toString()) &&
+                generalsList.get(1).getGender().toString().equals(grilCode.toString()) &&
+                generalsList.get(2).getGender().toString().equals(grilCode.toString()) &&
+                generalsList.get(3).getGender().toString().equals(grilCode.toString()) &&
+                generalsList.get(4).getGender().toString().equals(grilCode.toString())
+            ){
+                Result result = GeneralsUtil.getResult(generalsList,symbolsList,allTotalSword,allTotalSword2);
+                grilResultList.add(result);
+            }
+
             int zhanli = 375000;
             int flag = 0;
             //跳过战力低于zhanli的
@@ -356,70 +376,70 @@ public class Main {
                 }
             }
 
-            Result result = new Result();
-            Integer weiCount = 0;//魏国数量
-            Integer shuCount = 0;//蜀国数量
-            Integer wuCount = 0;//吴国数量
-            Integer qunCount = 0;//群雄数量
-            Integer qiangCount = 0;//枪兵数量
-            Integer qiCount = 0;//骑兵数量
-            Integer gongCount = 0;//弓兵数量
-            List<CountryArms> countryArms1 = new ArrayList<>();
-            List<CountryArms> countryArms2 = new ArrayList<>();
-            for(Generals generals : generalsList){
-                if(generals.getCountry().equals(GeneralsEnum.Country.wei.getCode())){
-                    weiCount++;
-                }else if(generals.getCountry().equals(GeneralsEnum.Country.shu.getCode())){
-                    shuCount++;
-                }else if(generals.getCountry().equals(GeneralsEnum.Country.wu.getCode())){
-                    wuCount++;
-                }else if(generals.getCountry().equals(GeneralsEnum.Country.qun.getCode())){
-                    qunCount++;
-                }
-                if(generals.getArms().equals(GeneralsEnum.Arms.gun.getCode())){
-                    qiangCount++;
-                }else if(generals.getArms().equals(GeneralsEnum.Arms.ride.getCode())){
-                    qiCount++;
-                }else if(generals.getArms().equals(GeneralsEnum.Arms.arch.getCode())){
-                    gongCount++;
-                }
-            }
-            if(weiCount!=0){countryArms1.add(new CountryArms(weiCount,GeneralsEnum.Country.wei.getName()));}
-            if(shuCount!=0){countryArms1.add(new CountryArms(shuCount,GeneralsEnum.Country.shu.getName()));}
-            if(wuCount!=0){countryArms1.add(new CountryArms(wuCount,GeneralsEnum.Country.wu.getName()));}
-            if(qunCount!=0){countryArms1.add(new CountryArms(qunCount,GeneralsEnum.Country.qun.getName()));}
-            if(qiangCount!=0){countryArms2.add(new CountryArms(qiangCount,GeneralsEnum.Arms.gun.getName()));}
-            if(qiCount!=0){countryArms2.add(new CountryArms(qiCount,GeneralsEnum.Arms.ride.getName()));}
-            if(gongCount!=0){countryArms2.add(new CountryArms(gongCount,GeneralsEnum.Arms.arch.getName()));}
-            countryArms1.sort((CountryArms o1,CountryArms o2)->{
-                return o2.getCount() - o1.getCount(); //降序
-            });
-            countryArms2.sort((CountryArms o1,CountryArms o2)->{
-                return o2.getCount() - o1.getCount(); //降序
-            });
-            String countryNames = "";
-            for(CountryArms countryArms : countryArms1){
-                countryNames += countryArms.getCount()+countryArms.getName();
-            }
-            String armsNames = "";
-            for(CountryArms countryArms : countryArms2){
-                armsNames += countryArms.getCount()+countryArms.getName();
-            }
-
-            result.setTotal(allTotalSword);
-            result.setTotal2(allTotalSword2);
-            result.setGeneralsList(generalsList);
-            result.setSymbolsList(symbolsList);
-            result.setWeiCount(weiCount);
-            result.setShuCount(shuCount);
-            result.setWuCount(wuCount);
-            result.setQunCount(qunCount);
-            result.setQiangCount(qiangCount);
-            result.setQiCount(qiCount);
-            result.setGongCount(gongCount);
-            result.setCountryNames(countryNames);
-            result.setArmsNames(armsNames);
-
+//            Result result = new Result();
+//            Integer weiCount = 0;//魏国数量
+//            Integer shuCount = 0;//蜀国数量
+//            Integer wuCount = 0;//吴国数量
+//            Integer qunCount = 0;//群雄数量
+//            Integer qiangCount = 0;//枪兵数量
+//            Integer qiCount = 0;//骑兵数量
+//            Integer gongCount = 0;//弓兵数量
+//            List<CountryArms> countryArms1 = new ArrayList<>();
+//            List<CountryArms> countryArms2 = new ArrayList<>();
+//            for(Generals generals : generalsList){
+//                if(generals.getCountry().equals(GeneralsEnum.Country.wei.getCode())){
+//                    weiCount++;
+//                }else if(generals.getCountry().equals(GeneralsEnum.Country.shu.getCode())){
+//                    shuCount++;
+//                }else if(generals.getCountry().equals(GeneralsEnum.Country.wu.getCode())){
+//                    wuCount++;
+//                }else if(generals.getCountry().equals(GeneralsEnum.Country.qun.getCode())){
+//                    qunCount++;
+//                }
+//                if(generals.getArms().equals(GeneralsEnum.Arms.gun.getCode())){
+//                    qiangCount++;
+//                }else if(generals.getArms().equals(GeneralsEnum.Arms.ride.getCode())){
+//                    qiCount++;
+//                }else if(generals.getArms().equals(GeneralsEnum.Arms.arch.getCode())){
+//                    gongCount++;
+//                }
+//            }
+//            if(weiCount!=0){countryArms1.add(new CountryArms(weiCount,GeneralsEnum.Country.wei.getName()));}
+//            if(shuCount!=0){countryArms1.add(new CountryArms(shuCount,GeneralsEnum.Country.shu.getName()));}
+//            if(wuCount!=0){countryArms1.add(new CountryArms(wuCount,GeneralsEnum.Country.wu.getName()));}
+//            if(qunCount!=0){countryArms1.add(new CountryArms(qunCount,GeneralsEnum.Country.qun.getName()));}
+//            if(qiangCount!=0){countryArms2.add(new CountryArms(qiangCount,GeneralsEnum.Arms.gun.getName()));}
+//            if(qiCount!=0){countryArms2.add(new CountryArms(qiCount,GeneralsEnum.Arms.ride.getName()));}
+//            if(gongCount!=0){countryArms2.add(new CountryArms(gongCount,GeneralsEnum.Arms.arch.getName()));}
+//            countryArms1.sort((CountryArms o1,CountryArms o2)->{
+//                return o2.getCount() - o1.getCount(); //降序
+//            });
+//            countryArms2.sort((CountryArms o1,CountryArms o2)->{
+//                return o2.getCount() - o1.getCount(); //降序
+//            });
+//            String countryNames = "";
+//            for(CountryArms countryArms : countryArms1){
+//                countryNames += countryArms.getCount()+countryArms.getName();
+//            }
+//            String armsNames = "";
+//            for(CountryArms countryArms : countryArms2){
+//                armsNames += countryArms.getCount()+countryArms.getName();
+//            }
+//
+//            result.setTotal(allTotalSword);
+//            result.setTotal2(allTotalSword2);
+//            result.setGeneralsList(generalsList);
+//            result.setSymbolsList(symbolsList);
+//            result.setWeiCount(weiCount);
+//            result.setShuCount(shuCount);
+//            result.setWuCount(wuCount);
+//            result.setQunCount(qunCount);
+//            result.setQiangCount(qiangCount);
+//            result.setQiCount(qiCount);
+//            result.setGongCount(gongCount);
+//            result.setCountryNames(countryNames);
+//            result.setArmsNames(armsNames);
+            Result result = GeneralsUtil.getResult(generalsList,symbolsList,allTotalSword,allTotalSword2);
             if(flag==1){
                 resultList2.add(result);
             }else{
@@ -428,6 +448,7 @@ public class Main {
             }
         }
 
+        //结果排序
         resultList.sort(new Comparator<Result>() {
             @Override
             public int compare(Result o1, Result o2) {
@@ -440,7 +461,14 @@ public class Main {
                 return o2.getTotal() - o1.getTotal(); //降序
             }
         });
+        grilResultList.sort(new Comparator<Result>() {
+            @Override
+            public int compare(Result o1, Result o2) {
+                return o2.getTotal() - o1.getTotal(); //降序
+            }
+        });
 
+        //结果排名
         int i = 1;
         for(Result result : resultList){
             result.setRank(i++);
@@ -449,10 +477,17 @@ public class Main {
         for(Result result : resultList2){
             result.setRank(i2++);
         }
+        int i3 = 1;
+        for(Result result : grilResultList){
+            result.setRank(i3++);
+        }
+
+
         long t2 = System.currentTimeMillis();
         System.out.println("用时："+(t2-t1)+"ms , 帝王八阵容数量："+resultList.size());
         System.out.println("---------end---------");
 
+        //随从榜
         Map<String,Object> model = new HashMap<>();
         List<Generals> forceTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Force.getCode());
         List<Generals> intellectTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Intellect.getCode());
@@ -483,6 +518,7 @@ public class Main {
         model.put("simplifyList2",GeneralsUtil.getSimplifyList(resultList2));//简表（特殊战器）
         model.put("list",resultList);//虚战力表
         model.put("list2",resultList2);//虚战力表（特殊战器）
+        model.put("grilList",grilResultList);//虚战力表（女队）
         model.put("forceTopList",forceTopList);
         model.put("intellectTopList",intellectTopList);
         model.put("troopsTopList",troopsTopList);
