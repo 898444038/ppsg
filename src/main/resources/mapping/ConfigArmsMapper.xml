@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ming.ppsg.mapper.ConfigArmsMapper">
+
+	<sql id="baseColumn">
+		id,
+		arms_name,
+		force_rate,
+		intellect_rate,
+		troops_rate
+	</sql>
+
+	<resultMap type="com.ming.ppsg.entity.ConfigArms" id="configArmsResultMap">
+		<id property="id" column="id" />
+		<result property="armsName" column="arms_name" />
+		<result property="forceRate" column="force_rate" />
+		<result property="intellectRate" column="intellect_rate" />
+		<result property="troopsRate" column="troops_rate" />
+	</resultMap>
+
+	<select id="select" resultMap="configArmsResultMap" parameterType="com.ming.ppsg.entity.ConfigArms">
+		SELECT <include refid="baseColumn"></include> 
+		FROM ppsg_config_arms
+		order by id
+	</select>
+
+	<!--<insert id="insert" parameterType="com.ming.ppsg.entity.User">
+		INSERT INTO user (
+			id,
+			name
+		)
+		VALUE (
+			#{id},
+			#{name}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.ming.ppsg.entity.User">
+		UPDATE user
+		<set>
+			<if test="name != null and name != ''">name = #{name},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		DELETE FROM user
+		WHERE id = #{id}
+	</delete>-->
+
+</mapper>

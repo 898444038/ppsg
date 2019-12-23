@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ming.ppsg.mapper.ConfigStarMapper">
+
+	<sql id="baseColumn">
+		id,
+		star_name
+	</sql>
+
+	<resultMap type="com.ming.ppsg.entity.ConfigStar" id="configStarResultMap">
+		<id property="id" column="id" />
+		<result property="starName" column="star_name" />
+	</resultMap>
+
+	<select id="select" resultMap="configStarResultMap" parameterType="com.ming.ppsg.entity.ConfigStar">
+		SELECT <include refid="baseColumn"></include> 
+		FROM ppsg_config_star
+		order by id
+	</select>
+
+	<!--<insert id="insert" parameterType="com.ming.ppsg.entity.User">
+		INSERT INTO user (
+			id,
+			name
+		)
+		VALUE (
+			#{id},
+			#{name}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.ming.ppsg.entity.User">
+		UPDATE user
+		<set>
+			<if test="name != null and name != ''">name = #{name},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		DELETE FROM user
+		WHERE id = #{id}
+	</delete>-->
+
+</mapper>

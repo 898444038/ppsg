@@ -67,7 +67,7 @@ var mingTools = {
             fileCss.setAttribute(this.attribuleName, this.attribuleVaues[1]);
             document.getElementsByTagName("head")[0].appendChild(fileCss);
         },
-        loadLink: function (rel,file,id) {
+        loadLink: function (rel, file, id) {
             var fileCss = document.createElement('link');
             fileCss.setAttribute("rel", rel);
             fileCss.setAttribute("href", file);
@@ -194,29 +194,30 @@ var mingTools = {
             }
         }
     },
-    ajaxResult:function (data,func) {
-        if(data.code == 1){//成功
-            if(func){
+    ajaxResult: function (data, func) {
+        if (data.code == 1) {//成功
+            if (func) {
                 setTimeout(func, 0);
             }
-        }else if(data.code == 0){//失败
+        } else if (data.code == 0) {//失败
 
-        }if(data.code == -1){//异常
+        }
+        if (data.code == -1) {//异常
 
         }
     },
     //转树结构
-    createMenuTree:function(el,arr,rootId){
+    createMenuTree: function (el, arr, rootId) {
         var ul = '<li class="navigation__active"><a href="index.html"><i class="zwicon-home"></i> 主页</a></li>';
-        if(arr != null){
-            for(var i=0;i<arr.length;i++){
-                if(arr[i].parentId == rootId){
+        if (arr != null) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].parentId == rootId) {
                     ul += '<li class="navigation__sub">';
-                    ul += '<a href="#"><i class="'+arr[i].menuIcon+'"></i> '+arr[i].menuName+'</a>';
+                    ul += '<a href="#"><i class="' + arr[i].menuIcon + '"></i> ' + arr[i].menuName + '</a>';
                     ul += '<ul>';
-                    for (var j=0;j<arr.length;j++){
-                        if(arr[j].parentId == arr[i].id){
-                            ul += '<li><a class="menu-item" href="#" data-url="'+arr[j].url+'"><i class="'+arr[j].menuIcon+'"></i> '+arr[j].menuName+'</a></li>' ;
+                    for (var j = 0; j < arr.length; j++) {
+                        if (arr[j].parentId == arr[i].id) {
+                            ul += '<li><a class="menu-item" href="#" data-url="' + arr[j].url + '"><i class="' + arr[j].menuIcon + '"></i> ' + arr[j].menuName + '</a></li>';
                         }
                     }
                     ul += '</ul>';
@@ -227,179 +228,42 @@ var mingTools = {
         $(el).html(ul);
         $(".menu-item").click(function () {
             mingTools.loading();
-            $("iframe").attr("src",$(this).attr("data-url"));
+            $("iframe").attr("src", $(this).attr("data-url"));
             $("#menuList").find("li").removeClass("navigation__active");
             $(this).closest("li").addClass("navigation__active");
             setTimeout(function () {
                 var html = $("iframe").contents().find(".content-root").html();
                 var events = $("iframe").contents().find("content-event");
                 $(".content").html(html);
-                if(events){
-
+                if (events) {
                     var func = eval(events.attr("event"));
-                    setTimeout(func,50);
+                    setTimeout(func, 50);
                 }
                 mingTools.hideLoading();
-            },1000);
+            }, 1000);
         });
-        $(document).on("click","#btn-add",function () {
+        $(document).on("click", "#btn-add", function () {
             mingTools.loading();
-            $("iframe").attr("src",$(this).attr("data-url"));
+            $("iframe").attr("src", $(this).attr("data-url"));
             setTimeout(function () {
                 var html = $("iframe").contents().find(".content-root").html();
                 $(".content").html(html);
                 mingTools.hideLoading();
-            },1000);
+            }, 1000);
         });
         return ul;
     },
-    loading:function () {
+    loading: function () {
         $(".page-loader").fadeIn();
     },
-    hideLoading:function () {
+    hideLoading: function () {
         $(".page-loader").fadeOut();
+    },
+    getOperButton: function () {
+        var detailBtn = '<button class="btn btn-theme btn--icon"><i class="zwicon-search"></i></button>';
+        var editBtn = '<button class="btn btn-theme btn--icon" style="margin-left: 10px;"><i class="zwicon-edit-square"></i></button>';
+        var deleteBtn = '<button class="btn btn-danger btn--icon" style="margin-left: 10px;"><i class="zwicon-close"></i></button>';
+        return detailBtn+editBtn+deleteBtn;
     }
 }
 
-function countryList() {
-    $(document).on("click",".btn-change",function () {
-        $(".card").find(".nav-tabs").toggleClass("nav-fill");
-    });
-    var data = [
-        [
-            "20170527150032890",
-            "-0.10  CNY",
-            "提现",
-            "失败",
-            "2017-05-27 15:00:32",
-            "提现",
-            ""
-        ],
-        [
-            "20170527145824609",
-            "-3.00  CNY",
-            "冻结",
-            "成功",
-            "2017-05-27 14:58:24",
-            "冻结金额",
-            ""
-        ],
-        [
-            "20170527145704263",
-            "-3.00  CNY",
-            "提现",
-            "失败",
-            "2017-05-27 14:57:04",
-            "提现",
-            ""
-        ],
-        [
-            "20170527145226988",
-            "-100.00  CNY",
-            "冻结",
-            "成功",
-            "2017-05-27 14:52:26",
-            "冻结金额",
-            ""
-        ],
-        [
-            "20170525121845479",
-            "-0.01 CNY",
-            "提现",
-            "已受理",
-            "2017-05-27 09:28:09",
-            "重新提现",
-            "<button class='btn btn-warning btn-block' onclick=alert('haha') >取消提现</button>"
-        ],
-        [
-            "20170527144117493",
-            "-0.11 CNY",
-            "提现",
-            "成功",
-            "2017-05-27 00:00:00",
-            "虚拟提现(冻结金额)",
-            ""
-        ],
-        [
-            "20170526165926389",
-            "-12.00 CNY",
-            "提现",
-            "已受理",
-            "2017-05-26 16:59:26",
-            "提现",
-            "<button class='btn btn-warning btn-block' onclick=alert('haha') >取消提现</button>"
-        ],
-        [
-            "20170526165802358",
-            "-2.00 CNY",
-            "提现",
-            "已受理",
-            "2017-05-26 16:58:02",
-            "提现",
-            ""
-        ],
-        [
-            "20170526165520190",
-            "-1.00 CNY",
-            "提现",
-            "已受理",
-            "2017-05-26 16:55:20",
-            "提现",
-            "<button class='btn btn-warning btn-block' onclick=alert('haha') >取消提现</button>"
-        ],
-        [
-            "20170526161241519",
-            "-1.00 CNY",
-            "提现",
-            "已受理",
-            "2017-05-26 16:12:41",
-            "提现",
-            ""
-        ],
-        [
-            "20170526165802358",
-            "-99.00 CNY",
-            "提现",
-            "已受理",
-            "2017-05-26 16:58:02",
-            "提现",
-            ""
-        ],
-        [
-            "20170526165520190",
-            "-99.00 CNY",
-            "提现",
-            "已受理",
-            "2017-05-26 16:55:20",
-            "提现",
-            ""
-        ],
-        [
-            "20170526161241519",
-            "-99.00 CNY",
-            "提现",
-            "已受理",
-            "2017-05-26 16:12:41",
-            "提现",
-            ""
-        ]
-    ];
-    $('#data-table').DataTable( {
-        data: data,
-        columns: [
-            { title: '批次号' },
-            { title: '金额' },
-            { title: '交易类型' },
-            { title: '交易状态' },
-            { title: '交易时间' },
-            { title: '交易信息' },
-            { title: '操作' }
-        ],
-        "fnInitComplete": function (oSettings, json) {
-            $('#data-table').find(".dataTables_filter").css({"float":"right","margin-right":"10px"});
-            $('#data-table').find("#data-table_length").css({"float":"right"});
-        }
-    } );
-
-
-}
