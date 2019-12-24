@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/ppsg/config")
 public class ConfigController {
 
-    @RequestMapping("/list")
-    public String list(){
-        return "ppsg/config/list";
+    /**
+     * 武将配置页
+     */
+    @RequestMapping("/generals")
+    public String generals(){
+        return "ppsg/config/generals";
     }
 
 }

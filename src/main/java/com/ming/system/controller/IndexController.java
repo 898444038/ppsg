@@ -27,10 +27,18 @@ public class IndexController {
         List<Menu> menuList = new ArrayList<>();
         String icon = "zwicon-cog";
         String icon2 = "";//"zwicon-slider-circle-h";
+        menuList.add(new Menu(10001L,"卡册",icon,0L,""));
+        menuList.add(new Menu(10002L,"武将图鉴",icon2,10001L,"/ppsg/generals"));
 
-        menuList.add(new Menu(10001L,"武将配置",icon,0L,""));
-        menuList.add(new Menu(10002L,"卡册",icon2,10001L,"/ppsg/generals"));
-        menuList.add(new Menu(10003L,"配置",icon2,10001L,"/ppsg/config/list"));
+        menuList.add(new Menu(10001L,"配置",icon,0L,""));
+        menuList.add(new Menu(10003L,"武将配置",icon2,10001L,"/ppsg/config/generals"));
+        menuList.add(new Menu(10004L,"战器配置",icon2,10001L,"/ppsg/config/list"));
+        menuList.add(new Menu(10005L,"兵符配置",icon2,10001L,"/ppsg/config/list"));
+        menuList.add(new Menu(10006L,"兵书配置",icon2,10001L,"/ppsg/config/list"));
+        menuList.add(new Menu(10007L,"战意配置",icon2,10001L,"/ppsg/config/list"));
+        menuList.add(new Menu(10008L,"命格配置",icon2,10001L,"/ppsg/config/list"));
+        menuList.add(new Menu(10009L,"工坊配置",icon2,10001L,"/ppsg/config/list"));
+        menuList.add(new Menu(10010L,"战阵配置",icon2,10001L,"/ppsg/config/list"));
 
         menuList.add(new Menu(20001L,"战力",icon,0L,""));
         menuList.add(new Menu(20002L,"战力计算器",icon2,20001L,"/ppsg/generals"));

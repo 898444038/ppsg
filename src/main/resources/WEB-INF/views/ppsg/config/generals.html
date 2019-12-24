@@ -1,0 +1,197 @@
+<section class="content content-root">
+    <style>
+        .dataTables_filter{
+            float:right;
+            margin-right:10px;
+        }
+        .dataTables_length{
+            float:right;
+        }
+        .dataTables_length label select option{
+            background: #000000b5;
+        }
+    </style>
+
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>配置 <small>config</small></h1>
+
+            <div class="actions">
+                <a href="#" class="actions__item zwicon-cog"></a>
+                <a href="#" class="actions__item zwicon-refresh-double"></a>
+
+                <div class="dropdown actions__item">
+                    <i data-toggle="dropdown" class="zwicon-more-h"></i>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#" class="dropdown-item">刷新</a>
+                        <button class="dropdown-item btn-change">切换</button>
+                        <a href="#" class="dropdown-item">配置</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--武将配置-->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">武将配置</h4>
+                <h6 class="card-subtitle">Basic config.</h6>
+
+                <div class="tab-container">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#country" role="tab">国家</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#star" role="tab">星级</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#arms" role="tab">兵种</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#generals-type" role="tab">武将类型</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active fade show" id="country" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <!--国家列表-->
+                                <table id="data-table-country" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade show" id="star" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <!--星级列表-->
+                                <table id="data-table-star" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade show" id="arms" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <!--兵种列表-->
+                                <table id="data-table-arms" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade show" id="generals-type" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <!--武将类型-->
+                                <table id="data-table-generals-type" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--战器配置-->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">战器配置</h4>
+                <h6 class="card-subtitle">Basic config.</h6>
+                <div class="tab-container">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#war-device-type" role="tab">战器类型</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#war-device-Strengthen" role="tab">战器强化</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#war-device-Quenching" role="tab">战器淬炼</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#war-device-passive" role="tab">战器被动</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#war-device-exclusive" role="tab">专属战器</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active fade show" id="war-device-type" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <table id="data-table-war-device-type" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="war-device-Strengthen" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <table id="data-table-war-device-Strengthen" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="war-device-Quenching" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <table id="data-table-war-device-Quenching" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="war-device-passive" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <table id="data-table-war-device-passive" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="war-device-exclusive" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <table id="data-table-war-device-exclusive" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--兵符配置-->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">兵符配置</h4>
+                <h6 class="card-subtitle">Basic config.</h6>
+                <div class="tab-container">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#symbols-number" role="tab">兵符号位</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#symbols-main-attr" role="tab">兵符主属性</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#symbols-second-attr" role="tab">兵符副属性</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#symbols-type" role="tab">兵符类型</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active fade show" id="symbols-number" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <table id="data-table-symbols-number" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="symbols-main-attr" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <table id="data-table-symbols-main-attr" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="symbols-second-attr" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <table id="data-table-symbols-second-attr" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="symbols-type" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <table id="data-table-symbols-type" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/formwork/vendors/jquery/jquery.min.js"></script>
+    <script src="/static/formwork/vendors/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/formwork/vendors/datatables/datatables-buttons/dataTables.buttons.min.js"></script>
+    <script src="/static/formwork/vendors/datatables/datatables-buttons/buttons.print.min.js"></script>
+    <script src="/static/formwork/vendors/jszip/jszip.min.js"></script>
+    <script src="/static/formwork/vendors/datatables/datatables-buttons/buttons.html5.min.js"></script>
+    <script src="/static/js/ming.tools.js"></script>
+</section>
+<content-event event="generalsList"></content-event>

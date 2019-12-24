@@ -1,4 +1,4 @@
-function countryList() {
+function generalsList() {
     $(document).on("click",".btn-change",function () {
         $(".card").find(".nav-tabs").toggleClass("nav-fill");
     });
@@ -122,7 +122,7 @@ function countryList() {
                 for(var i=0;i<d.length;i++){
                     arr.push([i+1,d[i].warDeviceName,btns])
                 }
-                $('#data-table-war-device').DataTable( {
+                $('#data-table-war-device-type').DataTable( {
                     data: arr,
                     columns: [
                         { title: '序号' },
