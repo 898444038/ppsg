@@ -343,6 +343,7 @@ public class Main {
 
             GeneralsUtil.getWarpath(generalsList);//战意三维
             // 总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
+            // 武将战力 =（总武力+总智力+总兵力）*2+ 命格被动战力 + 战器被动战力
             Integer allTotalSword = GeneralsUtil.getAllTotalSword(generalsList);
             Integer allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
 

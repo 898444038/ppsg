@@ -31,61 +31,60 @@
             </div>
         </header>
 
-        <!--武将配置-->
+        <!--战器配置-->
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">武将配置</h4>
+                <h4 class="card-title">战器配置</h4>
                 <h6 class="card-subtitle">Basic config.</h6>
-
                 <div class="tab-container">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#country" role="tab">国家</a>
+                            <a class="nav-link" data-toggle="tab" href="#war-device-type" role="tab">战器类型</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#star" role="tab">星级</a>
+                            <a class="nav-link" data-toggle="tab" href="#war-device-Strengthen" role="tab">战器强化</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#arms" role="tab">兵种</a>
+                            <a class="nav-link" data-toggle="tab" href="#war-device-Quenching" role="tab">战器淬炼</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#generals-type" role="tab">武将类型</a>
+                            <a class="nav-link" data-toggle="tab" href="#war-device-passive" role="tab">战器被动</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#war-device-exclusive" role="tab">专属战器</a>
                         </li>
                     </ul>
 
                     <div class="tab-content">
-                        <div class="tab-pane active fade show" id="country" role="tabpanel">
+                        <div class="tab-pane active fade show" id="war-device-type" role="tabpanel">
                             <div class="table-responsive data-table">
-                                <!--国家列表-->
-                                <table id="data-table-country" class="table" style="width: 100%!important;"></table>
+                                <table id="data-table-war-device-type" class="table" style="width: 100%!important;"></table>
                             </div>
                         </div>
-
-                        <div class="tab-pane fade show" id="star" role="tabpanel">
+                        <div class="tab-pane fade show" id="war-device-Strengthen" role="tabpanel">
                             <div class="table-responsive data-table">
-                                <!--星级列表-->
-                                <table id="data-table-star" class="table" style="width: 100%!important;"></table>
+                                <table id="data-table-war-device-Strengthen" class="table" style="width: 100%!important;"></table>
                             </div>
                         </div>
-
-                        <div class="tab-pane fade show" id="arms" role="tabpanel">
+                        <div class="tab-pane fade show" id="war-device-Quenching" role="tabpanel">
                             <div class="table-responsive data-table">
-                                <!--兵种列表-->
-                                <table id="data-table-arms" class="table" style="width: 100%!important;"></table>
+                                <table id="data-table-war-device-Quenching" class="table" style="width: 100%!important;"></table>
                             </div>
                         </div>
-
-                        <div class="tab-pane fade show" id="generals-type" role="tabpanel">
+                        <div class="tab-pane fade show" id="war-device-passive" role="tabpanel">
                             <div class="table-responsive data-table">
-                                <!--武将类型-->
-                                <table id="data-table-generals-type" class="table" style="width: 100%!important;"></table>
+                                <table id="data-table-war-device-passive" class="table" style="width: 100%!important;"></table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="war-device-exclusive" role="tabpanel">
+                            <div class="table-responsive data-table">
+                                <table id="data-table-war-device-exclusive" class="table" style="width: 100%!important;"></table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
     <script src="/static/formwork/vendors/jquery/jquery.min.js"></script>
     <script src="/static/formwork/vendors/datatables/jquery.dataTables.min.js"></script>
@@ -95,4 +94,4 @@
     <script src="/static/formwork/vendors/datatables/datatables-buttons/buttons.html5.min.js"></script>
     <script src="/static/js/ming.tools.js"></script>
 </section>
-<content-event event="generalsList"></content-event>
+<content-event event="warDeviceList"></content-event>

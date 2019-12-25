@@ -31,61 +31,52 @@
             </div>
         </header>
 
-        <!--武将配置-->
+        <!--兵符配置-->
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">武将配置</h4>
+                <h4 class="card-title">兵符配置</h4>
                 <h6 class="card-subtitle">Basic config.</h6>
-
                 <div class="tab-container">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#country" role="tab">国家</a>
+                            <a class="nav-link" data-toggle="tab" href="#symbols-number" role="tab">兵符号位</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#star" role="tab">星级</a>
+                            <a class="nav-link" data-toggle="tab" href="#symbols-main-attr" role="tab">兵符主属性</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#arms" role="tab">兵种</a>
+                            <a class="nav-link" data-toggle="tab" href="#symbols-second-attr" role="tab">兵符副属性</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#generals-type" role="tab">武将类型</a>
+                            <a class="nav-link" data-toggle="tab" href="#symbols-type" role="tab">兵符类型</a>
                         </li>
                     </ul>
 
                     <div class="tab-content">
-                        <div class="tab-pane active fade show" id="country" role="tabpanel">
+                        <div class="tab-pane active fade show" id="symbols-number" role="tabpanel">
                             <div class="table-responsive data-table">
-                                <!--国家列表-->
-                                <table id="data-table-country" class="table" style="width: 100%!important;"></table>
+                                <table id="data-table-symbols-number" class="table" style="width: 100%!important;"></table>
                             </div>
                         </div>
-
-                        <div class="tab-pane fade show" id="star" role="tabpanel">
+                        <div class="tab-pane fade show" id="symbols-main-attr" role="tabpanel">
                             <div class="table-responsive data-table">
-                                <!--星级列表-->
-                                <table id="data-table-star" class="table" style="width: 100%!important;"></table>
+                                <table id="data-table-symbols-main-attr" class="table" style="width: 100%!important;"></table>
                             </div>
                         </div>
-
-                        <div class="tab-pane fade show" id="arms" role="tabpanel">
+                        <div class="tab-pane fade show" id="symbols-second-attr" role="tabpanel">
                             <div class="table-responsive data-table">
-                                <!--兵种列表-->
-                                <table id="data-table-arms" class="table" style="width: 100%!important;"></table>
+                                <table id="data-table-symbols-second-attr" class="table" style="width: 100%!important;"></table>
                             </div>
                         </div>
-
-                        <div class="tab-pane fade show" id="generals-type" role="tabpanel">
+                        <div class="tab-pane fade show" id="symbols-type" role="tabpanel">
                             <div class="table-responsive data-table">
-                                <!--武将类型-->
-                                <table id="data-table-generals-type" class="table" style="width: 100%!important;"></table>
+                                <table id="data-table-symbols-type" class="table" style="width: 100%!important;"></table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
     <script src="/static/formwork/vendors/jquery/jquery.min.js"></script>
     <script src="/static/formwork/vendors/datatables/jquery.dataTables.min.js"></script>
@@ -95,4 +86,4 @@
     <script src="/static/formwork/vendors/datatables/datatables-buttons/buttons.html5.min.js"></script>
     <script src="/static/js/ming.tools.js"></script>
 </section>
-<content-event event="generalsList"></content-event>
+<content-event event="symbolsList"></content-event>

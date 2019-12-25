@@ -15,4 +15,19 @@ public class ConfigController {
         return "ppsg/config/generals";
     }
 
+    /**
+     * 战器配置页
+     */
+    @RequestMapping("/warDevice")
+    public String warDevice(){
+        return "ppsg/config/warDevice";
+    }
+
+    /**
+     * 兵符配置页
+     */
+    @RequestMapping("/symbols")
+    public String symbols(){
+        return "ppsg/config/symbols";
+    }
 }

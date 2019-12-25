@@ -6,6 +6,13 @@ var mingTools = {
     loadFile: {
         attribuleName: 'load-file',
         attribuleVaues: ['load-js', 'load-css'],
+        updateJsFile:function (url) {
+            mingTools.loadFile.removeJsFile(url);
+            var fileJs = document.createElement('script');
+            fileJs.setAttribute("type", "text/javascript");
+            fileJs.setAttribute("src", url);
+            $("mainjs").append(fileJs);
+        },
         loadjscssfile: function (fileurl, filetype) {
             if (filetype === "js") {
                 var fileJs = document.createElement('script');
@@ -260,9 +267,9 @@ var mingTools = {
         $(".page-loader").fadeOut();
     },
     getOperButton: function () {
-        var detailBtn = '<button class="btn btn-theme btn--icon"><i class="zwicon-search"></i></button>';
-        var editBtn = '<button class="btn btn-theme btn--icon" style="margin-left: 10px;"><i class="zwicon-edit-square"></i></button>';
-        var deleteBtn = '<button class="btn btn-danger btn--icon" style="margin-left: 10px;"><i class="zwicon-close"></i></button>';
+        var detailBtn = '<button class="btn btn-theme btn--icon" title="" data-toggle="tooltip" data-placement="top" data-original-title="详情"><i class="zwicon-search"></i></button>';
+        var editBtn = '<button class="btn btn-theme btn--icon" style="margin-left: 10px;" title="" data-toggle="tooltip" data-placement="top" data-original-title="编辑"><i class="zwicon-edit-square"></i></button>';
+        var deleteBtn = '<button class="btn btn-danger btn--icon" style="margin-left: 10px;" title="" data-toggle="tooltip" data-placement="top" data-original-title="删除"><i class="zwicon-close"></i></button>';
         return detailBtn+editBtn+deleteBtn;
     }
 }

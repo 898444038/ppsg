@@ -1,7 +1,17 @@
+$(function () {
+
+
+
 function generalsList() {
     $(document).on("click",".btn-change",function () {
         $(".card").find(".nav-tabs").toggleClass("nav-fill");
     });
+
+    //mingTools.loadFile.removeJsFile("/static/formwork/js/app.min.js");
+    //mingTools.loadFile.updateJsFile("/static/formwork/js/app.min.js");
+    //$("mainjs").html('<script src="/static/formwork/js/app.min.js"></script>');
+
+    $('[data-toggle="tooltip"]').tooltip()
 
     $.ajax({
         url:"/ppsg/config/country/list",
@@ -134,3 +144,5 @@ function generalsList() {
         }
     });
 }
+
+})
