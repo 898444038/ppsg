@@ -17,8 +17,17 @@ public class IndexController {
     public String index(){
         //用户验证
         //菜单
+        return "index2";
+    }
 
-        return "index";
+    @RequestMapping("/head")
+    public String head(){
+        return "head";
+    }
+
+    @RequestMapping("/foot")
+    public String foot(){
+        return "foot";
     }
 
     @RequestMapping("/getMenus")

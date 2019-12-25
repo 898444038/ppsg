@@ -1,5 +1,9 @@
 $(function () {
-
+    //generalsList();
+    $('body').tooltip({
+        selector: '[rel=tooltip]'
+    });
+})
 
 
 function generalsList() {
@@ -10,8 +14,6 @@ function generalsList() {
     //mingTools.loadFile.removeJsFile("/static/formwork/js/app.min.js");
     //mingTools.loadFile.updateJsFile("/static/formwork/js/app.min.js");
     //$("mainjs").html('<script src="/static/formwork/js/app.min.js"></script>');
-
-    $('[data-toggle="tooltip"]').tooltip()
 
     $.ajax({
         url:"/ppsg/config/country/list",
@@ -34,6 +36,7 @@ function generalsList() {
                         { title: '操作' }
                     ]
                 });
+
             });
         }
     });
@@ -144,5 +147,3 @@ function generalsList() {
         }
     });
 }
-
-})

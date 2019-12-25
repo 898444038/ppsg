@@ -6,12 +6,15 @@ var mingTools = {
     loadFile: {
         attribuleName: 'load-file',
         attribuleVaues: ['load-js', 'load-css'],
-        updateJsFile:function (url) {
+        updateJsFile:function (url,func) {
             mingTools.loadFile.removeJsFile(url);
             var fileJs = document.createElement('script');
             fileJs.setAttribute("type", "text/javascript");
             fileJs.setAttribute("src", url);
             $("mainjs").append(fileJs);
+            if(func){
+                setTimeout(func,0);
+            }
         },
         loadjscssfile: function (fileurl, filetype) {
             if (filetype === "js") {
@@ -243,8 +246,10 @@ var mingTools = {
                 var events = $("iframe").contents().find("content-event");
                 $(".content").html(html);
                 if (events) {
-                    var func = eval(events.attr("event"));
-                    setTimeout(func, 50);
+                    //var func = eval(events.attr("event"));
+                    var jsUrl = events.attr("js-url");
+                    mingTools.loadFile.updateJsFile(jsUrl);
+                    //setTimeout(func, 50);
                 }
                 mingTools.hideLoading();
             }, 1000);
