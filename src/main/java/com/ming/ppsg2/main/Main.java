@@ -58,7 +58,7 @@ public class Main {
 
         lists.remove(0);
         for (List<String> list : lists) {
-            if(list.size()<29 || "".equals(list.get(14))){
+            if(list.size()<30 || "".equals(list.get(14))){
                 continue;
             }
             String name = list.get(0);
@@ -169,16 +169,25 @@ public class Main {
                     {book5,book55},
             };
 
+            String skin = list.get(24);
+            Integer skinCode = null;
+            for(GeneralsEnum.Skin skin1 : GeneralsEnum.Skin.values()){
+                if(skin1.getName().equals(skin)){
+                    skinCode = skin1.getCode();
+                }
+            }
+            System.out.println(skin);
+
             Integer disobeyCode = null;
             for(GeneralsEnum.Destiny destiny : GeneralsEnum.Destiny.values()){
-                if(destiny.getName().equals(list.get(28))){
+                if(destiny.getName().equals(list.get(29))){
                     disobeyCode = destiny.getCode();
                 }
             }
 
-            Object[] destinys = {Integer.valueOf(list.get(24)),Integer.valueOf(list.get(25)),Integer.valueOf(list.get(26)),Boolean.valueOf(list.get(27)),disobeyCode,null,null,null};
+            Object[] destinys = {Integer.valueOf(list.get(25)),Integer.valueOf(list.get(26)),Integer.valueOf(list.get(27)),Boolean.valueOf(list.get(28)),disobeyCode,null,null,null};
 
-            Generals generals = DestinyData.getGenerals(name,code,level,force,intellect,troops,gender,generalsType,arms,country,isEntourage,entourages,warDevices,armsBooks,destinys);
+            Generals generals = DestinyData.getGenerals(name,code,level,force,intellect,troops,gender,generalsType,arms,country,isEntourage,entourages,warDevices,armsBooks,destinys,skinCode);
 
 
             GeneralsUtil.getMaxLevel(generals);//基础满级三维
@@ -190,6 +199,7 @@ public class Main {
             GeneralsUtil.getWillSoul(generals);//将魂三维
             GeneralsUtil.getBattleArray(generals);//战阵三维
             GeneralsUtil.getDestiny(generals);//命格三维
+            GeneralsUtil.getSkin(generals);//幻化三维
             generals.setWarpath(new Warpath());
 
             if(name.endsWith("_限")){
@@ -199,7 +209,7 @@ public class Main {
             }
             generals.setId(UUID.randomUUID().toString().replace("-", ""));
 
-            if("逆命".equals(list.get(28)) || "突破".equals(list.get(28))){
+            if(1 == disobeyCode || 2 == disobeyCode || 3 == disobeyCode){
                 Generals copy = new Generals();
 
                 ArmsBook copyBook = new ArmsBook();
@@ -377,69 +387,6 @@ public class Main {
                 }
             }
 
-//            Result result = new Result();
-//            Integer weiCount = 0;//魏国数量
-//            Integer shuCount = 0;//蜀国数量
-//            Integer wuCount = 0;//吴国数量
-//            Integer qunCount = 0;//群雄数量
-//            Integer qiangCount = 0;//枪兵数量
-//            Integer qiCount = 0;//骑兵数量
-//            Integer gongCount = 0;//弓兵数量
-//            List<CountryArms> countryArms1 = new ArrayList<>();
-//            List<CountryArms> countryArms2 = new ArrayList<>();
-//            for(Generals generals : generalsList){
-//                if(generals.getCountry().equals(GeneralsEnum.Country.wei.getCode())){
-//                    weiCount++;
-//                }else if(generals.getCountry().equals(GeneralsEnum.Country.shu.getCode())){
-//                    shuCount++;
-//                }else if(generals.getCountry().equals(GeneralsEnum.Country.wu.getCode())){
-//                    wuCount++;
-//                }else if(generals.getCountry().equals(GeneralsEnum.Country.qun.getCode())){
-//                    qunCount++;
-//                }
-//                if(generals.getArms().equals(GeneralsEnum.Arms.gun.getCode())){
-//                    qiangCount++;
-//                }else if(generals.getArms().equals(GeneralsEnum.Arms.ride.getCode())){
-//                    qiCount++;
-//                }else if(generals.getArms().equals(GeneralsEnum.Arms.arch.getCode())){
-//                    gongCount++;
-//                }
-//            }
-//            if(weiCount!=0){countryArms1.add(new CountryArms(weiCount,GeneralsEnum.Country.wei.getName()));}
-//            if(shuCount!=0){countryArms1.add(new CountryArms(shuCount,GeneralsEnum.Country.shu.getName()));}
-//            if(wuCount!=0){countryArms1.add(new CountryArms(wuCount,GeneralsEnum.Country.wu.getName()));}
-//            if(qunCount!=0){countryArms1.add(new CountryArms(qunCount,GeneralsEnum.Country.qun.getName()));}
-//            if(qiangCount!=0){countryArms2.add(new CountryArms(qiangCount,GeneralsEnum.Arms.gun.getName()));}
-//            if(qiCount!=0){countryArms2.add(new CountryArms(qiCount,GeneralsEnum.Arms.ride.getName()));}
-//            if(gongCount!=0){countryArms2.add(new CountryArms(gongCount,GeneralsEnum.Arms.arch.getName()));}
-//            countryArms1.sort((CountryArms o1,CountryArms o2)->{
-//                return o2.getCount() - o1.getCount(); //降序
-//            });
-//            countryArms2.sort((CountryArms o1,CountryArms o2)->{
-//                return o2.getCount() - o1.getCount(); //降序
-//            });
-//            String countryNames = "";
-//            for(CountryArms countryArms : countryArms1){
-//                countryNames += countryArms.getCount()+countryArms.getName();
-//            }
-//            String armsNames = "";
-//            for(CountryArms countryArms : countryArms2){
-//                armsNames += countryArms.getCount()+countryArms.getName();
-//            }
-//
-//            result.setTotal(allTotalSword);
-//            result.setTotal2(allTotalSword2);
-//            result.setGeneralsList(generalsList);
-//            result.setSymbolsList(symbolsList);
-//            result.setWeiCount(weiCount);
-//            result.setShuCount(shuCount);
-//            result.setWuCount(wuCount);
-//            result.setQunCount(qunCount);
-//            result.setQiangCount(qiangCount);
-//            result.setQiCount(qiCount);
-//            result.setGongCount(gongCount);
-//            result.setCountryNames(countryNames);
-//            result.setArmsNames(armsNames);
             Result result = GeneralsUtil.getResult(generalsList,symbolsList,allTotalSword,allTotalSword2);
             if(flag==1){
                 resultList2.add(result);

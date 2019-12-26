@@ -8,6 +8,8 @@ public class ThreeDimensional {
 
     private Integer total;
 
+    private String remark;
+
     public ThreeDimensional() {}
 
     public ThreeDimensional(Integer force, Integer intellect, Integer troops) {
@@ -46,6 +48,14 @@ public class ThreeDimensional {
 
     public void setTotal(Integer total) {
         this.total = total;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     @Override

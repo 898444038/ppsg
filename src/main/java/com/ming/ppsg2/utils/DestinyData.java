@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DestinyData {
 
-    //奋威袁绍
+    /*//奋威袁绍
     public static Generals getYuanShao(){
         String name = "奋威袁绍";
         Integer code = GeneralsEnum.GeneralsCode.qun_yuanshao.getCode();
@@ -194,11 +194,11 @@ public class DestinyData {
         Object[] destinys = {450,460,645,true,GeneralsEnum.Destiny.disobey.getCode()};
 
         return getGenerals(name,code,level,force,intellect,troops,gender,generalsType,arms,country,isEntourage,entourages,warDevices,armsBooks,destinys);
-    }
+    }*/
 
     public static Generals getGenerals(String name,Integer code,Integer level,Integer force,Integer intellect,Integer troops,Integer gender,
         Integer generalsType,Integer arms,Integer country,Boolean isEntourage,Integer[] entourages,Integer[] warDevices,
-        Integer[][] armsBooks,Object[] destinys
+        Integer[][] armsBooks,Object[] destinys,Integer skinCode
     ){
         Generals generals = new Generals();
         generals.setName(name);
@@ -249,6 +249,7 @@ public class DestinyData {
             }
         }
         generals.setDestiny(destiny);
+        generals.setSkinCode(skinCode);
         return generals;
     }
 

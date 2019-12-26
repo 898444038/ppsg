@@ -18,6 +18,7 @@ public enum GeneralsEnum {
     symbols("兵符"),//兵符
     material("逆命突破材料"),
     countrys("国家队"),//国家队
+    skin("幻化"),//幻化
     gender("性别");//性别
 
     private String groupName;
@@ -491,32 +492,39 @@ public enum GeneralsEnum {
 
     public enum Destiny implements GeneralsEnumInterface {
 
-        not(0,"未开命格",0,0,0,0,0,0,0,0),
-        disobey(1,"逆命",1220,1220,300,680,1220,1920,100,10),
-        breach(2,"突破",0,0,300,680,680,680,4,5);
+        not(0,"未开命格",0,0,0,0,0,0,0,0,0,0,0),
+        disobey(1,"逆命",1220,1220,0,0,300,680,1220,1920,1920,100,10),
+        breach(2,"突破",0,0,0,0,300,680,680,680,680,4,5),
+        disobey5(3,"逆命5",1220,1220,1220,1220,300,680,1220,1920,2380,200,40);
 
         private Integer code;
         private String name;
-        private Integer effect1;
-        private Integer effect2;
-        private Integer level1;
-        private Integer level2;
-        private Integer level3;
-        private Integer level4;
+        private Integer effect1;//命格被动1
+        private Integer effect2;//命格被动2
+        private Integer effect3;//命格被动3
+        private Integer effect4;//命格被动4
+        private Integer level1;//逆命1，突破1
+        private Integer level2;//逆命2，突破2
+        private Integer level3;//逆命3
+        private Integer level4;//逆命4
+        private Integer level5;//逆命5
         private Integer chip;//所需碎片或印
         private Integer crapeMyrtle;//紫薇之御
 
         Destiny(){}
 
-        Destiny(Integer code, String name, Integer effect1, Integer effect2, Integer level1, Integer level2, Integer level3, Integer level4, Integer chip, Integer crapeMyrtle) {
+        Destiny(Integer code, String name, Integer effect1, Integer effect2,Integer effect3,Integer effect4, Integer level1, Integer level2, Integer level3, Integer level4,Integer level5, Integer chip, Integer crapeMyrtle) {
             this.code = code;
             this.name = name;
             this.effect1 = effect1;
             this.effect2 = effect2;
+            this.effect3 = effect3;
+            this.effect4 = effect4;
             this.level1 = level1;
             this.level2 = level2;
             this.level3 = level3;
             this.level4 = level4;
+            this.level5 = level5;
             this.chip = chip;
             this.crapeMyrtle = crapeMyrtle;
         }
@@ -526,6 +534,18 @@ public enum GeneralsEnum {
         }
         public Integer getCode() {
             return this.code;
+        }
+
+        public Integer getEffect3() {
+            return effect3;
+        }
+
+        public Integer getEffect4() {
+            return effect4;
+        }
+
+        public Integer getLevel5() {
+            return level5;
         }
 
         public Integer getEffect1() {
@@ -1056,6 +1076,46 @@ public enum GeneralsEnum {
 
         public Integer getBreach() {
             return breach;
+        }
+    }
+
+    public enum Skin implements GeneralsEnumInterface {
+        skin_1(1,"沉弈忘雪",30,30,80),
+        skin_2(2,"繁花一梦",30,30,80),
+        skin_3(3,"月落千殇",30,30,80),
+        skin_4(4,"剑影流风",30,30,80);
+        private Integer code;
+        private String name;
+        private Integer force;
+        private Integer intellect;
+        private Integer troops;
+
+        Skin(){}
+
+        Skin(Integer code, String name, Integer force, Integer intellect, Integer troops) {
+            this.code = code;
+            this.name = name;
+            this.force = force;
+            this.intellect = intellect;
+            this.troops = troops;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+        public Integer getCode() {
+            return this.code;
+        }
+        public Integer getForce() {
+            return force;
+        }
+
+        public Integer getIntellect() {
+            return intellect;
+        }
+
+        public Integer getTroops() {
+            return troops;
         }
     }
 

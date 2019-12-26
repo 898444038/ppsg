@@ -68,6 +68,8 @@ public class Generals {
     private Device device;
     //战器(特殊)
     private Device device2;
+    //幻化
+    private Integer skinCode;
 
     //120满级三维
     private ThreeDimensional maxThreeDimensional;
@@ -95,6 +97,8 @@ public class Generals {
     private ThreeDimensional warpathThreeDimensional;
     //命格
     private ThreeDimensional destinyThreeDimensional;
+    //幻化
+    private ThreeDimensional skinThreeDimensional;
     //总战力
     private Integer totalSword;
     //武将总武力
@@ -566,6 +570,22 @@ public class Generals {
 
     public void setTotalTroops2(Integer totalTroops2) {
         this.totalTroops2 = totalTroops2;
+    }
+
+    public Integer getSkinCode() {
+        return skinCode;
+    }
+
+    public void setSkinCode(Integer skinCode) {
+        this.skinCode = skinCode;
+    }
+
+    public ThreeDimensional getSkinThreeDimensional() {
+        return skinThreeDimensional;
+    }
+
+    public void setSkinThreeDimensional(ThreeDimensional skinThreeDimensional) {
+        this.skinThreeDimensional = skinThreeDimensional;
     }
 
     @Override

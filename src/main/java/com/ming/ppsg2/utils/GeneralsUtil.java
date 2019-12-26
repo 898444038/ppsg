@@ -119,6 +119,11 @@ public class GeneralsUtil {
             totalIntellect += holyStoneThree.getIntellect();
             totalTroops += holyStoneThree.getTroops();
 
+            ThreeDimensional skinStoneThree =  getSkin(generals1);
+            totalForce += skinStoneThree.getForce();
+            totalIntellect += skinStoneThree.getIntellect();
+            totalTroops += skinStoneThree.getTroops();
+
             //兵书最大武力
             ThreeDimensional armsBookThree1 =  getArmsBook(copy1,GeneralsEnum.ThreeCircles.Force.getCode());
 
@@ -269,7 +274,7 @@ public class GeneralsUtil {
     }
 
     // todo:获取随从三维
-    // 随从三维 = 基础(满级) + 科技 + 四圣石 + 兵种 + 将魂 + 命格突破
+    // 随从三维 = 基础(满级) + 科技 + 四圣石 + 兵种 + 将魂 + 命格突破 + 幻化
     // 加成 = (随从三维/2+100)*(1+(0~0.25))
     public static Map<Integer,List<Generals>> getEntourage(Generals generals,List<Generals> all) {
         List<Integer> entourages = generals.getEntourages();
@@ -340,6 +345,11 @@ public class GeneralsUtil {
             totalIntellect += holyStoneThree.getIntellect();
             totalTroops += holyStoneThree.getTroops();
 
+            ThreeDimensional skinStoneThree =  getSkin(generals1);
+            totalForce += skinStoneThree.getForce();
+            totalIntellect += skinStoneThree.getIntellect();
+            totalTroops += skinStoneThree.getTroops();
+
             //兵书最大武力
             ThreeDimensional armsBookThree1 =  getArmsBook(copy1,GeneralsEnum.ThreeCircles.Force.getCode());
 
@@ -350,11 +360,13 @@ public class GeneralsUtil {
             ThreeDimensional armsBookThree3 =  getArmsBook(copy3,GeneralsEnum.ThreeCircles.Troops.getCode());
 
 
+            //将魂
             ThreeDimensional willSoulThree =  getWillSoul(generals1);
             totalForce += willSoulThree.getForce();
             totalIntellect += willSoulThree.getIntellect();
             totalTroops += willSoulThree.getTroops();
 
+            //命格
             ThreeDimensional destinyThree =  getDestiny(generals1);
             totalForce += destinyThree.getForce();
             totalIntellect += destinyThree.getIntellect();
@@ -2089,14 +2101,42 @@ public class GeneralsUtil {
         three.setIntellect(intellect);
         three.setTroops(troops);
         for (GeneralsEnum.Destiny type : GeneralsEnum.Destiny.values()){
+            //
             if(type.getCode().equals(destiny.getDisobey())){
                 destiny.setDestinyEffect1(type.getEffect1());
                 destiny.setDestinyEffect2(type.getEffect2());
-                destiny.setMaxLevel(type.getLevel4());
+                destiny.setDestinyEffect3(type.getEffect3());
+                destiny.setDestinyEffect4(type.getEffect4());
+                destiny.setMaxLevel(type.getLevel5());
                 break;
             }
         }
         generals.setDestinyThreeDimensional(three);
+        return three;
+    }
+
+    /**
+     * 幻化
+     * @param generals
+     * @return
+     */
+    public static ThreeDimensional getSkin(Generals generals) {
+        ThreeDimensional three = new ThreeDimensional();
+        three.setForce(0);
+        three.setIntellect(0);
+        three.setTroops(0);
+        if(generals.getSkinCode()!=null){
+            for(GeneralsEnum.Skin skin : GeneralsEnum.Skin.values()){
+                if(skin.getCode().equals(generals.getSkinCode())){
+                    three.setForce(skin.getForce());
+                    three.setIntellect(skin.getIntellect());
+                    three.setTroops(skin.getTroops());
+                    three.setRemark(skin.getName());
+                    break;
+                }
+            }
+        }
+        generals.setSkinThreeDimensional(three);
         return three;
     }
 
@@ -2184,7 +2224,14 @@ public class GeneralsUtil {
         intellect += destiny.getIntellect();
         troops += destiny.getTroops();
 
-        Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2() + destiny.getMaxLevel();
+        //幻化三维
+        ThreeDimensional skinThreeDimensional = generals.getSkinThreeDimensional();
+        force += skinThreeDimensional.getForce();
+        intellect += skinThreeDimensional.getIntellect();
+        troops += skinThreeDimensional.getTroops();
+
+        //命格被动战力
+        Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
 
         //战器三被动战力
         Integer warDeviceSword = 458 + 458 + 1220;
@@ -2272,13 +2319,20 @@ public class GeneralsUtil {
 //        troops += warpath.getTroops();
 //        System.out.println(generals.getName()+" 战意："+warpathThreeDimensional);
 
-        //命格被动战力
+        //命格三维
         Destiny destiny = generals.getDestiny();
         force += destiny.getForce();
         intellect += destiny.getIntellect();
         troops += destiny.getTroops();
 
-        Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2() + destiny.getMaxLevel();
+        //幻化三维
+        ThreeDimensional skinThreeDimensional = generals.getSkinThreeDimensional();
+        force += skinThreeDimensional.getForce();
+        intellect += skinThreeDimensional.getIntellect();
+        troops += skinThreeDimensional.getTroops();
+
+        //命格被动战力
+        Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
 
         //战器三被动战力
         Integer warDeviceSword = 458 + 458 + 1220;
@@ -3106,4 +3160,7 @@ public class GeneralsUtil {
 
         return result;
     }
+
+
+
 }

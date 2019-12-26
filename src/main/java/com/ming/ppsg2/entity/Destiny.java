@@ -18,8 +18,11 @@ public class Destiny {
 
     private Integer destinyEffect1;//效果1战力
     private Integer destinyEffect2;//效果2战力
+    private Integer destinyEffect3;//效果3战力
+    private Integer destinyEffect4;//效果4战力
 
     private Integer maxLevel;//被动满级战力
+
     private Integer code1;//命格材料1
     private Integer code2;//命格材料2
     private Integer code3;//命格材料3
@@ -57,6 +60,22 @@ public class Destiny {
     private String breakArmy_wx;//无暇破军之血
 
     public Destiny() {
+    }
+
+    public Integer getDestinyEffect3() {
+        return destinyEffect3;
+    }
+
+    public void setDestinyEffect3(Integer destinyEffect3) {
+        this.destinyEffect3 = destinyEffect3;
+    }
+
+    public Integer getDestinyEffect4() {
+        return destinyEffect4;
+    }
+
+    public void setDestinyEffect4(Integer destinyEffect4) {
+        this.destinyEffect4 = destinyEffect4;
     }
 
     public Integer getForce() {
