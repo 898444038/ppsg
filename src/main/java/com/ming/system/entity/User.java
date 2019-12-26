@@ -1,16 +1,19 @@
 package com.ming.system.entity;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements UserDetails, Serializable {
 
     private Long id;
 
-    private String userName;
+    private String username;
 
     private String password;
 
-    private List<Role> roleList;
+    private List<Role> authorities;
 
     public User() {
     }
@@ -23,14 +26,6 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -39,12 +34,53 @@ public class User {
         this.password = password;
     }
 
-    public List<Role> getRoleList() {
-        return roleList;
+    @Override
+    public String getUsername() {
+        return null;
     }
 
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
+    @Override
+    public List<Role> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Role> authorities) {
+        this.authorities = authorities;
+    }
+
+    /**
+     * 用户账号是否过期
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    /**
+     * 用户账号是否被锁定
+     */
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    /**
+     * 用户密码是否过期
+     */
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    /**
+     * 用户是否可用
+     */
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

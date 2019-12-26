@@ -1,5 +1,6 @@
 package com.ming.system.controller;
 
+import com.ming.system.entity.User;
 import com.ming.system.utils.ResultMsg;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,10 @@ public class LoginController {
 
     @RequestMapping("/loginVerify")
     @ResponseBody
-    public ResultMsg loginVerify(){
+    public ResultMsg loginVerify(User user){
+        String userName = user.getUsername();
+        String password = user.getPassword();
+
         return ResultMsg.success();
     }
 

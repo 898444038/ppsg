@@ -1,14 +1,12 @@
 package com.ming.system.entity;
 
-import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
 
-public class Role {
+public class Role implements GrantedAuthority {
 
     private Long id;
 
     private String roleName;
-
-    private List<Menu> menuList;
 
     public Role() {
     }
@@ -29,11 +27,8 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public List<Menu> getMenuList() {
-        return menuList;
-    }
-
-    public void setMenuList(List<Menu> menuList) {
-        this.menuList = menuList;
+    @Override
+    public String getAuthority() {
+        return roleName;
     }
 }

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50723
+Source Server         : local
+Source Server Version : 50714
 Source Host           : localhost:3306
 Source Database       : ppsg
 
 Target Server Type    : MYSQL
-Target Server Version : 50723
+Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2019-12-24 00:24:34
+Date: 2019-12-26 18:48:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -98,35 +98,20 @@ INSERT INTO `ppsg_config_star` VALUES ('4', '四星');
 INSERT INTO `ppsg_config_star` VALUES ('5', '五星');
 
 -- ----------------------------
--- Table structure for s_event
+-- Table structure for s_permission
 -- ----------------------------
-DROP TABLE IF EXISTS `s_event`;
-CREATE TABLE `s_event` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `event_name` varchar(64) DEFAULT NULL,
+DROP TABLE IF EXISTS `s_permission`;
+CREATE TABLE `s_permission` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `pid` bigint(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of s_event
--- ----------------------------
-
--- ----------------------------
--- Table structure for s_menu
--- ----------------------------
-DROP TABLE IF EXISTS `s_menu`;
-CREATE TABLE `s_menu` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `menu_name` varchar(64) DEFAULT NULL,
-  `menu_icon` varchar(255) DEFAULT NULL,
-  `parent_id` bigint(20) DEFAULT NULL,
-  `sort` int(11) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of s_menu
+-- Records of s_permission
 -- ----------------------------
 
 -- ----------------------------
@@ -134,8 +119,8 @@ CREATE TABLE `s_menu` (
 -- ----------------------------
 DROP TABLE IF EXISTS `s_role`;
 CREATE TABLE `s_role` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(32) DEFAULT NULL,
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -144,18 +129,16 @@ CREATE TABLE `s_role` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for s_role_menu
+-- Table structure for s_role_permission
 -- ----------------------------
-DROP TABLE IF EXISTS `s_role_menu`;
-CREATE TABLE `s_role_menu` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `role_id` bigint(20) NOT NULL,
-  `menu_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
+DROP TABLE IF EXISTS `s_role_permission`;
+CREATE TABLE `s_role_permission` (
+  `role_id` bigint(11) NOT NULL,
+  `permission_id` bigint(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of s_role_menu
+-- Records of s_role_permission
 -- ----------------------------
 
 -- ----------------------------
@@ -163,9 +146,9 @@ CREATE TABLE `s_role_menu` (
 -- ----------------------------
 DROP TABLE IF EXISTS `s_user`;
 CREATE TABLE `s_user` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(32) DEFAULT NULL,
-  `password` varchar(32) DEFAULT NULL,
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -178,10 +161,8 @@ CREATE TABLE `s_user` (
 -- ----------------------------
 DROP TABLE IF EXISTS `s_user_role`;
 CREATE TABLE `s_user_role` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
-  `role_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
+  `user_id` bigint(11) NOT NULL,
+  `role_id` bigint(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------

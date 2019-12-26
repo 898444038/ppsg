@@ -35,14 +35,14 @@
 
                 <div class="login__block__body">
                     <div class="form-group">
-                        <input type="text" class="form-control text-center" placeholder="Email Address">
+                        <input type="text" id="userName" class="form-control text-center" placeholder="Email Address" value="wang">
                     </div>
 
                     <div class="form-group">
-                        <input type="password" class="form-control text-center" placeholder="Password">
+                        <input type="password" id="password" class="form-control text-center" placeholder="Password" value="123456">
                     </div>
 
-                    <a href="#" id="loginSubmit" class="btn btn-theme btn--icon"><i class="zwicon-checkmark"></i></a>
+                    <button id="loginSubmit" class="btn btn-theme btn--icon"><i class="zwicon-checkmark"></i></button>
                 </div>
             </div>
 
@@ -166,10 +166,12 @@
             $(function () {
 
                 $("#loginSubmit").click(function () {
+                    var userName = $("#userName").val();
+                    var password = $("#password").val();
                     $.ajax({
                         url:"/loginVerify",
                         type:"post",
-                        data:{},
+                        data:{userName:userName,password:password},
                         dataType:"json",
                         success:function (data) {
                             if(data.code == 1){
