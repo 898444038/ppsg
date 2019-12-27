@@ -1,8 +1,6 @@
 package com.ming.ppsg.service;
 
 import com.ming.ppsg.entity.ConfigCountry;
-import com.ming.ppsg.entity.User;
-import com.ming.system.utils.ResultMsg;
 
 import java.util.List;
 

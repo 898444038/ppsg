@@ -1,7 +1,7 @@
 package com.ming.system.filter;
 
 
-import com.ming.system.service.MyUserDetailsService;
+import com.ming.system.service.impl.MyUserDetailsService;
 import com.ming.system.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

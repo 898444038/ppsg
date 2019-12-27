@@ -1,7 +1,6 @@
 package com.ming.ppsg.mapper;
 
 import com.ming.ppsg.entity.ConfigCountry;
-import com.ming.ppsg.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

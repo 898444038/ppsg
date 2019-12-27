@@ -3,6 +3,7 @@ package com.ming.ppsg;
 import org.beetl.core.resource.WebAppResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,10 +16,12 @@ import org.springframework.core.io.support.ResourcePatternUtils;
 import java.io.IOException;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {
-	"com.ming.system",
-	"com.ming.ppsg",
-})
+@ComponentScan(
+	basePackages = {"com.ming"}
+)
+@MapperScan(
+	basePackages = {"com.ming"}
+)
 public class PpsgApplication {
 
 	public static void main(String[] args) {

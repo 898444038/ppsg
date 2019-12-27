@@ -2,7 +2,7 @@ package com.ming.system.config.security;
 
 
 import com.ming.system.filter.JwtTokenFilter;
-import com.ming.system.service.MyUserDetailsService;
+import com.ming.system.service.impl.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //OPTIONS请求全部放行
                 .antMatchers( HttpMethod.OPTIONS, "/**").permitAll()
                 //登录接口放行
-                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/login","/loginVerify","/register","/forget","/logout","/static/**").permitAll()
                 //其他接口全部验证
                 .anyRequest().authenticated();
 

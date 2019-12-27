@@ -1,4 +1,4 @@
-package com.ming.system.service;
+package com.ming.system.service.impl;
 
 import com.ming.system.entity.Role;
 import com.ming.system.entity.User;

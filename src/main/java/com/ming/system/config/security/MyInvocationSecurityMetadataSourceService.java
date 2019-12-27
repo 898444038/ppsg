@@ -1,7 +1,7 @@
 package com.ming.system.config.security;
 
 import com.ming.system.entity.RolePermisson;
-import com.ming.system.mapper.PermissionMapper;
+import com.ming.system.mapper.RolePermissionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -10,7 +10,6 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,8 +24,8 @@ import java.util.List;
 @Component
 public class MyInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
 
-    @Resource
-    private PermissionMapper permissionMapper;
+    @Autowired
+    private RolePermissionMapper permissionMapper;
 
     /**
      * 每一个资源所需要的角色 Collection<ConfigAttribute>决策器会用到

@@ -9,5 +9,5 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 
 mybatis:
-  mapper-locations: classpath:mapping/*Mapper.xml
+  mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.ming.ppsg.entity

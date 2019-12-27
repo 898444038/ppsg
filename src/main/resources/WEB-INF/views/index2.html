@@ -3,8 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--<meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>-->
     <title>Super Admin 2.0</title>
 
+    <span style="white-space:pre">	</span><link href="http://www.lituanmin.com/favicon.ico" rel="icon" type="image/x-icon" />
     <!-- Vendor styles -->
     <link rel="stylesheet" href="/static/formwork/vendors/zwicon/zwicon.min.css">
     <link rel="stylesheet" href="/static/formwork/vendors/animate.css/animate.min.css">
@@ -493,6 +496,16 @@
 </main>
 <script type="text/javascript">
     document.write(footPage.import.body.innerHTML);
+
+   /* var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            if(header && token ){
+                xhr.setRequestHeader(header, token);
+            }
+        }}
+    );*/
 </script>
 </body>
 </html>

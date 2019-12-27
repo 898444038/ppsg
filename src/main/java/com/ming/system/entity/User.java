@@ -36,7 +36,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     public void setUsername(String username) {

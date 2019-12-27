@@ -32,13 +32,11 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
         FilterInvocation fi = new FilterInvocation(servletRequest, servletResponse, filterChain);
         invoke(fi);
     }
 
     public void invoke(FilterInvocation fi) throws IOException, ServletException {
-
         InterceptorStatusToken token = super.beforeInvocation(fi);
         try {
             //执行下一个拦截器
@@ -55,7 +53,6 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 
     @Override
     public SecurityMetadataSource obtainSecurityMetadataSource() {
-
         return this.securityMetadataSource;
     }
 
