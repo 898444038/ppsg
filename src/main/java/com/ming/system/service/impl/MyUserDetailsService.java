@@ -4,6 +4,12 @@ import com.ming.system.entity.Role;
 import com.ming.system.entity.User;
 import com.ming.system.mapper.RoleMapper;
 import com.ming.system.mapper.UserMapper;
+import com.ming.system.utils.JwtTokenUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,15 +28,28 @@ public class MyUserDetailsService implements UserDetailsService {
     private UserMapper userMapper;
     @Resource
     private RoleMapper roleMapper;
+    @Resource
+    private JwtTokenUtil jwtTokenUtil;
+    @Resource
+    private AuthenticationManager authenticationManager;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //查数据库
-        User user = userMapper.loadUserByUsername(userName);
+        User user = userMapper.loadUserByUsername(username);
         if (null != user) {
             List<Role> roles = roleMapper.getRolesByUserId(user.getId());
             user.setAuthorities(roles);
         }
         return user;
+    }
+
+    public String login(String username, String password) {
+        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken( username, password );
+        Authentication authentication = authenticationManager.authenticate(upToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetails userDetails = loadUserByUsername(username);
+        String token = jwtTokenUtil.generateToken(userDetails);
+        return token;
     }
 }

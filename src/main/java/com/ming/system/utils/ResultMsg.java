@@ -32,9 +32,9 @@ public class ResultMsg {
     public static ResultMsg success(String msg, Object data) {
         return new ResultMsg(ResultType.SUCCESS.code,msg,data);
     }
-    public static ResultMsg success(String msg) {
+    /*public static ResultMsg success(String msg) {
         return success(msg,null);
-    }
+    }*/
     public static ResultMsg success(Object data) {
         return success(ResultType.SUCCESS.desc,data);
     }

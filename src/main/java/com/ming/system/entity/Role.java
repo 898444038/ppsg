@@ -5,11 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class Role implements GrantedAuthority {
 
     private Long id;
-
-    private String roleName;
-
-    public Role() {
-    }
+    private String name;
 
     public Long getId() {
         return id;
@@ -19,16 +15,16 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return name;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String getAuthority() {
-        return roleName;
+        return name;
     }
 }

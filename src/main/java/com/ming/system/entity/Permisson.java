@@ -11,6 +11,7 @@ public class Permisson {
     private String description;
     private Long pid;
     private String icon;
+    private Integer isClose;
 
     public Permisson() {
     }
@@ -70,5 +71,13 @@ public class Permisson {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public Integer getIsClose() {
+        return isClose;
+    }
+
+    public void setIsClose(Integer isClose) {
+        this.isClose = isClose;
     }
 }

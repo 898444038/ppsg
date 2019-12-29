@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.DigestUtils;
 
+import javax.annotation.Resource;
+
 /**
  * 简书：https://www.jianshu.com/p/e715cc993bf0
  * github:https://github.com/gf-huanchupk/SpringBootLearning
@@ -25,18 +27,17 @@ import org.springframework.util.DigestUtils;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    @Resource
     private MyUserDetailsService userDetailsService;
 
-    @Autowired
+    @Resource
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         //校验用户
-        auth.userDetailsService( userDetailsService ).passwordEncoder( new PasswordEncoder() {
+        auth.userDetailsService(userDetailsService).passwordEncoder(new PasswordEncoder() {
             //对密码进行加密
             @Override
             public String encode(CharSequence charSequence) {
-                System.out.println(charSequence.toString());
                 return DigestUtils.md5DigestAsHex(charSequence.toString().getBytes());
             }
             //对密码进行判断匹配
@@ -52,16 +53,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.csrf().disable()
                 //因为使用JWT，所以不需要HttpSession
-                .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS).and()
+                //.sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 //OPTIONS请求全部放行
                 .antMatchers( HttpMethod.OPTIONS, "/**").permitAll()
                 //登录接口放行
-                .antMatchers("/login","/loginVerify","/register","/forget","/logout","/static/**").permitAll()
-                //其他接口全部验证
+                .antMatchers("/login","/index","/static/**").permitAll()
+                //其他接口全部接受验证
                 .anyRequest().authenticated();
 
         //使用自定义的 Token过滤器 验证请求的Token是否合法

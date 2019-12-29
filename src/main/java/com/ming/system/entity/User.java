@@ -8,15 +8,10 @@ import java.util.List;
 public class User implements UserDetails, Serializable {
 
     private Long id;
-
     private String username;
-
     private String password;
 
     private List<Role> authorities;
-
-    public User() {
-    }
 
     public Long getId() {
         return id;
@@ -26,14 +21,6 @@ public class User implements UserDetails, Serializable {
         this.id = id;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String getUsername() {
         return username;
@@ -41,6 +28,15 @@ public class User implements UserDetails, Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
