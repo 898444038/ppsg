@@ -18,7 +18,7 @@ public class IndexController {
     public String index(HttpServletRequest request){
         //用户验证
         //菜单
-        return "index2";
+        return "search";
     }
 
     @RequestMapping("/head")
