@@ -77,6 +77,7 @@ public class ThreeDimensionals {
     public void setTroops0(Integer troops0) {
         Troops0 = troops0;
     }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("{");

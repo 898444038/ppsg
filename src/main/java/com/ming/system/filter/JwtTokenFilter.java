@@ -3,6 +3,7 @@ package com.ming.system.filter;
 
 import com.ming.system.service.impl.MyUserDetailsService;
 import com.ming.system.utils.JwtTokenUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,9 +36,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String token = request.getHeader(HEADER_STRING);
         if(null == token){
-            //token = (String) request.getSession().getAttribute("token");
+            token = (String) request.getSession().getAttribute("token");
+            if(StringUtils.isBlank(token)){
+                token = null;
+            }
         }
-        if (null != token) {
+        if (StringUtils.isNotBlank(token)) {
             String username = jwtTokenUtil.getUsernameFromToken(token);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);

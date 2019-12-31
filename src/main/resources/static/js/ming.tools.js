@@ -218,16 +218,16 @@ var mingTools = {
     },
     //转树结构
     createMenuTree: function (el, arr, rootId) {
-        var ul = '<li class="navigation__active"><a href="index.html"><i class="zwicon-home"></i> 主页</a></li>';
+        var ul = '<li class="navigation__active"><a href="/index"><i class="zwicon-home"></i> 主页</a></li>';
         if (arr != null) {
             for (var i = 0; i < arr.length; i++) {
-                if (arr[i].parentId == rootId) {
+                if (arr[i].pid == rootId) {
                     ul += '<li class="navigation__sub">';
-                    ul += '<a href="#"><i class="' + arr[i].menuIcon + '"></i> ' + arr[i].menuName + '</a>';
+                    ul += '<a href="#"><i class="' + arr[i].icon + '"></i> ' + arr[i].name + '</a>';
                     ul += '<ul>';
                     for (var j = 0; j < arr.length; j++) {
-                        if (arr[j].parentId == arr[i].id) {
-                            ul += '<li><a class="menu-item" href="#" data-url="' + arr[j].url + '"><i class="' + arr[j].menuIcon + '"></i> ' + arr[j].menuName + '</a></li>';
+                        if (arr[j].pid == arr[i].id) {
+                            ul += '<li><a class="menu-item" href="#" data-url="' + arr[j].url + '"><i class="' + arr[j].icon + '"></i> ' + arr[j].name + '</a></li>';
                         }
                     }
                     ul += '</ul>';
@@ -235,8 +235,9 @@ var mingTools = {
                 }
             }
         }
+        console.log(ul)
         $(el).html(ul);
-        $(".menu-item").click(function () {
+        /*$(".menu-item").click(function () {
             mingTools.loading();
             $("iframe").attr("src", $(this).attr("data-url"));
             $("#menuList").find("li").removeClass("navigation__active");
@@ -262,7 +263,7 @@ var mingTools = {
                 $(".content").html(html);
                 mingTools.hideLoading();
             }, 1000);
-        });
+        });*/
         return ul;
     },
     loading: function () {

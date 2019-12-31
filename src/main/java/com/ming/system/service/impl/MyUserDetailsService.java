@@ -44,7 +44,7 @@ public class MyUserDetailsService implements UserDetailsService {
         return user;
     }
 
-    public String login(String username, String password) {
+    public String login(String username, String password) throws UsernameNotFoundException {
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken( username, password );
         Authentication authentication = authenticationManager.authenticate(upToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -13,6 +13,7 @@ public class NumberUtil {
 
     //copy对象
     public static List<List<Generals>> getNoRepeatList(List<Generals> data, int size) {
+
         List<List<Generals>> glongList = getList(data,size);
         for(List<Generals> generalsList : glongList){
             List<Generals> copyList = new ArrayList<>();
@@ -24,6 +25,11 @@ public class NumberUtil {
             noRepeatList.add(copyList);
         }
         return noRepeatList;
+    }
+
+    public static void clear(){
+        longList = new ArrayList<>();
+        noRepeatList = new ArrayList<>();
     }
 
     public static List<List<Generals>> getList(List<Generals> data, int size) {

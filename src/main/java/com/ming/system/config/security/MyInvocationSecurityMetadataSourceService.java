@@ -46,7 +46,6 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
                 return map.get( url );
             }
         }
-
         return null;
     }
 

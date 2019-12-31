@@ -32,15 +32,26 @@ public class LoginController {
         return "403";
     }
 
+    @GetMapping("/403")
+    public String fail(){
+        return "403";
+    }
+
+    @GetMapping("/error")
+    public String error(){
+        return "403";
+    }
+
     @PostMapping("/auth/login")
     public String login(User user, HttpServletRequest request) throws AuthenticationException{
         String username = user.getUsername();
         String password = user.getPassword();
         // 登录成功会返回Token给用户
         String token = userDetailsService.login(username,password);
+        request.getSession().setAttribute("token",token);
         if(StringUtils.isNotBlank(token)){
             request.setAttribute("token",token);
-            return "search";
+            return "index";
         }
         return "login";
     }

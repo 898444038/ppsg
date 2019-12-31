@@ -18,17 +18,7 @@ public class IndexController {
     public String index(HttpServletRequest request){
         //用户验证
         //菜单
-        return "search";
-    }
-
-    @RequestMapping("/head")
-    public String head(){
-        return "head";
-    }
-
-    @RequestMapping("/foot")
-    public String foot(){
-        return "foot";
+        return "index";
     }
 
     @RequestMapping("/getMenus")

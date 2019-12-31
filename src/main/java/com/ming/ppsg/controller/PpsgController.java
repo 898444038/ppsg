@@ -47,6 +47,13 @@ public class PpsgController {
     @PostMapping("/search")
     @ResponseBody
     public ResultMsg search(String generals){
+        Integer count = (Integer) CacheUtil.getInstance().getCacheData("searchCount");
+        if(count==null){
+            count = 0;
+        }
+        count++;
+        CacheUtil.getInstance().addCacheData("searchCount",count);
+        System.out.println("searchCount:"+count);
         if(StringUtils.isNotBlank(generals)){
             String[] names = generals.split(",");
             Map<String,Object> model = xzl(names);
@@ -61,7 +68,7 @@ public class PpsgController {
 
 
 
-    private static Map<String,Object> xzl(String[] sz){
+    private Map<String,Object> xzl(String[] sz){
         List<Generals> nimingList = new ArrayList<>();
         List<Generals> generalsAll = new ArrayList<>();
 
@@ -328,6 +335,7 @@ public class PpsgController {
         Map<Integer,List<Generals>> allEntourage = GeneralsUtil.getAllEntourage(allEntourageList);//随从三维
 
         long t1 = System.currentTimeMillis();
+        NumberUtil.clear();
         List<List<Generals>> all = NumberUtil.getNoRepeatList(nimingList,5);
         System.out.println("上阵武将组合个数："+all.size());
         List<Result> resultList = new ArrayList<>();
