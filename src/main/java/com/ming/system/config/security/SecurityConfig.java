@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.DigestUtils;
@@ -20,6 +21,8 @@ import javax.annotation.Resource;
 /**
  * 简书：https://www.jianshu.com/p/e715cc993bf0
  * github:https://github.com/gf-huanchupk/SpringBootLearning
+ *  Springboot+Spring-Security+JWT 实现用户登录和权限认证
+ * https://blog.csdn.net/zhangcongyi420/article/details/91348402
  */
 @Configuration
 @EnableWebSecurity
@@ -51,20 +54,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //由于使用的是JWT，我们这里不需要csrf
         http.csrf().disable()
                 //因为使用JWT，所以不需要HttpSession
-                //.sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS).and()
+                .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                //OPTIONS请求全部放行
-                .antMatchers( HttpMethod.OPTIONS, "/**").permitAll()
+                //所有用户可以访问
+                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 //登录接口放行
-                .antMatchers("/login","/index","/static/**").permitAll()
+                .antMatchers("/","/403","/login","/auth/login","/static/**").permitAll()
                 //其他接口全部接受验证
                 .anyRequest().authenticated().and()
-                .formLogin().loginPage("/login").failureUrl("/login").loginProcessingUrl("/index");
+                .exceptionHandling().accessDeniedPage("/403")
+                //指定登录界面，并且设置为所有人都能访问
+                //.and().formLogin().loginPage("/login").permitAll()
+                //.defaultSuccessUrl("/index")
+                //登录失败
+                //.failureUrl("/logout")
+                //.and()
+                //.logout().logoutUrl("/logout").logoutSuccessUrl("/login")
+                //.invalidateHttpSession(true).deleteCookies("usernameCookie","urlCookie")
+        ;
 
-        //使用自定义的 Token过滤器 验证请求的Token是否合法
+        //添加JWT filter,使用自定义的 Token过滤器 验证请求的Token是否合法
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        //禁用缓存
         http.headers().cacheControl();
     }
 

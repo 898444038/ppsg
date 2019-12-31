@@ -35,7 +35,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String token = request.getHeader(HEADER_STRING);
         if(null == token){
-            token = (String) request.getSession().getAttribute("token");
+            //token = (String) request.getSession().getAttribute("token");
         }
         if (null != token) {
             String username = jwtTokenUtil.getUsernameFromToken(token);

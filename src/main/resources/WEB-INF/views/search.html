@@ -381,6 +381,7 @@
                     <!--<h4 class="card-title">Select 2</h4>-->
                     <!--<h6 class="card-subtitle">Select2 gives you a customizable select box with support for searching, tagging, remote data sets, infinite scrolling, and many other highly used options.</h6>-->
 
+                    <input type="hidden" id="token" value="${token!}">
                     <div class="row">
                         <div class="col-sm-9 col-md-9">
                             <div class="form-group">
@@ -693,23 +694,13 @@
 <script src="/static/js/ming.tools.js"></script>
 <script>
     $(function () {
-        /*$("#genarals").select2({
-            language : "zh-CN",
-            multiple : true,
-            minimumInputLength : 1,
-            maximumSelectionSize : 5,
-            placeholder:"请选择五个武将",//默认值
-            allowClear: true,
-            data: [
-                {id: 0, text: 'story'},
-                {id: 1, text: 'bug'},
-                {id: 2, text: 'task'},
-                {id: 3, text: 'task2'},
-                {id: 4, text: 'task3'},
-                {id: 5, text: 'task4'},
-                {id: 6, text: 'task5'},
-            ]
-        })*/
+
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", $("#token").val());
+            }}
+        );
+
         $("#submit").click(function () {
             var val = $("#generals").val();
             if(val && val.length===5){
