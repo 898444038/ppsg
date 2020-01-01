@@ -33,7 +33,7 @@ public class LogAspest {
     @Around("point()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable{
         long startTime = System.currentTimeMillis();
-        String argStr = null;
+        String argStr = "";
         Object[] args = joinPoint.getArgs();
         if(args!=null){
             for(Object arg :args){
@@ -55,13 +55,15 @@ public class LogAspest {
     public void after(){}
 
     private static void printLog(String className,String methodName,String args){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-        System.out.println("[开始执行[方法："+className+"."+methodName+"()][参数："+args+"][开始时间:"+sdf.format(new Date())+"s]");
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        //System.out.println(sdf.format(new Date())+" [start] "+className+"."+methodName+"("+(args==null?"":args)+")");
     }
 
     private static void printLog(String className,String methodName,String args,long startTime,long endTime){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         DecimalFormat df=new DecimalFormat("0.000");
-        System.out.println("结束执行[方法："+className+"."+methodName+"()][参数："+args+"][执行时间:"+df.format((float)(endTime-startTime)/1000)+"s]");
+        //System.out.println(sdf.format(new Date())+" [  end] "+className+"."+methodName+"("+(args==null?"":args)+")");
+        System.out.println(sdf.format(new Date())+" ["+df.format((float)(endTime-startTime)/1000)+"s"+"] "+className+"."+methodName+"("+(args==null?"":args)+")");
     }
 
     private static String formatBlankSpace(String str){

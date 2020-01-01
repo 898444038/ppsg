@@ -204,16 +204,20 @@ var mingTools = {
             }
         }
     },
-    ajaxResult: function (data, func) {
+    ajaxResult: function (data, func,func2) {
         if (data.code == 1) {//成功
             if (func) {
                 setTimeout(func, 0);
             }
         } else if (data.code == 0) {//失败
-
+            if (func2) {
+                setTimeout(func2, 0);
+            }
         }
         if (data.code == -1) {//异常
-
+            if (func2) {
+                setTimeout(func2, 0);
+            }
         }
     },
     //转树结构
@@ -227,7 +231,7 @@ var mingTools = {
                     ul += '<ul>';
                     for (var j = 0; j < arr.length; j++) {
                         if (arr[j].pid == arr[i].id) {
-                            ul += '<li><a class="menu-item" href="#" data-url="' + arr[j].url + '"><i class="' + arr[j].icon + '"></i> ' + arr[j].name + '</a></li>';
+                            ul += '<li><a class="menu-item" href="' + arr[j].url + '"><i class="' + arr[j].icon + '"></i> ' + arr[j].name + '</a></li>';
                         }
                     }
                     ul += '</ul>';
@@ -277,6 +281,50 @@ var mingTools = {
         var editBtn = '<button class="btn btn-theme btn--icon" style="margin-left: 10px;" title="" data-toggle="tooltip" data-placement="top" data-original-title="编辑"><i class="zwicon-edit-square"></i></button>';
         var deleteBtn = '<button class="btn btn-danger btn--icon" style="margin-left: 10px;" title="" data-toggle="tooltip" data-placement="top" data-original-title="删除"><i class="zwicon-close"></i></button>';
         return detailBtn+editBtn+deleteBtn;
+    },
+    token:null,
+    getToken:function () {
+        getToken();
     }
 }
 
+
+$(function () {
+    getToken();
+});
+
+function getToken() {
+    $.ajax({
+        url:"/auth/getToken",
+        type:"post",
+        async:false,//同步
+        dataType:"json",
+        success:function (data) {
+            var token = data.data;
+            mingTools.token = token;
+            mingTools.ajaxResult(data,function () {
+                $.ajaxSetup({
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("Authorization", mingTools.token);
+                        }
+                    }
+                );
+                setTimeout(function () {
+                    $.ajax({
+                        url:"/getMenus",
+                        type:"post",
+                        dataType:"json",
+                        success:function (data) {
+                            mingTools.ajaxResult(data,function () {
+                                mingTools.createMenuTree("#menuList",data.data,0);
+                            })
+                        }
+                    });
+                },10)
+                console.log("mingTools.token",mingTools.token)
+            },function () {
+                window.location.href = "/login";
+            });
+        }
+    });
+}

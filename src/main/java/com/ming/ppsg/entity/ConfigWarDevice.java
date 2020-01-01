@@ -7,25 +7,15 @@ public class ConfigWarDevice {
 
     private Long id;
 
-    private String warDeviceName;
+    private String name;
 
-    private String type;//0:普通 1：特殊
+    private Integer type;//0:普通战器 1：特殊战器
 
-    private Integer force;//基础战器武力
-    private Integer intellect;//基础战器智力
-    private Integer troops;//基础战器兵力
-    private Integer strengthenForce;//强化15战器武力
-    private Integer strengthenIntellect;//强化15战器智力
-    private Integer strengthenTroops;//强化15战器兵力
-    private Double quenchingForceRate;//淬炼战器武力百分比
-    private Double quenchingIntellectRate;//淬炼战器智力百分比
-    private Double quenchingTroopsRate;//淬炼战器兵力百分比
-    private Integer exclusiveForce;//专属战器武力
-    private Integer exclusiveIntellect;//专属战器智力
-    private Integer exclusiveTroops;//专属战器兵力
-    private Integer passive1;//被动1战力
-    private Integer passive2;//被动2战力
-    private Integer passive3;//被动3战力
+    private Integer level;//品质：白 黑 银 金 钻
+
+    private Integer forceVal;
+    private Integer intellectVal;
+    private Integer troopsVal;
 
     public ConfigWarDevice() {
     }
@@ -38,5 +28,51 @@ public class ConfigWarDevice {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Integer getForceVal() {
+        return forceVal;
+    }
+
+    public void setForceVal(Integer forceVal) {
+        this.forceVal = forceVal;
+    }
+
+    public Integer getIntellectVal() {
+        return intellectVal;
+    }
+
+    public void setIntellectVal(Integer intellectVal) {
+        this.intellectVal = intellectVal;
+    }
+
+    public Integer getTroopsVal() {
+        return troopsVal;
+    }
+
+    public void setTroopsVal(Integer troopsVal) {
+        this.troopsVal = troopsVal;
+    }
 }

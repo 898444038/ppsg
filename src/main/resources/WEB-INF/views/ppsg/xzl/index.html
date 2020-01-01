@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="token" content="${session.token}">
 
     <!-- Vendor styles -->
     <link rel="stylesheet" href="/static/formwork/vendors/zwicon/zwicon.min.css">
@@ -285,6 +284,7 @@
                     <!--<h4 class="card-title">Select 2</h4>-->
                     <!--<h6 class="card-subtitle">Select2 gives you a customizable select box with support for searching, tagging, remote data sets, infinite scrolling, and many other highly used options.</h6>-->
 
+                    <input type="hidden" id="token" value="${token!}">
                     <div class="row">
                         <div class="col-sm-9 col-md-9">
                             <div class="form-group">

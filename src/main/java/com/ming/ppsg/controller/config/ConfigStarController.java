@@ -1,6 +1,6 @@
-package com.ming.ppsg.controller;
+package com.ming.ppsg.controller.config;
 
-import com.ming.ppsg.service.ConfigGeneralsTypeService;
+import com.ming.ppsg.service.ConfigCountryService;
 import com.ming.ppsg.service.ConfigStarService;
 import com.ming.system.utils.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/ppsg/config/generalsType")
-public class ConfigGeneralsTypeController {
+@RequestMapping("/ppsg/config/star")
+public class ConfigStarController {
 
     @Autowired
-    private ConfigGeneralsTypeService configGeneralsTypeService;
+    private ConfigStarService configStarService;
 
     @GetMapping("/list")
     public ResultMsg list(){
-        return ResultMsg.success(configGeneralsTypeService.select());
+        return ResultMsg.success(configStarService.select());
     }
 
 }

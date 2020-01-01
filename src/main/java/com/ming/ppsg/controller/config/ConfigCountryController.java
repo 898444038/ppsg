@@ -1,4 +1,4 @@
-package com.ming.ppsg.controller;
+package com.ming.ppsg.controller.config;
 
 import com.ming.ppsg.service.ConfigCountryService;
 import com.ming.system.utils.ResultMsg;

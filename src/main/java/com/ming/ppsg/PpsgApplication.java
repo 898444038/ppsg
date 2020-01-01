@@ -20,7 +20,7 @@ import java.io.IOException;
 	basePackages = {"com.ming"}
 )
 @MapperScan(
-	basePackages = {"com.ming"}
+	basePackages = {"com.ming.ppsg.mapper","com.ming.system.mapper"}
 )
 public class PpsgApplication {
 
