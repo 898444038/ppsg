@@ -1,7 +1,9 @@
 package com.ming.system.service.impl;
 
+import com.ming.system.entity.Permisson;
 import com.ming.system.entity.Role;
 import com.ming.system.entity.User;
+import com.ming.system.mapper.PermissionMapper;
 import com.ming.system.mapper.RoleMapper;
 import com.ming.system.mapper.UserMapper;
 import com.ming.system.utils.JwtTokenUtil;
@@ -31,6 +33,8 @@ public class MyUserDetailsService implements UserDetailsService {
     private JwtTokenUtil jwtTokenUtil;
     @Resource
     private AuthenticationManager authenticationManager;
+    @Resource
+    private PermissionMapper permissionMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -50,5 +54,9 @@ public class MyUserDetailsService implements UserDetailsService {
         UserDetails userDetails = loadUserByUsername(username);
         String token = jwtTokenUtil.generateToken(userDetails);
         return token;
+    }
+
+    public List<Permisson> getResource() {
+        return permissionMapper.getResource();
     }
 }

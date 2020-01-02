@@ -225,16 +225,31 @@ var mingTools = {
     },
     //转树结构
     createMenuTree: function (el, arr, rootId) {
-        var ul = '<li class="navigation__active"><a href="/index"><i class="zwicon-home"></i> 主页</a></li>';
+        var ul = '';
+        var flag = 0;
         if (arr != null) {
             for (var i = 0; i < arr.length; i++) {
                 if (arr[i].pid == rootId) {
-                    ul += '<li class="navigation__sub">';
+                    if(arr[i].isOpen == 1){
+                        ul += '<li id="'+arr[i].id+'" class="navigation__sub navigation__sub--toggled">';
+                    }else{
+                        ul += '<li id="'+arr[i].id+'" class="navigation__sub">';
+                    }
                     ul += '<a href="#"><i class="' + arr[i].icon + '"></i> ' + arr[i].name + '</a>';
-                    ul += '<ul>';
+                    if(arr[i].isOpen == 1){
+                        ul += '<ul style="display: block;">';
+                    }else {
+                        ul += '<ul>';
+                    }
                     for (var j = 0; j < arr.length; j++) {
                         if (arr[j].pid == arr[i].id) {
-                            ul += '<li><a class="menu-item" href="' + arr[j].url + '"><i class="' + arr[j].icon + '"></i> ' + arr[j].name + '</a></li>';
+                            if(arr[j].isActive==1){
+                                flag = 1;
+                                ul += '<li class="navigation__active" id="'+arr[j].id+'"><a class="menu-item" href="' + arr[j].url + '"><i class="' + arr[j].icon + '"></i> ' + arr[j].name + '</a></li>';
+                            }else{
+                                ul += '<li id="'+arr[j].id+'"><a class="menu-item" href="' + arr[j].url + '"><i class="' + arr[j].icon + '"></i> ' + arr[j].name + '</a></li>';
+                            }
+
                         }
                     }
                     ul += '</ul>';
@@ -242,8 +257,13 @@ var mingTools = {
                 }
             }
         }
-        console.log(ul)
-        $(el).html(ul);
+        var html = "";
+        if(flag==0){
+            html = '<li class="navigation__active"><a href="/index"><i class="zwicon-home"></i> 主页</a></li>';
+        }else{
+            html = '<li><a href="/index"><i class="zwicon-home"></i> 主页</a></li>';
+        }
+        $(el).html(html+ul);
         /*$(".menu-item").click(function () {
             mingTools.loading();
             $("iframe").attr("src", $(this).attr("data-url"));
@@ -332,11 +352,38 @@ function getToken() {
                         success:function (data) {
                             mingTools.ajaxResult(data,function () {
                                 mingTools.createMenuTree("#menuList",data.data,0);
+                                $(document).on("click",".navigation > li",function () {
+                                    $(".navigation > li").removeClass("navigation__active");
+                                    $(this).addClass("navigation__active");
+                                    var id = $(this).attr("id");
+                                    var isOpen = $(this).hasClass("navigation__sub--toggled")?1:0;
+                                    $.ajax({
+                                        url:"/setMenuStatus",
+                                        type:"post",
+                                        data:{id:id,isOpen:isOpen},
+                                        dataType:"json",
+                                        success:function (data) {
+
+                                        }
+                                    });
+                                });
+
+                                $(document).on("click",".menu-item",function () {
+                                    var id = $(this).closest("li").attr("id");
+                                    $.ajax({
+                                        url:"/setMenuActive",
+                                        type:"post",
+                                        data:{id:id},
+                                        dataType:"json",
+                                        success:function (data) {
+
+                                        }
+                                    });
+                                });
                             })
                         }
                     });
-                },10)
-                console.log("mingTools.token",mingTools.token)
+                },10);
             },function () {
                 window.location.href = "/login";
             });

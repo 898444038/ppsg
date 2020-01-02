@@ -37,7 +37,7 @@ public class LogAspest {
         Object[] args = joinPoint.getArgs();
         if(args!=null){
             for(Object arg :args){
-                argStr += arg.toString()+",";
+                argStr += arg+",";
             }
         }
         //HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();

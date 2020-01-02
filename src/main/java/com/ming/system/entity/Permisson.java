@@ -12,6 +12,7 @@ public class Permisson {
     private Long pid;
     private String icon;
     private Integer isOpen;//1:打开 0：关闭
+    private Integer isActive;//1:活动 0：无
 
     public Permisson() {
     }
@@ -79,5 +80,13 @@ public class Permisson {
 
     public void setIsOpen(Integer isOpen) {
         this.isOpen = isOpen;
+    }
+
+    public Integer getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
     }
 }
