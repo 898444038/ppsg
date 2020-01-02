@@ -60,6 +60,19 @@ public class LoginController {
         return "login";
     }
 
+    @PostMapping("/auth/register")
+    public String register(User user, HttpServletRequest request) throws AuthenticationException{
+        String username = user.getUsername();
+        String password = user.getPassword();
+        // 登录成功会返回Token给用户
+        String token = userDetailsService.login(username,password);
+        request.getSession().setAttribute("token",token);
+        if(StringUtils.isNotBlank(token)){
+            return "index";
+        }
+        return "login";
+    }
+
     @PostMapping("/auth/getToken")
     @ResponseBody
     public ResultMsg login(HttpSession session) throws AuthenticationException {

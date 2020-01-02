@@ -204,7 +204,7 @@ var mingTools = {
             }
         }
     },
-    ajaxResult: function (data, func,func2) {
+    ajaxResult: function (data, func,func2,func3) {
         if (data.code == 1) {//成功
             if (func) {
                 setTimeout(func, 0);
@@ -213,10 +213,13 @@ var mingTools = {
             if (func2) {
                 setTimeout(func2, 0);
             }
-        }
-        if (data.code == -1) {//异常
+        }else if (data.code == -1) {//异常
             if (func2) {
                 setTimeout(func2, 0);
+            }
+        }else if (data.code == 403) {//拒绝访问
+            if (func3) {
+                setTimeout(func3, 0);
             }
         }
     },
@@ -285,7 +288,19 @@ var mingTools = {
     token:null,
     getToken:function () {
         getToken();
-    }
+    },
+    page403: '<section class="error" style="height: auto;"><div class="error__inner"><h1>403</h1><h2>拒绝访问！您没有权限访问该资源！</h2><p>The page you are looking for does not have permission to access!</p></div></section>',
+
+    /*page403:function(){
+        var html = '<section class="error">'+
+            '<div class="error__inner">'+
+                '<h1>403</h1>'+
+                '<h2>拒绝访问</h2>'+
+                '<p>The page you are looking for does not have permission to access!</p>'+
+            '</div>'+
+        '</section>';
+        return html;
+    }*/
 }
 
 

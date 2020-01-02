@@ -32,6 +32,9 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
      */
     private static HashMap<String, Collection<ConfigAttribute>> map =null;
 
+    public static HashMap<String, Collection<ConfigAttribute>> getMap(){
+        return map;
+    }
 
     /**
      * 返回请求的资源需要的角色

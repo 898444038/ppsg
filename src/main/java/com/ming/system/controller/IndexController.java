@@ -18,8 +18,6 @@ public class IndexController {
 
     @RequestMapping("/index")
     public String index(HttpServletRequest request){
-        //用户验证
-        //菜单
         return "index";
     }
 

@@ -1,7 +1,7 @@
 package com.ming.ppsg.controller.config;
 
-import com.ming.ppsg.service.ConfigCountryService;
 import com.ming.ppsg.service.ConfigStarService;
+import com.ming.system.annotation.Role;
 import com.ming.system.utils.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +15,7 @@ public class ConfigStarController {
     @Autowired
     private ConfigStarService configStarService;
 
+    @Role
     @GetMapping("/list")
     public ResultMsg list(){
         return ResultMsg.success(configStarService.select());

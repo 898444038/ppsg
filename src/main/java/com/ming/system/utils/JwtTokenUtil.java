@@ -24,6 +24,7 @@ import java.util.Map;
 public class JwtTokenUtil implements Serializable {
 
     private static final String CLAIM_KEY_USERNAME = "sub";
+    private static final String CLAIM_KEY_Role = "rol";
 
     /**
      * 5天(毫秒)
@@ -42,8 +43,10 @@ public class JwtTokenUtil implements Serializable {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>(16);
         claims.put( CLAIM_KEY_USERNAME, userDetails.getUsername() );
+        //claims.put( CLAIM_KEY_Role, role);
         return Jwts.builder()
                 .setClaims( claims )
+                .setSubject(userDetails.getUsername())
                 .setExpiration( new Date( Instant.now().toEpochMilli() + EXPIRATION_TIME  ) )
                 .signWith( SignatureAlgorithm.HS512, SECRET )
                 .compact();

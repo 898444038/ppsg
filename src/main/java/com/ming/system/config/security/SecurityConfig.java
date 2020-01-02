@@ -1,6 +1,8 @@
 package com.ming.system.config.security;
 
 
+import com.ming.system.filter.JWTAccessDeniedHandler;
+import com.ming.system.filter.JWTAuthenticationEntryPoint;
 import com.ming.system.filter.JwtTokenFilter;
 import com.ming.system.service.impl.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
@@ -8,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.DigestUtils;
@@ -26,6 +28,7 @@ import javax.annotation.Resource;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
@@ -62,10 +65,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //所有用户可以访问
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 //登录接口放行
-                .antMatchers("/","/403","/login","/auth/login","/static/**").permitAll()
+                .antMatchers("/login","/auth/login","/auth/register","/static/**").permitAll()
                 //其他接口全部接受验证
                 .anyRequest().authenticated().and()
-                .exceptionHandling().accessDeniedPage("/403")
+                //统一结果处理
+                .exceptionHandling()
+                .authenticationEntryPoint(new JWTAuthenticationEntryPoint())
+                .accessDeniedHandler(new JWTAccessDeniedHandler())
                 //指定登录界面，并且设置为所有人都能访问
                 //.and().formLogin().loginPage("/login").permitAll()
                 //.defaultSuccessUrl("/index")

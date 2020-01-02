@@ -11,7 +11,7 @@ public class Permisson {
     private String description;
     private Long pid;
     private String icon;
-    private Integer isClose;
+    private Integer isOpen;//1:打开 0：关闭
 
     public Permisson() {
     }
@@ -73,11 +73,11 @@ public class Permisson {
         this.icon = icon;
     }
 
-    public Integer getIsClose() {
-        return isClose;
+    public Integer getIsOpen() {
+        return isOpen;
     }
 
-    public void setIsClose(Integer isClose) {
-        this.isClose = isClose;
+    public void setIsOpen(Integer isOpen) {
+        this.isOpen = isOpen;
     }
 }

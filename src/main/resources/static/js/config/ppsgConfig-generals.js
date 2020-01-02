@@ -18,6 +18,7 @@ function generalsList() {
         data:{},
         dataType:"json",
         success:function (data) {
+            var $table = $('#data-table-country');
             mingTools.ajaxResult(data,function () {
                 var btns = mingTools.getOperButton();
                 var arr = [];
@@ -25,7 +26,7 @@ function generalsList() {
                     arr.push([i+1,data.data[i].countryName,btns])
                 }
 
-                $('#data-table-country').DataTable( {
+                $table.DataTable( {
                     autoWidth: !1,
                     responsive: !0,
                     lengthMenu: [[15, 30, 45, -1], ["15 Rows", "30 Rows", "45 Rows", "Everything"]],
@@ -43,10 +44,14 @@ function generalsList() {
                         { title: '操作' }
                     ],
                     initComplete: function () {
-                        $(".dataTables_actions").html('<i class="zwicon-more-h" data-toggle="dropdown" /><div class="dropdown-menu dropdown-menu-right"><a data-table-action="print" class="dropdown-item">Print</a><a data-table-action="fullscreen" class="dropdown-item">Fullscreen</a><div class="dropdown-divider" /><div class="dropdown-header border-bottom-0 pt-0"><small>Download as</small></div><a data-table-action="excel" class="dropdown-item">Excel (.xlsx)</a><a data-table-action="csv" class="dropdown-item">CSV (.csv)</a></div>')
+                        $table.siblings(".dataTables__top").find(".dataTables_actions").html('<i class="zwicon-more-h" data-toggle="dropdown" /><div class="dropdown-menu dropdown-menu-right"><a data-table-action="print" class="dropdown-item">Print</a><a data-table-action="fullscreen" class="dropdown-item">Fullscreen</a><div class="dropdown-divider" /><div class="dropdown-header border-bottom-0 pt-0"><small>Download as</small></div><a data-table-action="excel" class="dropdown-item">Excel (.xlsx)</a><a data-table-action="csv" class="dropdown-item">CSV (.csv)</a></div>')
                     }
                 });
 
+            },function () {
+                $table.html(data.msg);
+            },function () {
+                $table.html(mingTools.page403);
             });
         }
     });
@@ -57,6 +62,7 @@ function generalsList() {
         data:{},
         dataType:"json",
         success:function (data) {
+            var $table = $('#data-table-star');
             mingTools.ajaxResult(data,function () {
                 var btns = mingTools.getOperButton();
                 var arr = [];
@@ -64,7 +70,7 @@ function generalsList() {
                 for(var i=0;i<data.data.length;i++){
                     arr.push([i+1,data.data[i].starName,btns])
                 }
-                $('#data-table-star').DataTable( {
+                $table.DataTable( {
                     autoWidth: !1,
                     responsive: !0,
                     lengthMenu: [[15, 30, 45, -1], ["15 Rows", "30 Rows", "45 Rows", "Everything"]],
@@ -82,9 +88,13 @@ function generalsList() {
                         { title: '操作' }
                     ],
                     initComplete: function () {
-                        $(".dataTables_actions").html('<i class="zwicon-more-h" data-toggle="dropdown" /><div class="dropdown-menu dropdown-menu-right"><a data-table-action="print" class="dropdown-item">Print</a><a data-table-action="fullscreen" class="dropdown-item">Fullscreen</a><div class="dropdown-divider" /><div class="dropdown-header border-bottom-0 pt-0"><small>Download as</small></div><a data-table-action="excel" class="dropdown-item">Excel (.xlsx)</a><a data-table-action="csv" class="dropdown-item">CSV (.csv)</a></div>')
+                        $table.siblings(".dataTables__top").find(".dataTables_actions").html('<i class="zwicon-more-h" data-toggle="dropdown" /><div class="dropdown-menu dropdown-menu-right"><a data-table-action="print" class="dropdown-item">Print</a><a data-table-action="fullscreen" class="dropdown-item">Fullscreen</a><div class="dropdown-divider" /><div class="dropdown-header border-bottom-0 pt-0"><small>Download as</small></div><a data-table-action="excel" class="dropdown-item">Excel (.xlsx)</a><a data-table-action="csv" class="dropdown-item">CSV (.csv)</a></div>')
                     }
                 });
+            },function () {
+                $table.html(data.msg);
+            },function () {
+                $table.html(mingTools.page403);
             });
         }
     });
@@ -95,6 +105,7 @@ function generalsList() {
         data:{},
         dataType:"json",
         success:function (data) {
+            var $table = $('#data-table-arms');
             mingTools.ajaxResult(data,function () {
                 var btns = mingTools.getOperButton();
                 var arr = [];
@@ -102,7 +113,7 @@ function generalsList() {
                 for(var i=0;i<d.length;i++){
                     arr.push([i+1,d[i].armsName,d[i].forceRate,d[i].intellectRate,d[i].troopsRate,btns])
                 }
-                $('#data-table-arms').DataTable( {
+                $table.DataTable( {
                     autoWidth: !1,
                     responsive: !0,
                     lengthMenu: [[15, 30, 45, -1], ["15 Rows", "30 Rows", "45 Rows", "Everything"]],
@@ -123,9 +134,13 @@ function generalsList() {
                         { title: '操作' }
                     ],
                     initComplete: function () {
-                        $(".dataTables_actions").html('<i class="zwicon-more-h" data-toggle="dropdown" /><div class="dropdown-menu dropdown-menu-right"><a data-table-action="print" class="dropdown-item">Print</a><a data-table-action="fullscreen" class="dropdown-item">Fullscreen</a><div class="dropdown-divider" /><div class="dropdown-header border-bottom-0 pt-0"><small>Download as</small></div><a data-table-action="excel" class="dropdown-item">Excel (.xlsx)</a><a data-table-action="csv" class="dropdown-item">CSV (.csv)</a></div>')
+                        $table.siblings(".dataTables__top").find(".dataTables_actions").html('<i class="zwicon-more-h" data-toggle="dropdown" /><div class="dropdown-menu dropdown-menu-right"><a data-table-action="print" class="dropdown-item">Print</a><a data-table-action="fullscreen" class="dropdown-item">Fullscreen</a><div class="dropdown-divider" /><div class="dropdown-header border-bottom-0 pt-0"><small>Download as</small></div><a data-table-action="excel" class="dropdown-item">Excel (.xlsx)</a><a data-table-action="csv" class="dropdown-item">CSV (.csv)</a></div>')
                     }
                 });
+            },function () {
+                $table.html(data.msg);
+            },function () {
+                $table.html(mingTools.page403);
             });
         }
     });
@@ -137,6 +152,7 @@ function generalsList() {
         data:{},
         dataType:"json",
         success:function (data) {
+            var $table = $('#data-table-generals-type');
             mingTools.ajaxResult(data,function () {
                 var btns = mingTools.getOperButton();
                 var arr = [];
@@ -144,7 +160,7 @@ function generalsList() {
                 for(var i=0;i<d.length;i++){
                     arr.push([i+1,d[i].generalsTypeName,d[i].forceGrowth,d[i].intellectGrowth,d[i].troopsGrowth,btns])
                 }
-                $('#data-table-generals-type').DataTable( {
+                $table.DataTable( {
                     autoWidth: !1,
                     responsive: !0,
                     lengthMenu: [[15, 30, 45, -1], ["15 Rows", "30 Rows", "45 Rows", "Everything"]],
@@ -165,9 +181,13 @@ function generalsList() {
                         { title: '操作' }
                     ],
                     initComplete: function () {
-                        $(".dataTables_actions").html('<i class="zwicon-more-h" data-toggle="dropdown" /><div class="dropdown-menu dropdown-menu-right"><a data-table-action="print" class="dropdown-item">Print</a><a data-table-action="fullscreen" class="dropdown-item">Fullscreen</a><div class="dropdown-divider" /><div class="dropdown-header border-bottom-0 pt-0"><small>Download as</small></div><a data-table-action="excel" class="dropdown-item">Excel (.xlsx)</a><a data-table-action="csv" class="dropdown-item">CSV (.csv)</a></div>')
+                        $table.siblings(".dataTables__top").find(".dataTables_actions").html('<i class="zwicon-more-h" data-toggle="dropdown" /><div class="dropdown-menu dropdown-menu-right"><a data-table-action="print" class="dropdown-item">Print</a><a data-table-action="fullscreen" class="dropdown-item">Fullscreen</a><div class="dropdown-divider" /><div class="dropdown-header border-bottom-0 pt-0"><small>Download as</small></div><a data-table-action="excel" class="dropdown-item">Excel (.xlsx)</a><a data-table-action="csv" class="dropdown-item">CSV (.csv)</a></div>')
                     }
                 });
+            },function () {
+                $table.html(data.msg);
+            },function () {
+                $table.html(mingTools.page403);
             });
         }
     });

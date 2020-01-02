@@ -5,7 +5,8 @@ public class ResultMsg {
     private enum ResultType{
         SUCCESS(1,"SUCCESS","操作成功"),
         FAILED(0,"FAILED","操作失败"),
-        ERROR(-1,"ERROR","系统异常");
+        ERROR(-1,"ERROR","系统异常"),
+        AUTH(403,"拒绝访问","没有访问权限");
         private int code;
         private String name;
         private String desc;
@@ -60,6 +61,10 @@ public class ResultMsg {
     }
     public static ResultMsg error() {
         return error(ResultType.ERROR.desc,null);
+    }
+
+    public static ResultMsg auth() {
+        return new ResultMsg(ResultType.AUTH.code,ResultType.AUTH.name,ResultType.AUTH.desc);
     }
 
     public int getCode() {

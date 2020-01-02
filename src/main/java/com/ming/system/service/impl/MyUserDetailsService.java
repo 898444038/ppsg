@@ -5,7 +5,6 @@ import com.ming.system.entity.User;
 import com.ming.system.mapper.RoleMapper;
 import com.ming.system.mapper.UserMapper;
 import com.ming.system.utils.JwtTokenUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
