@@ -321,6 +321,16 @@ var mingTools = {
         '</section>';
         return html;
     }*/
+    swal:function (title) {
+        swal.fire({
+            text: title,
+            background: "#000",
+            backdrop: "rgba(0,0,0,0.2)",
+            buttonsStyling: !1,
+            padding: "3rem 3rem 2rem",
+            customClass: {confirmButton: "btn btn-link", title: "ca-title", container: "ca"}
+        })
+    }
 }
 
 

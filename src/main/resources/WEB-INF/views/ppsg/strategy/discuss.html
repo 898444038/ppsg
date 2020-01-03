@@ -23,7 +23,6 @@
             text-overflow: ellipsis;
             white-space: nowrap;}
     </style>
-
 </head>
 
 <body data-sa-theme="1">
@@ -255,107 +254,138 @@
         </div>
     </div>
 
-    <section class="content content-root">
-        <style>
-            .dataTables_filter{
-                float:right;
-                margin-right:10px;
-            }
-            .dataTables_length{
-                float:right;
-            }
-            .dataTables_length label select option{
-                background: #000000b5;
-            }
-        </style>
-
+    <section class="content">
         <div class="content__inner">
             <header class="content__title">
-                <h1>配置 <small>config</small></h1>
-
-                <div class="actions">
-                    <a href="#" class="actions__item zwicon-cog"></a>
-                    <a href="#" class="actions__item zwicon-refresh-double"></a>
-
-                    <div class="dropdown actions__item">
-                        <i data-toggle="dropdown" class="zwicon-more-h"></i>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item">刷新</a>
-                            <button class="dropdown-item btn-change">切换</button>
-                            <a href="#" class="dropdown-item">配置</a>
-                        </div>
-                    </div>
-                </div>
+                <h1>Questions and Answers <small>Praesent commodo cursus magnavel scelerisque nisl consectetur</small></h1>
             </header>
 
-            <!--武将配置-->
             <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">武将配置</h4>
-                    <h6 class="card-subtitle">Basic config.</h6>
+                <div class="toolbar toolbar--inner">
+                    <div class="toolbar__nav">
+                        <a class="active" href="#">Opened 25</a>
+                        <a href="#" class="d-none d-md-inline-block">Responded 30</a>
+                        <a href="#">Closed 19</a>
+                    </div>
 
-                    <div class="tab-container">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#country" role="tab">国家</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#star" role="tab">品质</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#arms" role="tab">兵种</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#generals-type" role="tab">武将类型</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#generals-data" role="tab">数据字典</a>
-                            </li>
-                        </ul>
+                    <div class="actions">
+                        <i class="actions__item zwicon-search" data-sa-action="toolbar-search-open" data-toggle="tooltip" data-title="Search"></i>
 
-                        <div class="tab-content">
-                            <div class="tab-pane active fade show" id="country" role="tabpanel">
-                                <div class="table-responsive data-table">
-                                    <!--国家列表-->
-                                    <table id="data-table-country" class="table" style="width: 100%!important;"></table>
-                                </div>
+                        <div class="dropdown actions__item d-none d-md-flex" data-toggle="tooltip" data-title="Tag">
+                            <i class="zwicon-price-tag" data-toggle="dropdown"></i>
+
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu--active">
+                                <a class="dropdown-item" href="#">All</a>
+                                <a class="dropdown-item" href="#">Tag One</a>
+                                <a class="dropdown-item" href="#">Tag Two</a>
+                                <a class="dropdown-item" href="#">Tag Three</a>
                             </div>
+                        </div>
 
-                            <div class="tab-pane fade show" id="star" role="tabpanel">
-                                <div class="table-responsive data-table">
-                                    <!--品质列表-->
-                                    <table id="data-table-star" class="table" style="width: 100%!important;"></table>
-                                </div>
+                        <div class="dropdown actions__item d-none d-md-flex" data-toggle="tooltip" data-title="Project">
+                            <i class="zwicon-notebook" data-toggle="dropdown"></i>
+
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu--active">
+                                <a class="dropdown-item" href="#">All Projects</a>
+                                <a class="dropdown-item" href="#">Project One</a>
+                                <a class="dropdown-item" href="#">Project Two</a>
+                                <a class="dropdown-item" href="#">Project Three</a>
+                                <a class="dropdown-item" href="#">Project Four</a>
+                                <a class="dropdown-item" href="#">Project Five</a>
                             </div>
+                        </div>
 
-                            <div class="tab-pane fade show" id="arms" role="tabpanel">
-                                <div class="table-responsive data-table">
-                                    <!--兵种列表-->
-                                    <table id="data-table-arms" class="table" style="width: 100%!important;"></table>
-                                </div>
+                        <div class="dropdown actions__item d-none d-md-flex" data-toggle="tooltip" data-title="Assignee">
+                            <i class="zwicon-user-circle" data-toggle="dropdown"></i>
+
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu--active">
+                                <a class="dropdown-item" href="#">Everyone</a>
+                                <a class="dropdown-item" href="#">David Wilson</a>
+                                <a class="dropdown-item" href="#">James Frank</a>
+                                <a class="dropdown-item" href="#">Natalie Sheth</a>
+                                <a class="dropdown-item" href="#">Christian Robu</a>
+                                <a class="dropdown-item" href="#">Wins Williamson</a>
                             </div>
+                        </div>
 
-                            <div class="tab-pane fade show" id="generals-type" role="tabpanel">
-                                <div class="table-responsive data-table">
-                                    <!--武将类型-->
-                                    <table id="data-table-generals-type" class="table" style="width: 100%!important;"></table>
-                                </div>
-                            </div>
+                        <div class="dropdown actions__item d-none d-md-flex" data-toggle="tooltip" data-title="Sort by">
+                            <i class="zwicon-filter-alt" data-toggle="dropdown"></i>
 
-                            <div class="tab-pane fade show" id="generals-data" role="tabpanel">
-                                <div class="table-responsive data-table">
-                                    <!--数据字典-->
-                                    <table id="data-table-generals-data" class="table" style="width: 100%!important;"></table>
-                                </div>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu--active">
+                                <a class="dropdown-item" href="#">Newest</a>
+                                <a class="dropdown-item" href="#">Oldest</a>
+                                <a class="dropdown-item" href="#">Most Commented</a>
+                                <a class="dropdown-item" href="#">Least Commented</a>
+                                <a class="dropdown-item" href="#">Recently Updated</a>
                             </div>
                         </div>
                     </div>
+
+                    <div class="toolbar__search">
+                        <input type="text" placeholder="Search for questions and answers...">
+                        <i class="toolbar__search__close zwicon-arrow-left" data-sa-action="toolbar-search-close"></i>
+                    </div>
+                </div>
+
+                <div class="listview listview--bordered q-a">
+                    <div class="listview__item q-a__item">
+
+                        <div class="listview__content">
+                            <a href="/ppsg/strategy/discuss/detail" class="listview__heading">集结攻略-巴郡</a>
+                            <p>最后一次回复2小时前</p>
+                            <div class="listview__attrs">
+                                <span>集结</span>
+                                <span>蜀</span>
+                                <span>巴郡</span>
+                            </div>
+                        </div>
+                        <div class="q-a__stat d-none d-md-block">
+                            <span>
+                                <strong>22</strong>
+                                <small>点赞</small>
+                            </span>
+                            <span>
+                                <strong>02</strong>
+                                <small>回复</small>
+                            </span>
+                            <span class="d-none d-lg-inline-block">
+                                <strong>35</strong>
+                                <small>查看</small>
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="clearfix mb-3"></div>
                 </div>
             </div>
+
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item pagination-prev"><a class="page-link" href="#"><i class="zwicon-arrow-left"></i></a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item"><a class="page-link" href="#">6</a></li>
+                    <li class="page-item pagination-next"><a class="page-link" href="#"><i class="zwicon-arrow-right"></i></a></li>
+                </ul>
+            </nav>
+
+            <footer class="footer d-none d-sm-block">
+                <p>© Super Admin Responsive. All rights reserved.</p>
+
+                <ul class="footer__nav">
+                    <a href="#">Homepage</a>
+                    <a href="#">Company</a>
+                    <a href="#">Support</a>
+                    <a href="#">News</a>
+                    <a href="#">Contacts</a>
+                </ul>
+            </footer>
         </div>
-
     </section>
-
 </main>
 
 <!-- Older IE warning message -->
@@ -419,9 +449,10 @@
 <!-- App functions and actions -->
 <script src="/static/formwork/js/app.min.js"></script>
 <script src="/static/js/ming.tools.js"></script>
-<script src="/static/js/config/ppsgConfig-generals.js"></script>
 <script>
+    $(function () {
 
+    })
 </script>
 </body>
 </html>

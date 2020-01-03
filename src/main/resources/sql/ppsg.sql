@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50723
+Source Server         : local
+Source Server Version : 50714
 Source Host           : localhost:3306
 Source Database       : ppsg
 
 Target Server Type    : MYSQL
-Target Server Version : 50723
+Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2020-01-02 21:47:42
+Date: 2020-01-03 18:28:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -242,22 +242,24 @@ CREATE TABLE `s_permission` (
   `is_open` tinyint(1) DEFAULT '0' COMMENT '1:打开 0：关闭',
   `type` tinyint(1) DEFAULT NULL COMMENT '0:菜单 1：功能',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=20003 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of s_permission
 -- ----------------------------
-INSERT INTO `s_permission` VALUES ('1', '', '卡册', null, '0', 'zwicon-cog', '0', '0');
-INSERT INTO `s_permission` VALUES ('2', '/ppsg/generals/index', '武将图鉴', null, '1', null, '0', '0');
-INSERT INTO `s_permission` VALUES ('3', '', '配置', null, '0', 'zwicon-cog', '0', '0');
-INSERT INTO `s_permission` VALUES ('4', '/ppsg/config/generals', '武将配置', null, '3', null, '0', '0');
-INSERT INTO `s_permission` VALUES ('5', '/ppsg/config/country/list', '武将配置-国家配置', null, '4', null, '0', '1');
-INSERT INTO `s_permission` VALUES ('6', '/ppsg/config/star/list', '武将配置-星级配置', null, '4', null, '0', '1');
-INSERT INTO `s_permission` VALUES ('7', '/ppsg/config/arms/list', '武将配置-兵种配置', null, '4', null, '0', '1');
-INSERT INTO `s_permission` VALUES ('8', '/ppsg/config/generalsType/list', '武将配置-武将类型', null, '4', null, '0', '1');
-INSERT INTO `s_permission` VALUES ('9', '', '战力', null, '0', 'zwicon-cog', '0', '0');
-INSERT INTO `s_permission` VALUES ('10', '/ppsg/xzl/index', '虚战力查询', null, '9', null, '0', '0');
-INSERT INTO `s_permission` VALUES ('49', '/ppsg/config/warDevice', '战器配置', null, '3', null, '0', '0');
+INSERT INTO `s_permission` VALUES ('1000', '', '卡册', null, '0', 'zwicon-cog', '0', '0');
+INSERT INTO `s_permission` VALUES ('1100', '/ppsg/generals/index', '武将图鉴', null, '1000', null, '0', '0');
+INSERT INTO `s_permission` VALUES ('2000', '', '配置', null, '0', 'zwicon-cog', '0', '0');
+INSERT INTO `s_permission` VALUES ('2100', '/ppsg/config/generals', '武将配置', null, '2000', null, '0', '0');
+INSERT INTO `s_permission` VALUES ('2101', '/ppsg/config/country/list', '武将配置-国家配置', null, '2100', null, '0', '1');
+INSERT INTO `s_permission` VALUES ('2102', '/ppsg/config/star/list', '武将配置-星级配置', null, '2100', null, '0', '1');
+INSERT INTO `s_permission` VALUES ('2103', '/ppsg/config/arms/list', '武将配置-兵种配置', null, '2100', null, '0', '1');
+INSERT INTO `s_permission` VALUES ('2104', '/ppsg/config/generalsType/list', '武将配置-武将类型', null, '2100', null, '0', '1');
+INSERT INTO `s_permission` VALUES ('3000', '', '战力', null, '0', 'zwicon-cog', '0', '0');
+INSERT INTO `s_permission` VALUES ('3100', '/ppsg/xzl/index', '虚战力查询', null, '3000', null, '0', '0');
+INSERT INTO `s_permission` VALUES ('2200', '/ppsg/config/warDevice', '战器配置', null, '2000', null, '0', '0');
+INSERT INTO `s_permission` VALUES ('4000', '', '攻略', null, '0', 'zwicon-cog', '0', '0');
+INSERT INTO `s_permission` VALUES ('4100', ' /ppsg/strategy/discuss', '讨论区', null, '4000', null, '0', '0');
 
 -- ----------------------------
 -- Table structure for s_role
@@ -327,5 +329,5 @@ CREATE TABLE `s_user_role` (
 -- Records of s_user_role
 -- ----------------------------
 INSERT INTO `s_user_role` VALUES ('1', '1');
-INSERT INTO `s_user_role` VALUES ('2', '1');
+INSERT INTO `s_user_role` VALUES ('2', '2');
 INSERT INTO `s_user_role` VALUES ('3', '2');

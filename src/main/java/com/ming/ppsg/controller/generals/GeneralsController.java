@@ -14,4 +14,8 @@ public class GeneralsController {
         return "ppsg/generals/index";
     }
 
+    @RequestMapping("/add")
+    public String add(){
+        return "ppsg/generals/generals_add";
+    }
 }

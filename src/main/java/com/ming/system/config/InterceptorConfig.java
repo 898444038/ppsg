@@ -1,11 +1,9 @@
 package com.ming.system.config;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /*
 * 拦截器配置类
@@ -13,9 +11,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class InterceptorConfig extends WebMvcConfigurationSupport {
 
+    @Value("${upload.image.realpath}")
+    private String uploadImagePath;
+    @Value("${upload.file.realpath}")
+    private String uploadFilePath;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/static/upload/image/**").addResourceLocations("file:"+uploadImagePath);
+        registry.addResourceHandler("/static/upload/file/**").addResourceLocations("file:"+uploadFilePath);
         super.addResourceHandlers(registry);
     }
 

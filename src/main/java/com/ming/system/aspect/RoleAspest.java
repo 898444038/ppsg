@@ -74,6 +74,13 @@ public class RoleAspest {
         }
         System.out.println("Request Mapping : "+mapping);
 
+        //Admin 有所有权限
+        for(Role role : authorities){
+            if("ADMIN".equals(role.getName())){
+                return joinPoint.proceed();
+            }
+        }
+
         Iterator it = map.entrySet().iterator();
         while (it.hasNext()){
             Map.Entry entry = (Map.Entry)it.next();

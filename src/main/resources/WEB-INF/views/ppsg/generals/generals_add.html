@@ -23,7 +23,6 @@
             text-overflow: ellipsis;
             white-space: nowrap;}
     </style>
-
 </head>
 
 <body data-sa-theme="1">
@@ -256,106 +255,129 @@
     </div>
 
     <section class="content content-root">
-        <style>
-            .dataTables_filter{
-                float:right;
-                margin-right:10px;
-            }
-            .dataTables_length{
-                float:right;
-            }
-            .dataTables_length label select option{
-                background: #000000b5;
-            }
-        </style>
-
-        <div class="content__inner">
+        <div class="content__inner content__inner--sm" style="max-width: 1200px;">
             <header class="content__title">
-                <h1>配置 <small>config</small></h1>
-
-                <div class="actions">
-                    <a href="#" class="actions__item zwicon-cog"></a>
-                    <a href="#" class="actions__item zwicon-refresh-double"></a>
-
-                    <div class="dropdown actions__item">
-                        <i data-toggle="dropdown" class="zwicon-more-h"></i>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item">刷新</a>
-                            <button class="dropdown-item btn-change">切换</button>
-                            <a href="#" class="dropdown-item">配置</a>
-                        </div>
-                    </div>
-                </div>
+                <h1>新增武将 <small>add generals</small></h1>
             </header>
 
-            <!--武将配置-->
-            <div class="card">
+            <div class="card new-contact">
+                <div class="new-contact__header">
+                    <form id="uploadFileForm" style="display: none" enctype="multipart/form-data">
+                        <input type='file' id='ming-file' name='file' class="zwicon-camera new-contact__upload">
+                    </form>
+                    <a id="upload" href="#" class="zwicon-camera new-contact__upload"></a>
+                    <img src="/static/formwork/demo/img/contacts/user_empty.png" class="new-contact__img" alt="">
+                </div>
+
                 <div class="card-body">
-                    <h4 class="card-title">武将配置</h4>
-                    <h6 class="card-subtitle">Basic config.</h6>
-
-                    <div class="tab-container">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#country" role="tab">国家</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#star" role="tab">品质</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#arms" role="tab">兵种</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#generals-type" role="tab">武将类型</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#generals-data" role="tab">数据字典</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content">
-                            <div class="tab-pane active fade show" id="country" role="tabpanel">
-                                <div class="table-responsive data-table">
-                                    <!--国家列表-->
-                                    <table id="data-table-country" class="table" style="width: 100%!important;"></table>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade show" id="star" role="tabpanel">
-                                <div class="table-responsive data-table">
-                                    <!--品质列表-->
-                                    <table id="data-table-star" class="table" style="width: 100%!important;"></table>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade show" id="arms" role="tabpanel">
-                                <div class="table-responsive data-table">
-                                    <!--兵种列表-->
-                                    <table id="data-table-arms" class="table" style="width: 100%!important;"></table>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade show" id="generals-type" role="tabpanel">
-                                <div class="table-responsive data-table">
-                                    <!--武将类型-->
-                                    <table id="data-table-generals-type" class="table" style="width: 100%!important;"></table>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade show" id="generals-data" role="tabpanel">
-                                <div class="table-responsive data-table">
-                                    <!--数据字典-->
-                                    <table id="data-table-generals-data" class="table" style="width: 100%!important;"></table>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>武将名称</label>
+                                <input type="text" class="form-control" placeholder="Name of the generals">
                             </div>
                         </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>武将英文名称</label>
+                                <input type="text" class="form-control" placeholder="English name of general">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>所属国家</label>
+                                <input type="text" class="form-control" placeholder="Country of origin">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>星级</label>
+                                <input type="text" class="form-control" placeholder="Star">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>兵种</label>
+                                <input type="text" class="form-control" placeholder="Arms">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>武将类型</label>
+                                <input type="text" class="form-control" placeholder="Types of generals">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>初始武力</label>
+                                <input type="text" class="form-control" placeholder="Initial force">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>初始智力</label>
+                                <input type="text" class="form-control" placeholder="Initial intelligence">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>初始兵力</label>
+                                <input type="text" class="form-control" placeholder="Initial Troops">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>联协</label>
+                                <input type="text" class="form-control" placeholder="Entourage">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>可用战器</label>
+                                <input type="text" class="form-control" placeholder="Usable weapon">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>技能</label>
+                                <input type="text" class="form-control" placeholder="Skill">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>被动</label>
+                                <input type="text" class="form-control" placeholder="passive">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>援军技</label>
+                        <textarea class="form-control textarea-autosize" placeholder="Reinforcements"></textarea>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="mt-5 text-center">
+                        <button href="#" class="btn btn-theme" style="width: 100%;">保存</button>
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
-
 </main>
 
 <!-- Older IE warning message -->
@@ -419,9 +441,35 @@
 <!-- App functions and actions -->
 <script src="/static/formwork/js/app.min.js"></script>
 <script src="/static/js/ming.tools.js"></script>
-<script src="/static/js/config/ppsgConfig-generals.js"></script>
 <script>
+$(function () {
+    $("#upload").click(function () {
+        $("#ming-file").click();
+    });
 
+    $("#ming-file").change(function () {
+        var fileInput = $('#ming-file').val();
+        if(fileInput){
+            $.ajax({
+                url: '/upload/image',//上传地址
+                type: 'POST',
+                cache: false,
+                data: new FormData($('#uploadFileForm')[0]),//表单数据
+                processData: false,
+                contentType: false,
+                success:function(data){
+                    mingTools.ajaxResult(data,function () {
+                        $(".new-contact__img").attr("src",data.data);
+                    },function () {
+                        mingTools.swal(data.msg);
+                    })
+                }
+            });
+        }else{
+            mingTools.swal("请选择上传文件！");
+        }
+    });
+})
 </script>
 </body>
 </html>

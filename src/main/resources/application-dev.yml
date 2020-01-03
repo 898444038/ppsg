@@ -7,7 +7,21 @@ spring:
     password:
     url: jdbc:mysql://localhost:3306/ppsg?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 10
+      max-request-size: 10
 
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.ming.ppsg.entity
+
+upload:
+  #此处修改
+  basepath: E:/mine
+  image:
+    realpath: ${upload.basepath}/ppsg/src/main/resources/static/upload/image/
+    relativepath: /static/upload/image
+  file:
+    realpath: ${upload.basepath}/ppsg/src/main/resources/static/upload/file/
+    relativepath: /static/upload/file
