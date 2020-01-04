@@ -30,9 +30,12 @@ public class Log {
 
     private String result;//返回结果
 
-    private Integer type;//登录、注册、。。。
+    private String type;//登录、注册、。。。
 
     private String mapping;//访问路径
+
+    public Log() {
+    }
 
     public Long getId() {
         return id;
@@ -58,11 +61,11 @@ public class Log {
         this.username = username;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -128,5 +131,13 @@ public class Log {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getMapping() {
+        return mapping;
+    }
+
+    public void setMapping(String mapping) {
+        this.mapping = mapping;
     }
 }

@@ -17,7 +17,8 @@ function generalsList() {
         type:"get",
         data:{},
         dataType:"json",
-        success:function (data) {
+        complete:function (xhr,data) {
+            data = mingTools.ajaxComplete(xhr,data);
             var $table = $('#data-table-country');
             mingTools.ajaxResult(data,function () {
                 var btns = mingTools.getOperButton();
@@ -61,7 +62,8 @@ function generalsList() {
         type:"get",
         data:{},
         dataType:"json",
-        success:function (data) {
+        complete:function (xhr,data) {
+            data = mingTools.ajaxComplete(xhr,data);
             var $table = $('#data-table-star');
             mingTools.ajaxResult(data,function () {
                 var btns = mingTools.getOperButton();
@@ -104,7 +106,8 @@ function generalsList() {
         type:"get",
         data:{},
         dataType:"json",
-        success:function (data) {
+        complete:function (xhr,data) {
+            data = mingTools.ajaxComplete(xhr,data);
             var $table = $('#data-table-arms');
             mingTools.ajaxResult(data,function () {
                 var btns = mingTools.getOperButton();
@@ -151,7 +154,8 @@ function generalsList() {
         async:false,
         data:{},
         dataType:"json",
-        success:function (data) {
+        complete:function (xhr,data) {
+            data = mingTools.ajaxComplete(xhr,data);
             var $table = $('#data-table-generals-type');
             mingTools.ajaxResult(data,function () {
                 var btns = mingTools.getOperButton();

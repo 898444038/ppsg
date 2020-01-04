@@ -1,5 +1,7 @@
 package com.ming.system.controller;
 
+import com.ming.system.annotation.Log;
+import com.ming.system.annotation.methodtype.Upload;
 import com.ming.system.utils.ResultMsg;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,7 +66,8 @@ public class UploadController {
             }
         }
     }
-
+    @Log
+    @Upload
     @RequestMapping("/file")
     @ResponseBody
     public Map<String,Object> uploadFile(HttpServletRequest request){
@@ -151,6 +154,8 @@ public class UploadController {
         return result;
     }
 
+    @Log
+    @Upload
     @RequestMapping("/image")
     @ResponseBody
     public ResultMsg uploadImage(HttpServletRequest request){

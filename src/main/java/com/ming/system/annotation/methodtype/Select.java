@@ -1,4 +1,6 @@
-package com.ming.system.annotation;
+package com.ming.system.annotation.methodtype;
+
+import com.ming.system.utils.Operate;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -14,6 +16,6 @@ import java.lang.annotation.Target;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE,ElementType.METHOD})
-public @interface Update {
+public @interface Select {
 
 }

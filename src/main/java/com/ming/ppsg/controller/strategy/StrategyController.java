@@ -1,6 +1,7 @@
 package com.ming.ppsg.controller.strategy;
 
 import com.ming.system.annotation.Log;
+import com.ming.system.annotation.methodtype.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/ppsg/strategy")
 public class StrategyController {
 
+    @Page
     @RequestMapping("/discuss")
     public String mass(){
         return "ppsg/strategy/discuss";
     }
 
+    @Page
     @RequestMapping("/discuss/detail")
     public String massDetail(){
         return "ppsg/strategy/discuss_detail";

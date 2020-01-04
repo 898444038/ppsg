@@ -66,6 +66,9 @@ public class ResultMsg {
     public static ResultMsg auth() {
         return new ResultMsg(ResultType.AUTH.code,ResultType.AUTH.name,ResultType.AUTH.desc);
     }
+    public static ResultMsg auth(String msg) {
+        return new ResultMsg(ResultType.AUTH.code,msg,ResultType.AUTH.desc);
+    }
 
     public int getCode() {
         return code;

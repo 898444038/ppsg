@@ -22,6 +22,9 @@
         th,td{    overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;}
+        .listview__item{
+            align-items: normal !important;
+        }
     </style>
 </head>
 
@@ -233,9 +236,7 @@
                 </div>
             </div>
 
-            <ul class="navigation" id="menuList">
-
-            </ul>
+            <ul class="navigation" id="menuList"></ul>
         </div>
     </aside>
 
@@ -264,7 +265,7 @@
                 <div class="toolbar toolbar--inner">
                     <div class="toolbar__nav">
                         <a class="active" href="#" class="d-none d-md-inline-block">讨论中 30</a>
-                        <a href="#">已关闭 19</a>
+                        <a href="#">已结束 19</a>
                         <a href="#">只看我的 25</a>
                     </div>
 
@@ -327,7 +328,7 @@
                     </div>
                 </div>
 
-                <div class="listview listview--bordered q-a" style="align-items: normal;">
+                <div class="listview listview--bordered q-a">
                     <div class="listview__item q-a__item">
                         <img class="user__img" src="/static/formwork/demo/img/profile-pics/9.jpg" alt="">
                         <div class="listview__content">

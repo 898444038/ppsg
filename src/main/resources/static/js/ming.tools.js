@@ -223,6 +223,15 @@ var mingTools = {
             }
         }
     },
+    ajaxComplete: function (xhr,data) {
+        var result = null;
+        if(data.code){
+            result = data;
+        }else{
+            result = xhr.responseJSON;
+        }
+        return result;
+    },
     //转树结构
     createMenuTree: function (el, arr, rootId) {
         var ul = '';
@@ -330,12 +339,39 @@ var mingTools = {
             padding: "3rem 3rem 2rem",
             customClass: {confirmButton: "btn btn-link", title: "ca-title", container: "ca"}
         })
+    },
+    regex:{
+        email: /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
+    },
+    valid:{
+        email:function (val) {
+            if(!mingTools.regex.email.test(val)){
+                return false;
+            }
+            return true;
+        }
+    },
+    string:{
+        endWith:function (endStr) {
+
+        }
     }
 }
 
 
 $(function () {
-    getToken();
+    String.prototype.endWith = function(endStr){
+        var d = this.length - endStr.length;
+        return (d >= 0 && this.lastIndexOf(endStr) == d)
+    };
+
+    var href = window.location.href;
+    if(!href.endWith("/login")){
+        getToken();
+    }
+    if(href.endWith("/auth/login")){
+        getToken();
+    }
 });
 
 function getToken() {
@@ -355,6 +391,19 @@ function getToken() {
                     }
                 );
                 setTimeout(function () {
+                    $.ajax({
+                        url:"/auth/getUserInfo",
+                        type:"post",
+                        dataType:"json",
+                        success:function (data) {
+                            mingTools.ajaxResult(data,function () {
+                                $(".user__img").attr("src",data.data.headPortrait);
+                                $(".user__name").html(data.data.username);
+                                $(".user__email").html(data.data.email);
+                                $('img[src="'+data.data.skin+'"]').closest(".themes__item").addClass("active").siblings(".themes__item").removeClass("active");
+                            });
+                        }
+                    });
                     $.ajax({
                         url:"/getMenus",
                         type:"post",

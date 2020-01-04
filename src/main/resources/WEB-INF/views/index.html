@@ -223,10 +223,10 @@
         <div class="scrollbar">
             <div class="user">
                 <div class="user__info" data-toggle="dropdown">
-                    <img class="user__img" src="/static/formwork/demo/img/profile-pics/9.jpg" alt="">
+                    <img class="user__img" src="" alt="">
                     <div>
-                        <div class="user__name">super admin</div>
-                        <div class="user__email">123456@qq.com</div>
+                        <div class="user__name"></div>
+                        <div class="user__email"></div>
                     </div>
                 </div>
                 <div class="dropdown-menu dropdown-menu--invert">
@@ -601,7 +601,7 @@
             if(val && val.length===5){
                 mingTools.loading();
                 $.ajax({
-                    url:"/ppsg/search",
+                    url:"/ppsg/xzl/search",
                     type:"post",
                     data:{generals:val.toString()},
                     dataType:"json",

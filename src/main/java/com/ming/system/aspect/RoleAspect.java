@@ -3,6 +3,7 @@ package com.ming.system.aspect;
 import com.ming.system.config.security.MyInvocationSecurityMetadataSourceService;
 import com.ming.system.entity.Role;
 import com.ming.system.entity.User;
+import com.ming.system.service.LogService;
 import com.ming.system.utils.ResultMsg;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
@@ -32,7 +34,7 @@ import java.util.Map;
  */
 @Aspect
 @Component
-public class RoleAspest {
+public class RoleAspect {
 
     @Pointcut(value = "@annotation(com.ming.system.annotation.Role)")
     public void point(){}
@@ -51,27 +53,7 @@ public class RoleAspest {
         Class clazz = joinPoint.getTarget().getClass();
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();//获取访问的方法
 
-        String mapping = "";
-        if(clazz.isAnnotationPresent(RequestMapping.class)){
-            RequestMapping mappingClass = (RequestMapping)clazz.getAnnotation(RequestMapping.class);
-            mapping += mappingClass.value()[0];
-        }
-        if(method.isAnnotationPresent(RequestMapping.class)){
-            RequestMapping mappingMethod = method.getAnnotation(RequestMapping.class);
-            mapping += mappingMethod.value()[0];
-        }else if(method.isAnnotationPresent(GetMapping.class)){
-            GetMapping mappingMethod = method.getAnnotation(GetMapping.class);
-            mapping += mappingMethod.value()[0];
-        }else if(method.isAnnotationPresent(PostMapping.class)){
-            PostMapping mappingMethod = method.getAnnotation(PostMapping.class);
-            mapping += mappingMethod.value()[0];
-        }else if(method.isAnnotationPresent(PutMapping.class)){
-            PutMapping mappingMethod = method.getAnnotation(PutMapping.class);
-            mapping += mappingMethod.value()[0];
-        }else if(method.isAnnotationPresent(DeleteMapping.class)){
-            DeleteMapping mappingMethod = method.getAnnotation(DeleteMapping.class);
-            mapping += mappingMethod.value()[0];
-        }
+        String mapping = AspectUtils.getMapping(clazz,method);
         System.out.println("Request Mapping : "+mapping);
 
         //Admin 有所有权限

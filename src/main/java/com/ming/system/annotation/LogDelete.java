@@ -1,5 +1,7 @@
 package com.ming.system.annotation;
 
+import com.ming.system.annotation.methodtype.Delete;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

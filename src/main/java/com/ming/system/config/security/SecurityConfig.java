@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //所有用户可以访问
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 //登录接口放行
-                .antMatchers("/login","/auth/login","/auth/register","/static/**").permitAll()
+                .antMatchers("/login","/auth/**","/auth/register/checkUsername","/static/**").permitAll()
                 //其他接口全部接受验证
                 .anyRequest().authenticated().and()
                 //统一结果处理
@@ -77,9 +77,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.defaultSuccessUrl("/index")
                 //登录失败
                 //.failureUrl("/logout")
-                //.and()
-                //.logout().logoutUrl("/logout").logoutSuccessUrl("/login")
-                //.invalidateHttpSession(true).deleteCookies("usernameCookie","urlCookie")
+                .and()
+                .logout().logoutUrl("/logout")//.logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)//.deleteCookies("usernameCookie","urlCookie")
         ;
 
         //添加JWT filter,使用自定义的 Token过滤器 验证请求的Token是否合法

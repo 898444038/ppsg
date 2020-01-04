@@ -1,6 +1,7 @@
 package com.ming.system.controller;
 
 import com.ming.system.annotation.Log;
+import com.ming.system.annotation.methodtype.Page;
 import com.ming.system.entity.Permisson;
 import com.ming.system.service.impl.MyUserDetailsService;
 import com.ming.system.utils.ResultMsg;
@@ -16,13 +17,22 @@ import java.util.List;
 
 @Controller
 @RequestMapping
-@Log
+
 public class IndexController {
     @Resource
     private MyUserDetailsService myUserDetailsService;
 
+    @Log
+    @Page
     @RequestMapping("/index")
-    public String index(HttpServletRequest request){
+    public String index(HttpSession session){
+        List<Permisson> menuList = (List<Permisson>)session.getAttribute("menuList");
+        if(null != menuList){
+            for (Permisson permisson : menuList) {
+                permisson.setIsOpen(0);
+                permisson.setIsActive(0);
+            }
+        }
         return "index";
     }
 
