@@ -24,4 +24,10 @@ public class StrategyController {
     public String massDetail(){
         return "ppsg/strategy/discuss_detail";
     }
+
+    @Page
+    @RequestMapping("/discuss/add")
+    public String add(){
+        return "ppsg/strategy/discuss_add";
+    }
 }

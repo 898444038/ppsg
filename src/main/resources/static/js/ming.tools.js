@@ -330,15 +330,25 @@ var mingTools = {
         '</section>';
         return html;
     }*/
-    swal:function (title) {
+    swal:function (title,code,func) {
+        var type = "";
+        if(code){
+            if(code==1){
+                type = "success".toLowerCase();
+            }else if(code==0){
+                type = "error".toLowerCase();
+            }
+        }
         swal.fire({
-            text: title,
+            type: type,
+            title: title,
+            text: "",
             background: "#000",
             backdrop: "rgba(0,0,0,0.2)",
             buttonsStyling: !1,
             padding: "3rem 3rem 2rem",
             customClass: {confirmButton: "btn btn-link", title: "ca-title", container: "ca"}
-        })
+        }).then(func);
     },
     regex:{
         email: /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
@@ -397,7 +407,7 @@ function getToken() {
                         dataType:"json",
                         success:function (data) {
                             mingTools.ajaxResult(data,function () {
-                                $(".user__img").attr("src",data.data.headPortrait);
+                                $(".user__info>.user__img").attr("src",data.data.headPortrait);
                                 $(".user__name").html(data.data.username);
                                 $(".user__email").html(data.data.email);
                                 $('img[src="'+data.data.skin+'"]').closest(".themes__item").addClass("active").siblings(".themes__item").removeClass("active");
@@ -449,3 +459,20 @@ function getToken() {
         }
     });
 }
+
+//格式化时间函数
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};

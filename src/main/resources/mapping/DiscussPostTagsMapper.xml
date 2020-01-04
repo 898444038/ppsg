@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ming.ppsg.mapper.DiscussPostTagsMapper">
+
+	<sql id="baseColumn">
+		id,
+		name,
+		create_time,
+		del_flag
+	</sql>
+
+	<resultMap type="com.ming.ppsg.entity.DiscussPostTags" id="resultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="createTime" column="create_time" />
+		<result property="delFlag" column="del_flag" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="resultMap" parameterType="com.ming.ppsg.entity.DiscussPostTags">
+		SELECT <include refid="baseColumn"></include> 
+		FROM ppsg_discuss_post_tags
+		where del_flag = 0
+	</select>
+
+	<insert id="insert" parameterType="com.ming.ppsg.entity.DiscussPostTags">
+		INSERT INTO ppsg_discuss_post_tags (
+			name,
+			create_time,
+			del_flag
+		)
+		VALUE (
+			#{name},
+			#{createTime},
+			#{delFlag}
+		)
+	</insert>
+	<!--
+        <update id="update" parameterType="com.ming.ppsg.entity.User">
+            UPDATE user
+            <set>
+                <if test="name != null and name != ''">name = #{name},</if>
+            </set>
+            WHERE id = #{id}
+        </update>
+
+        <delete id="delete" parameterType="long">
+            DELETE FROM user
+            WHERE id = #{id}
+        </delete>-->
+
+</mapper>

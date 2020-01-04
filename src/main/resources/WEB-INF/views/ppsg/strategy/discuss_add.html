@@ -15,17 +15,19 @@
     <link rel="stylesheet" href="/static/formwork/vendors/bootstrap-colorpicker/css/bootstrap-colorpicker.css">
     <link rel="stylesheet" href="/static/formwork/vendors/trumbowyg/ui/trumbowyg.min.css">
     <link rel="stylesheet" href="/static/formwork/vendors/rateyo/jquery.rateyo.min.css">
+
     <!-- App styles -->
     <link rel="stylesheet" href="/static/formwork/css/app.min.css">
-
     <style>
-        th,td{    overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;}
-        .listview__item{
-            align-items: normal !important;
+        .tags button{
+            margin: 0 10px 10px 0;
+        }
+        .trumbowyg-button-pane {
+            background-color: rgba(255, 255, 255, 0.45)!important;
         }
     </style>
+
+
 </head>
 
 <body data-sa-theme="1">
@@ -236,7 +238,9 @@
                 </div>
             </div>
 
-            <ul class="navigation" id="menuList"></ul>
+            <ul class="navigation" id="menuList">
+
+            </ul>
         </div>
     </aside>
 
@@ -258,124 +262,64 @@
     <section class="content">
         <div class="content__inner">
             <header class="content__title">
-                <h1>讨论区 <small>攻略/布阵/破解</small></h1>
-            </header>
+                <h1>发起讨论</h1>
 
-            <div class="card">
-                <div class="toolbar toolbar--inner">
-                    <div class="toolbar__nav">
-                        <a class="active" href="#" class="d-none d-md-inline-block">讨论中 30</a>
-                        <a href="#">已结束 19</a>
-                        <a href="#">只看我的 25</a>
-                    </div>
+                <div class="actions">
+                    <a href="#" class="actions__item zwicon-cog"></a>
+                    <a href="#" class="actions__item zwicon-refresh-double"></a>
 
-                    <div class="actions">
-                        <i class="actions__item zwicon-search" data-sa-action="toolbar-search-open" data-toggle="tooltip" data-title="Search"></i>
-
-                        <div class="dropdown actions__item d-none d-md-flex" data-toggle="tooltip" data-title="Tag">
-                            <i class="zwicon-price-tag" data-toggle="dropdown"></i>
-
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu--active">
-                                <a class="dropdown-item" href="#">All</a>
-                                <a class="dropdown-item" href="#">Tag One</a>
-                                <a class="dropdown-item" href="#">Tag Two</a>
-                                <a class="dropdown-item" href="#">Tag Three</a>
-                            </div>
+                    <div class="dropdown actions__item">
+                        <i data-toggle="dropdown" class="zwicon-more-h"></i>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="#" class="dropdown-item">刷新</a>
+                            <a href="#" class="dropdown-item">组件</a>
+                            <a href="#" class="dropdown-item">设置</a>
                         </div>
-
-                        <!--<div class="dropdown actions__item d-none d-md-flex" data-toggle="tooltip" data-title="Project">
-                            <i class="zwicon-notebook" data-toggle="dropdown"></i>
-
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu&#45;&#45;active">
-                                <a class="dropdown-item" href="#">All Projects</a>
-                                <a class="dropdown-item" href="#">Project One</a>
-                                <a class="dropdown-item" href="#">Project Two</a>
-                                <a class="dropdown-item" href="#">Project Three</a>
-                                <a class="dropdown-item" href="#">Project Four</a>
-                                <a class="dropdown-item" href="#">Project Five</a>
-                            </div>
-                        </div>-->
-
-                        <!--<div class="dropdown actions__item d-none d-md-flex" data-toggle="tooltip" data-title="Assignee">
-                            <i class="zwicon-user-circle" data-toggle="dropdown"></i>
-
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu&#45;&#45;active">
-                                <a class="dropdown-item" href="#">Everyone</a>
-                                <a class="dropdown-item" href="#">David Wilson</a>
-                                <a class="dropdown-item" href="#">James Frank</a>
-                                <a class="dropdown-item" href="#">Natalie Sheth</a>
-                                <a class="dropdown-item" href="#">Christian Robu</a>
-                                <a class="dropdown-item" href="#">Wins Williamson</a>
-                            </div>
-                        </div>-->
-
-                        <!--<div class="dropdown actions__item d-none d-md-flex" data-toggle="tooltip" data-title="Sort by">
-                            <i class="zwicon-filter-alt" data-toggle="dropdown"></i>
-
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu&#45;&#45;active">
-                                <a class="dropdown-item" href="#">Newest</a>
-                                <a class="dropdown-item" href="#">Oldest</a>
-                                <a class="dropdown-item" href="#">Most Commented</a>
-                                <a class="dropdown-item" href="#">Least Commented</a>
-                                <a class="dropdown-item" href="#">Recently Updated</a>
-                            </div>
-                        </div>-->
-                    </div>
-
-                    <div class="toolbar__search">
-                        <input type="text" placeholder="Search for questions and answers...">
-                        <i class="toolbar__search__close zwicon-arrow-left" data-sa-action="toolbar-search-close"></i>
                     </div>
                 </div>
-
-                <div id="discuss-list" class="listview listview--bordered q-a">
-                    <!--<div class="listview__item q-a__item">
-                        <img class="user__img" src="/static/formwork/demo/img/profile-pics/9.jpg" alt="">
-                        <div class="listview__content">
-                            <a href="/ppsg/strategy/discuss/detail" class="listview__heading">集结攻略-巴郡</a>
-                            <p><span>最后一次回复2小时前</span>&nbsp;<span>最后一次回复2小时前</span></p>
-                            <div class="listview__attrs">
-                                <span>集结</span>
-                                <span>蜀</span>
-                                <span>巴郡</span>
+            </header>
+            <div class="row todo">
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <!--<h4 class="card-title">WYSIWYG Editor</h4>
+                            <h6 class="card-subtitle"></h6>-->
+                            <div class="input-group input-group-lg" style="margin-bottom: 20px;">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">标题</span>
+                                </div>
+                                <input type="text" id="title" class="form-control">
                             </div>
-                        </div>
-                        <div class="q-a__stat d-none d-md-block">
-                            <span>
-                                <strong>22</strong>
-                                <small>点赞</small>
-                            </span>
-                            <span>
-                                <strong>02</strong>
-                                <small>回复</small>
-                            </span>
-                            <span class="d-none d-lg-inline-block">
-                                <strong>35</strong>
-                                <small>查看</small>
-                            </span>
+                            <form class="dropzone dz-clickable" id="dropzone-upload">
+                                <div class="dz-default dz-message">
+                                    <span>上传图片</span>
+                                </div>
+                            </form>
+                            <div class="discuss-wysiwyg-editor"></div>
+                            <button id="submit" type="button" class="btn btn-theme btn-block">发布</button>
                         </div>
                     </div>
--->
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">标签</h4>
+                            <h6 class="card-subtitle">label</h6>
+                            <div class="tags">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="input-group">
+                                <input type="text" id="tagName" class="form-control" placeholder="标签名">
 
-                    <div class="clearfix mb-3"></div>
+                                <a id="addTags" class="input-group-append" href="#" data-toggle="tooltip" data-placement="top" data-original-title="新增标签">
+                                    <span class="input-group-text"><i class="zwicon-plus"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!--<nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item pagination-prev"><a class="page-link" href="#"><i class="zwicon-arrow-left"></i></a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                    <li class="page-item pagination-next"><a class="page-link" href="#"><i class="zwicon-arrow-right"></i></a></li>
-                </ul>
-            </nav>-->
-
-            <a href="/ppsg/strategy/discuss/add" id="btn-add" class="btn btn-light btn--action btn--fixed" data-toggle="tooltip" data-placement="top" data-original-title="发帖"><i class="zwicon-plus"></i></a>
-
         </div>
     </section>
 </main>
@@ -432,66 +376,121 @@
 <script src="/static/formwork/vendors/jquery-text-counter/textcounter.min.js"></script>
 <script src="/static/formwork/vendors/autosize/autosize.min.js"></script>
 <script src="/static/formwork/vendors/sweetalert2/sweetalert2.all.min.js"></script>
-
-<script src="/static/formwork/vendors/datatables/jquery.dataTables.min.js"></script>
-<script src="/static/formwork/vendors/datatables/datatables-buttons/dataTables.buttons.min.js"></script>
-<script src="/static/formwork/vendors/datatables/datatables-buttons/buttons.print.min.js"></script>
-<script src="/static/formwork/vendors/jszip/jszip.min.js"></script>
-<script src="/static/formwork/vendors/datatables/datatables-buttons/buttons.html5.min.js"></script>
 <!-- App functions and actions -->
 <script src="/static/formwork/js/app.min.js"></script>
 <script src="/static/js/ming.tools.js"></script>
 <script>
     $(function () {
+        query();
+        var editor = $(".discuss-wysiwyg-editor").trumbowyg({autogrow: !0});
+
+        Dropzone.autoDiscover = false;
+        $("#dropzone-upload")[0] && $("#dropzone-upload").dropzone({
+            url: "/upload/image",
+            addRemoveLinks: !0,
+            init: function () {
+                this.on("success", function (file, data) {
+                    // 上传成功触发的事件
+                    mingTools.ajaxResult(data,function () {
+                        $(".dz-preview").find(".dz-image").find("img[alt='"+file.upload.filename+"']").closest(".dz-image").siblings(".dz-details").find(".dz-filename>span").text(data.data);
+                        $(".dz-preview").find(".dz-image").find("img[alt='"+file.upload.filename+"']").attr("alt",data.data);
+                    },function () {
+                        mingTools.swal(data.msg,data.code)
+                    })
+                });
+            }
+        });
+
+        $("#addTags").click(function () {
+            var tagName = $("#tagName").val();
+            if(tagName && tagName.length>0){
+                $.ajax({
+                    url:"/ppsg/strategy/discuss/post/tags/addTags",
+                    type:"post",
+                    data:{name:tagName},
+                    dataType:"json",
+                    success:function (data) {
+                        $("#tagName").val("");
+                        mingTools.ajaxResult(data,function () {
+                            mingTools.swal(data.msg,data.code);
+                        },function () {
+                            mingTools.swal(data.msg,data.code);
+                        });
+                        query();
+                    }
+                });
+            }else{
+                mingTools.swal("请输入标签名！");
+            }
+        });
+
+        $(document).on("click",".discuss-tags",function () {
+            //$(this).toggleClass("btn-outline-success");
+            $(this).toggleClass("btn-success");
+        });
+
+        $("#submit").click(function () {
+            var title = $("#title").val();
+            var content = $(".discuss-wysiwyg-editor").html();
+            var imgs = $("#dropzone-upload").find(".dz-success").find(".dz-filename>span");
+            var tags = $(".tags").find("button.btn-success");
+            if(!title || title.length === 0){
+                mingTools.swal("请输入标题！");
+                return;
+            }
+            if(!content){
+                mingTools.swal("请输入内容！");
+                return;
+            }
+            if(!tags || tags.length===0){
+                mingTools.swal("请选择标签！");
+                return;
+            }
+            var images = [];
+            if(imgs){
+                for(var j=0;j<imgs.length;j++){
+                    images.push($(imgs[j]).text());
+                }
+            }
+            var tagIds = [];
+            for(var i=0;i<tags.length;i++){
+                tagIds.push($(tags[i]).attr("data-id"));
+            }
+            $.ajax({
+                url:"/ppsg/strategy/discuss/post/addPost",
+                type:"post",
+                data:{title:title,content:content,images:images.toString(),tagIds:tagIds.toString()},
+                dataType:"json",
+                success:function (data) {
+                    mingTools.ajaxResult(data,function () {
+                        mingTools.swal(data.msg,data.code,function () {
+                            window.location.href = "/ppsg/strategy/discuss";
+                        })
+                    },function () {
+                        mingTools.swal(data.msg,data.code)
+                    })
+                }
+            });
+        });
+    });
+
+    function query() {
+        var $tags = $(".tags");
         $.ajax({
-            url:"/ppsg/strategy/discuss/post/list",
+            url:"/ppsg/strategy/discuss/post/tags/list",
             type:"get",
             dataType:"json",
             success:function (data) {
                 mingTools.ajaxResult(data,function () {
+                    $tags.html("");
                     var list = data.data;
-                    if(list && list.length>0){
-                        var html = "";
-                        for(var i=0;i<list.length;i++){
-                            var d = new Date();
-                            d.setTime(list[i].createTime);
-                            var createTime = d.Format("yyyy-MM-dd hh:mm:ss");
-                            html += '<div class="listview__item q-a__item">\n' +
-                                '                        <img class="user__img" src="'+list[i].headPortrait+'" alt="">\n' +
-                                '                        <div class="listview__content">\n' +
-                                '                            <a href="/ppsg/strategy/discuss/detail" class="listview__heading">'+list[i].title+'</a>\n' +
-                                '                            <p>发布于<span>'+createTime+'</span></p>\n' +
-                                //'                            <p>最后一次回复于<span>'+createTime+'</span></p>\n' +
-                                '                            <div class="listview__attrs">\n';
-
-                            var tagsList = list[i].tagsList;
-                            for(var j=0;j<tagsList.length;j++){
-                                html +='                                <span>'+tagsList[j].name+'</span>\n';
-                            }
-                            html+='                          </div>\n' +
-                                '                        </div>\n' +
-                                '                        <div class="q-a__stat d-none d-md-block">\n' +
-                                '                            <span>\n' +
-                                '                                <strong>'+list[i].fabulousCount+'</strong>\n' +
-                                '                                <small>点赞</small>\n' +
-                                '                            </span>\n' +
-                                '                            <span>\n' +
-                                '                                <strong>'+list[i].answerCount+'</strong>\n' +
-                                '                                <small>回复</small>\n' +
-                                '                            </span>\n' +
-                                '                            <span class="d-none d-lg-inline-block">\n' +
-                                '                                <strong>'+list[i].lookCount+'</strong>\n' +
-                                '                                <small>查看</small>\n' +
-                                '                            </span>\n' +
-                                '                        </div>\n' +
-                                '                    </div>';
-                        }
-                        $("#discuss-list").html(html);
+                    for (var i=0;i<list.length;i++){
+                        $tags.append('<button class="btn btn-theme discuss-tags" data-id="'+list[i].id+'">'+list[i].name+'</button>')
                     }
-                })
+                });
             }
         });
-    })
+    }
 </script>
 </body>
 </html>

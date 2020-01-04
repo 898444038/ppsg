@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ming.ppsg.mapper.DiscussPostMapper">
+
+	<sql id="baseColumn">
+		id,
+		user_id,
+		title,
+		images,
+		content,
+		create_time,
+		last_answer_time,
+		fabulous_count,
+		answer_count,
+		look_count,
+		status,
+		del_flag
+	</sql>
+
+	<sql id="postColumn">
+		p.id,
+		p.user_id,
+		p.title,
+		p.images,
+		p.content,
+		p.create_time,
+		p.last_answer_time,
+		p.fabulous_count,
+		p.answer_count,
+		p.look_count,
+		p.status,
+		p.del_flag,
+		u.head_portrait,
+		pts.name
+	</sql>
+
+	<resultMap type="com.ming.ppsg.entity.DiscussPost" id="resultMap">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="title" column="title" />
+		<result property="images" column="images" />
+		<result property="content" column="content" />
+		<result property="createTime" column="create_time" />
+		<result property="lastAnswerTime" column="last_answer_time" />
+		<result property="fabulousCount" column="fabulous_count" />
+		<result property="answerCount" column="answer_count" />
+		<result property="lookCount" column="look_count" />
+		<result property="status" column="status" />
+		<result property="delFlag" column="del_flag" />
+		<result property="headPortrait" column="head_portrait" />
+		<collection property="tagsList" ofType="com.ming.ppsg.entity.DiscussPostTags">
+			<result property="name" column="name"/>
+		</collection>
+	</resultMap>
+
+	<select id="selectAll" resultMap="resultMap" parameterType="com.ming.ppsg.entity.DiscussPost">
+		SELECT <include refid="postColumn"></include>
+		FROM ppsg_discuss_post p
+		left join s_user u on p.user_id = u.id
+		left join ppsg_discuss_post_tag pt on p.id=pt.discuss_id
+		left join ppsg_discuss_post_tags pts on pt.tag_id = pts.id
+		where p.del_flag = 0 and pts.del_flag = 0
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ming.ppsg.entity.DiscussPost">
+		INSERT INTO ppsg_discuss_post (
+			user_id,
+			title,
+			images,
+			content,
+			create_time,
+			last_answer_time,
+			fabulous_count,
+			answer_count,
+			look_count,
+			status,
+			del_flag
+		)
+		VALUE (
+			#{userId},
+			#{title},
+			#{images},
+			#{content},
+			#{createTime},
+			#{lastAnswerTime},
+			#{fabulousCount},
+			#{answerCount},
+			#{lookCount},
+			#{status},
+			#{delFlag}
+		)
+	</insert>
+	<!--
+        <update id="update" parameterType="com.ming.ppsg.entity.User">
+            UPDATE user
+            <set>
+                <if test="name != null and name != ''">name = #{name},</if>
+            </set>
+            WHERE id = #{id}
+        </update>
+
+        <delete id="delete" parameterType="long">
+            DELETE FROM user
+            WHERE id = #{id}
+        </delete>-->
+
+</mapper>
