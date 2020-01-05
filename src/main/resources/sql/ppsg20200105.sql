@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50723
 File Encoding         : 65001
 
-Date: 2020-01-05 02:09:46
+Date: 2020-01-06 00:23:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -180,12 +180,13 @@ CREATE TABLE `ppsg_discuss_post` (
   `status` tinyint(2) DEFAULT '0' COMMENT '0:讨论中 1：已结束',
   `del_flag` tinyint(1) DEFAULT '0' COMMENT '0:未删除 1：已删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ppsg_discuss_post
 -- ----------------------------
-INSERT INTO `ppsg_discuss_post` VALUES ('5', '2', '321321', '/static/upload/image/1578158030079.jpg', '213213', '2020-01-04 17:13:53', null, '0', '0', '0', '0', '0');
+INSERT INTO `ppsg_discuss_post` VALUES ('7', '2', '蜀国江阳方向关隘', '/static/upload/image/1578206471851.jpg,/static/upload/image/1578206474780.jpg,/static/upload/image/1578206477416.jpg,/static/upload/image/1578206480664.jpg', '<p>豹魂、玉琼、挽歌不开突</p><p>灵刃右突</p>', '2020-01-05 06:43:14', null, '0', '0', '0', '0', '0');
+INSERT INTO `ppsg_discuss_post` VALUES ('8', '2', '蜀国永安方向营寨', '/static/upload/image/1578213990361.jpg,/static/upload/image/1578213993367.jpg,/static/upload/image/1578213995913.jpg,/static/upload/image/1578213998440.jpg', '<p>诡骑武器洗技能范围提升</p><p>劫国战器洗削血</p><p>可打350M伤害</p>', '2020-01-05 08:48:49', null, '0', '0', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for ppsg_discuss_post_reply
@@ -216,8 +217,12 @@ CREATE TABLE `ppsg_discuss_post_tag` (
 -- ----------------------------
 -- Records of ppsg_discuss_post_tag
 -- ----------------------------
-INSERT INTO `ppsg_discuss_post_tag` VALUES ('5', '2');
-INSERT INTO `ppsg_discuss_post_tag` VALUES ('5', '5');
+INSERT INTO `ppsg_discuss_post_tag` VALUES ('7', '2');
+INSERT INTO `ppsg_discuss_post_tag` VALUES ('7', '5');
+INSERT INTO `ppsg_discuss_post_tag` VALUES ('7', '6');
+INSERT INTO `ppsg_discuss_post_tag` VALUES ('8', '2');
+INSERT INTO `ppsg_discuss_post_tag` VALUES ('8', '5');
+INSERT INTO `ppsg_discuss_post_tag` VALUES ('8', '7');
 
 -- ----------------------------
 -- Table structure for ppsg_discuss_post_tags
@@ -229,7 +234,7 @@ CREATE TABLE `ppsg_discuss_post_tags` (
   `create_time` datetime DEFAULT NULL,
   `del_flag` tinyint(1) DEFAULT '0' COMMENT '0:未删除 1：已删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ppsg_discuss_post_tags
@@ -239,6 +244,8 @@ INSERT INTO `ppsg_discuss_post_tags` VALUES ('2', '蜀', '2020-01-04 14:13:57', 
 INSERT INTO `ppsg_discuss_post_tags` VALUES ('3', '吴', '2020-01-04 14:17:14', '0');
 INSERT INTO `ppsg_discuss_post_tags` VALUES ('4', '群', '2020-01-04 14:17:59', '0');
 INSERT INTO `ppsg_discuss_post_tags` VALUES ('5', '集结', '2020-01-04 14:18:57', '0');
+INSERT INTO `ppsg_discuss_post_tags` VALUES ('6', '女队', '2020-01-05 06:42:44', '0');
+INSERT INTO `ppsg_discuss_post_tags` VALUES ('7', '群雄队', '2020-01-05 08:47:05', '0');
 
 -- ----------------------------
 -- Table structure for ppsg_geo_coord
@@ -325,106 +332,7 @@ CREATE TABLE `s_log` (
   `type` varchar(32) DEFAULT NULL COMMENT '登录、注册、。。。',
   `mapping` varchar(255) DEFAULT NULL COMMENT '访问路径',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=905 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of s_log
--- ----------------------------
-INSERT INTO `s_log` VALUES ('810', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:28:13', '2020-01-04 17:28:13', '0', 'login', 'user:{username=\"wang\",password=\"123456\",},request:{},response:{},session:{},', null, 'index', 'LOGIN', '/auth/login');
-INSERT INTO `s_log` VALUES ('811', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:28:15', '2020-01-04 17:28:15', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('812', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:28:15', '2020-01-04 17:28:15', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('813', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:28:18', '2020-01-04 17:28:18', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('814', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:28:18', '2020-01-04 17:28:18', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('815', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:30:15', '2020-01-04 17:30:15', '0', 'login', 'user:{username=\"wang\",password=\"123456\",},request:{},response:{},session:{},', null, 'index', 'LOGIN', '/auth/login');
-INSERT INTO `s_log` VALUES ('816', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:30:17', '2020-01-04 17:30:17', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('817', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:30:18', '2020-01-04 17:30:18', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('818', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:30:21', '2020-01-04 17:30:21', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('819', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:30:21', '2020-01-04 17:30:21', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('820', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:32:20', '2020-01-04 17:32:20', '0', 'login', 'user:{username=\"wang\",password=\"123456\",},request:{},response:{},session:{},', null, 'index', 'LOGIN', '/auth/login');
-INSERT INTO `s_log` VALUES ('821', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:32:22', '2020-01-04 17:32:22', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('822', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:32:22', '2020-01-04 17:32:22', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@615d0c7e]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('823', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:32:25', '2020-01-04 17:32:25', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('824', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:32:25', '2020-01-04 17:32:25', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('825', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:33:32', '2020-01-04 17:33:32', '0', 'login', '', null, 'login', 'PAGE', '/login');
-INSERT INTO `s_log` VALUES ('826', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:37:34', '2020-01-04 17:37:35', '0', 'login', 'user:{username=\"wang\",password=\"123456\",},request:{},response:{},session:{},', null, 'index', 'LOGIN', '/auth/login');
-INSERT INTO `s_log` VALUES ('827', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:37:37', '2020-01-04 17:37:37', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('828', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:37:52', '2020-01-04 17:37:52', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('829', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:37:52', '2020-01-04 17:37:52', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('830', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:37:52', '2020-01-04 17:37:52', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('831', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:39:00', '2020-01-04 17:39:00', '0', 'login', 'user:{username=\"wang\",password=\"123456\",},request:{},response:{},session:{},', null, 'index', 'LOGIN', '/auth/login');
-INSERT INTO `s_log` VALUES ('832', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:39:02', '2020-01-04 17:39:02', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('833', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:39:02', '2020-01-04 17:39:27', '24', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@8773da3]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('834', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:39:27', '2020-01-04 17:39:27', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('835', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:39:27', '2020-01-04 17:39:27', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('836', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:24', '2020-01-04 17:47:24', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('837', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:24', '2020-01-04 17:47:24', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('838', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:24', '2020-01-04 17:47:24', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('839', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:24', '2020-01-04 17:47:24', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('840', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:24', '2020-01-04 17:47:24', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('841', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:24', '2020-01-04 17:47:24', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('842', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:34', '2020-01-04 17:47:34', '0', 'login', '', null, 'login', 'PAGE', '/login');
-INSERT INTO `s_log` VALUES ('843', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:24', '2020-01-04 17:47:34', '10', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@7d435df3]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('844', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:39', '2020-01-04 17:47:39', '0', 'login', 'user:{username=\"wang\",password=\"123456\",},request:{},response:{},session:{},', null, 'index', 'LOGIN', '/auth/login');
-INSERT INTO `s_log` VALUES ('845', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:41', '2020-01-04 17:47:41', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('846', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:47:41', '2020-01-04 17:47:41', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@5f578866]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('847', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:50:48', '2020-01-04 17:50:48', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('848', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:50:48', '2020-01-04 17:50:48', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@7840cfe2]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('849', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:52:37', '2020-01-04 17:52:37', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('850', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:52:37', '2020-01-04 17:52:37', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@653caba9]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('851', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:52:59', '2020-01-04 17:52:59', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('852', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:52:59', '2020-01-04 17:52:59', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@298db292]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('853', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:54:35', '2020-01-04 17:54:35', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('854', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:54:36', '2020-01-04 17:54:36', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@61872d7f]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('855', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:54:36', '2020-01-04 17:54:36', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('856', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:19', '2020-01-04 17:55:19', '0', 'massDetail', '', null, 'ppsg/strategy/discuss_detail', 'PAGE', '/ppsg/strategy/discuss/detail');
-INSERT INTO `s_log` VALUES ('857', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:19', '2020-01-04 17:55:19', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('858', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:19', '2020-01-04 17:55:19', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('859', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:19', '2020-01-04 17:55:19', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('860', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:19', '2020-01-04 17:55:19', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('861', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:19', '2020-01-04 17:55:19', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('862', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:19', '2020-01-04 17:55:19', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('863', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:19', '2020-01-04 17:55:19', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('864', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:19', '2020-01-04 17:55:19', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('865', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:24', '2020-01-04 17:55:24', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('866', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:24', '2020-01-04 17:55:24', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('867', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:55:24', '2020-01-04 17:55:24', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('868', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:27', '2020-01-04 17:56:27', '0', 'massDetail', '', null, 'ppsg/strategy/discuss_detail', 'PAGE', '/ppsg/strategy/discuss/detail');
-INSERT INTO `s_log` VALUES ('869', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:27', '2020-01-04 17:56:27', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('870', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:27', '2020-01-04 17:56:27', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('871', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:27', '2020-01-04 17:56:27', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('872', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:27', '2020-01-04 17:56:27', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('873', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:27', '2020-01-04 17:56:27', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('874', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:27', '2020-01-04 17:56:27', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('875', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:27', '2020-01-04 17:56:27', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('876', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:27', '2020-01-04 17:56:27', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('877', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:31', '2020-01-04 17:56:31', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('878', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:31', '2020-01-04 17:56:31', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@624e8994]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('879', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:33', '2020-01-04 17:56:33', '0', 'add', '', null, 'ppsg/strategy/discuss_add', 'PAGE', '/ppsg/strategy/discuss/add');
-INSERT INTO `s_log` VALUES ('880', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:34', '2020-01-04 17:56:34', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPostTags@4039af69, com.ming.ppsg.entity.DiscussPostTags@663fb541, com.ming.ppsg.entity.DiscussPostTags@40b15b3d, com.ming.ppsg.entity.DiscussPostTags@670aed19, com.ming.ppsg.entity.DiscussPostTags@6ac55476]}', 'SELECT', '/ppsg/strategy/discuss/post/tags/list');
-INSERT INTO `s_log` VALUES ('881', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:43', '2020-01-04 17:56:43', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('882', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 17:56:43', '2020-01-04 17:56:43', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@6659c298]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('883', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:04:23', '2020-01-04 18:04:23', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('884', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:04:23', '2020-01-04 18:04:23', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@4ab2a9fe]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('885', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:04:55', '2020-01-04 18:04:55', '0', 'login', 'user:{username=\"wang\",password=\"123456\",},request:{},response:{},session:{},', null, 'index', 'LOGIN', '/auth/login');
-INSERT INTO `s_log` VALUES ('886', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:04:57', '2020-01-04 18:04:57', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('887', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:04:57', '2020-01-04 18:04:57', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@60678225]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('888', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:02', '2020-01-04 18:05:02', '0', 'massDetail', '', null, 'ppsg/strategy/discuss_detail', 'PAGE', '/ppsg/strategy/discuss/detail');
-INSERT INTO `s_log` VALUES ('889', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:02', '2020-01-04 18:05:02', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('890', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:02', '2020-01-04 18:05:02', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('891', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:02', '2020-01-04 18:05:02', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('892', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:02', '2020-01-04 18:05:02', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('893', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:02', '2020-01-04 18:05:02', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('894', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:02', '2020-01-04 18:05:02', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('895', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:02', '2020-01-04 18:05:02', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('896', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:02', '2020-01-04 18:05:02', '0', 'error', '', null, '/login', 'PAGE', '/error');
-INSERT INTO `s_log` VALUES ('897', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:05', '2020-01-04 18:05:05', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('898', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:05', '2020-01-04 18:05:05', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@4ec87780]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('899', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:16', '2020-01-04 18:05:16', '0', 'index', '', null, 'ppsg/generals/index', 'PAGE', '/ppsg/generals/index');
-INSERT INTO `s_log` VALUES ('900', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:30', '2020-01-04 18:05:30', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('901', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:05:30', '2020-01-04 18:05:30', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@276e73cf]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
-INSERT INTO `s_log` VALUES ('902', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:07:10', '2020-01-04 18:07:10', '0', 'login', 'user:{username=\"wang\",password=\"123456\",},request:{},response:{},session:{},', null, 'index', 'LOGIN', '/auth/login');
-INSERT INTO `s_log` VALUES ('903', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:07:13', '2020-01-04 18:07:13', '0', 'mass', '', null, 'ppsg/strategy/discuss', 'PAGE', '/ppsg/strategy/discuss');
-INSERT INTO `s_log` VALUES ('904', '2', 'wang', '0:0:0:0:0:0:0:1', '2020-01-04 18:07:13', '2020-01-04 18:07:13', '0', 'list', '', null, 'ResultMsg{code=1, msg=\'操作成功\', data=[com.ming.ppsg.entity.DiscussPost@2d0e2cce]}', 'SELECT', '/ppsg/strategy/discuss/post/list');
+) ENGINE=MyISAM AUTO_INCREMENT=1406 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for s_permission
@@ -517,9 +425,8 @@ CREATE TABLE `s_user` (
 -- Records of s_user
 -- ----------------------------
 INSERT INTO `s_user` VALUES ('1', 'user', 'e10adc3949ba59abbe56e057f20f883e', '/static/formwork/demo/img/profile-pics/5.jpg', '2132@123.cks', null, '/static/formwork/img/bg/1.jpg', '2020-01-01 16:56:08', '0', '0');
-INSERT INTO `s_user` VALUES ('2', 'wang', 'e10adc3949ba59abbe56e057f20f883e', '/static/formwork/demo/img/profile-pics/9.jpg', '2132@123.cks', null, '/static/formwork/img/bg/1.jpg', '2020-01-02 16:56:12', '0', '0');
-INSERT INTO `s_user` VALUES ('3', 'superadmin', 'e10adc3949ba59abbe56e057f20f883e', '/static/formwork/demo/img/profile-pics/5.jpg', '2132@123.cks', null, '/static/formwork/img/bg/1.jpg', '2020-01-03 16:56:15', '0', '0');
-INSERT INTO `s_user` VALUES ('10', 'wang1', 'e10adc3949ba59abbe56e057f20f883e', '/static/formwork/demo/img/profile-pics/5.jpg', '2132@123.cks', null, '/static/formwork/img/bg/1.jpg', '2020-01-04 08:37:16', '0', '0');
+INSERT INTO `s_user` VALUES ('2', 'superadmin', 'e10adc3949ba59abbe56e057f20f883e', '/static/formwork/demo/img/profile-pics/9.jpg', '2132@123.cks', null, '/static/formwork/img/bg/1.jpg', '2020-01-03 16:56:15', '0', '0');
+INSERT INTO `s_user` VALUES ('3', 'wang', 'e10adc3949ba59abbe56e057f20f883e', '/static/formwork/demo/img/profile-pics/5.jpg', '2132@123.cks', null, '/static/formwork/img/bg/1.jpg', '2020-01-01 16:56:08', '0', '0');
 
 -- ----------------------------
 -- Table structure for s_user_role
@@ -535,5 +442,4 @@ CREATE TABLE `s_user_role` (
 -- ----------------------------
 INSERT INTO `s_user_role` VALUES ('1', '1');
 INSERT INTO `s_user_role` VALUES ('2', '2');
-INSERT INTO `s_user_role` VALUES ('3', '2');
-INSERT INTO `s_user_role` VALUES ('10', '1');
+INSERT INTO `s_user_role` VALUES ('3', '1');
