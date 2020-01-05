@@ -77,9 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.defaultSuccessUrl("/index")
                 //登录失败
                 //.failureUrl("/logout")
-                .and()
-                .logout().logoutUrl("/logout")//.logoutSuccessUrl("/login")
-                .invalidateHttpSession(true)//.deleteCookies("usernameCookie","urlCookie")
+                .and().logout().logoutUrl("/logout").invalidateHttpSession(true)
+                //.logoutSuccessUrl("/login").deleteCookies("usernameCookie","urlCookie")
         ;
 
         //添加JWT filter,使用自定义的 Token过滤器 验证请求的Token是否合法

@@ -50,7 +50,7 @@ public class LoginController {
 
     @Log
     @Page
-    @GetMapping("/403")
+    @RequestMapping("/403")
     public String fail(){
         return "403";
     }
@@ -65,7 +65,7 @@ public class LoginController {
     @Log
     @Login
     @PostMapping("/auth/login")
-    public String login(User user, HttpServletRequest request, HttpServletResponse response,HttpSession session) throws AuthenticationException{
+    public String login(User user, HttpServletRequest request) throws AuthenticationException{
         String username = user.getUsername();
         String password = user.getPassword();
         // 登录成功会返回Token给用户

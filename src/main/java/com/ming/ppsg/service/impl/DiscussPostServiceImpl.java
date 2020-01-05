@@ -8,6 +8,7 @@ import com.ming.ppsg.service.DiscussPostService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DiscussPostServiceImpl implements DiscussPostService {
@@ -18,8 +19,8 @@ public class DiscussPostServiceImpl implements DiscussPostService {
     private DiscussPostTagMapper discussPostTagMapper;
 
     @Override
-    public List<DiscussPost> selectAll() {
-        return discussPostMapper.selectAll();
+    public List<DiscussPost> selectAll(DiscussPost post) {
+        return discussPostMapper.selectAll(post);
     }
 
     @Override
@@ -30,5 +31,15 @@ public class DiscussPostServiceImpl implements DiscussPostService {
             discussPostTagMapper.insertPostTag(post.getId(),Long.valueOf(id));
         }
         return i;
+    }
+
+    @Override
+    public Map<String, Object> selectCount(Long userId) {
+        return discussPostMapper.selectCount(userId);
+    }
+
+    @Override
+    public DiscussPost detail(Long id) {
+        return discussPostMapper.detail(id);
     }
 }

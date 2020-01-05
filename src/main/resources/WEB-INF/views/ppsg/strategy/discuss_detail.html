@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/static/formwork/vendors/zwicon/zwicon.min.css">
     <link rel="stylesheet" href="/static/formwork/vendors/animate.css/animate.min.css">
     <link rel="stylesheet" href="/static/formwork/vendors/overlay-scrollbars/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="/static/formwork/vendors/lightgallery/css/lightgallery.min.css">
     <!-- App styles -->
     <link rel="stylesheet" href="/static/formwork/css/app.min.css">
 </head>
@@ -258,20 +259,37 @@
                     </div>
                 </div>
 
-                <h2>Dulla vel metus scelerisque ante sollicitudin commodo purus odio Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</h2>
-                <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget metus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec id elit non mi porta gravida at eget metus.</p>
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">${discussPost.title!}</h2>
+                        <p>${discussPost.content!}</p>
+                    </div>
+                </div>
 
+                <div class="row lightbox photos">
+                    <%
+                    if(has(discussPost) && discussPost.imageUrlList!=null){
+                    for(img in discussPost.imageUrlList){
+                    var url = img;
+                    print('<a href="'+url+'" class="col-md-2 col-4"><div class="lightbox__item photos__item"><img src="'+url+'" alt="" /></div></a>');
+                    }
+                    }
+                    %>
+                </div>
                 <div class="tags mt-4">
-                    <a href="#">#Sollicitudin</a>
-                    <a href="#">#Ultricies</a>
-                    <a href="#">#Elit</a>
-                    <a href="#">#Crastortor</a>
+                    <%
+                        if(has(discussPost) && discussPost.tagsList!=null){
+                            for(tag in discussPost.tagsList){
+                                print("<a href='javascript:void(0);'>"+tag.name+"</a>");
+                            }
+                        }
+                    %>
                 </div>
 
                 <div class="q-a__info">
                     <div class="q-a__op">
-                        <a href="#"><img src="demo/img/contacts/1.jpg" alt=""></a>
-                        <span>Asked by James Williams 5 days ago</span>
+                        <a href="#"><img src="${discussPost.headPortrait!}" alt=""></a>
+                        <span>发起于 ${discussPost.createTime,dateFormat="yyyy-MM-dd hh:mm:ss"}</span>
                     </div>
 
                     <div class="actions d-none d-sm-flex">
@@ -287,6 +305,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="content__inner">
@@ -295,14 +314,14 @@
                     <div class="toolbar__label">Total 10 Answers</div>
 
                     <nav class="toolbar__nav ml-auto d-none d-sm-block">
-                        <a href="#" class="active">Newest</a>
-                        <a href="#">Oldest</a>
-                        <a href="#">Active</a>
+                        <a href="javascript:void(0);" class="active">Newest</a>
+                        <a href="javascript:void(0);">Oldest</a>
+                        <a href="javascript:void(0);">Active</a>
                     </nav>
                 </div>
 
                 <div class="listview listview--bordered listview--block">
-                    <div class="listview__item">
+                    <!--<div class="listview__item">
                         <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget metus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec id elit non mi porta gravida at eget metus.</p>
                         <p>Cras mattis consectetur purus sit amet fermentum. Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis. Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 
@@ -312,9 +331,9 @@
                                 <span>Replied by Jane Cross 6 days ago</span>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
-                    <div class="listview__item">
+                    <!--<div class="listview__item">
                         <p>Cras mattis consectetur purus sit amet fermentum. Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed odio dui.</p>
 
                         <div class="q-a__info">
@@ -323,9 +342,9 @@
                                 <span>Replied by Xena Williams 6 days ago</span>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
-                    <div class="listview__item">
+                    <!--<div class="listview__item">
                         <p>Mauris accumsan neque sit amet blandit commodo. Aliquam sapien est, finibus non libero vitae, mattis egestas tellus. Aliquam faucibus in odio id feugiat. Quisque eu lacus justo. Sed ut dolor nunc. In fringilla lacus ac magna porttitor, posuere volutpat quam ultrices. Suspendisse vehicula mi eros, sed feugiat dolor condimentum elementum.</p>
 
                         <div class="q-a__info">
@@ -334,11 +353,11 @@
                                 <span>Replied by Rose Taylor 6 days ago</span>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <form class="listview__item">
                         <textarea class="form-control mb-3" placeholder="Start typing..."></textarea>
-                        <button class="btn btn-theme">Answer</button>
+                        <button class="btn btn-theme">回复</button>
                     </form>
                 </div>
             </div>
@@ -388,6 +407,7 @@
 <script src="/static/formwork/vendors/popper.js/popper.min.js"></script>
 <script src="/static/formwork/vendors/bootstrap/js/bootstrap.min.js"></script>
 <script src="/static/formwork/vendors/overlay-scrollbars/jquery.overlayScrollbars.min.js"></script>
+<script src="/static/formwork/vendors/lightgallery/js/lightgallery-all.min.js"></script>
 
 <script src="/static/formwork/vendors/jquery-mask-plugin/jquery.mask.min.js"></script>
 <script src="/static/formwork/vendors/select2/js/select2.full.min.js"></script>
@@ -401,11 +421,6 @@
 <script src="/static/formwork/vendors/autosize/autosize.min.js"></script>
 <script src="/static/formwork/vendors/sweetalert2/sweetalert2.all.min.js"></script>
 
-<script src="/static/formwork/vendors/datatables/jquery.dataTables.min.js"></script>
-<script src="/static/formwork/vendors/datatables/datatables-buttons/dataTables.buttons.min.js"></script>
-<script src="/static/formwork/vendors/datatables/datatables-buttons/buttons.print.min.js"></script>
-<script src="/static/formwork/vendors/jszip/jszip.min.js"></script>
-<script src="/static/formwork/vendors/datatables/datatables-buttons/buttons.html5.min.js"></script>
 <!-- App functions and actions -->
 <script src="/static/formwork/js/app.min.js"></script>
 <script src="/static/js/ming.tools.js"></script>

@@ -19,6 +19,7 @@ public class DiscussPost {
     private Integer status;//0:讨论中 1：已结束
     private Integer delFlag;//0:未删除 1：已删除
     private List<DiscussPostTags> tagsList;
+    private List<String> imageUrlList;
 
     public DiscussPost() {
     }
@@ -133,5 +134,13 @@ public class DiscussPost {
 
     public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
+    }
+
+    public List<String> getImageUrlList() {
+        return imageUrlList;
+    }
+
+    public void setImageUrlList(List<String> imageUrlList) {
+        this.imageUrlList = imageUrlList;
     }
 }

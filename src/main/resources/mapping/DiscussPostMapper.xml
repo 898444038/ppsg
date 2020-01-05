@@ -55,6 +55,15 @@
 		</collection>
 	</resultMap>
 
+	<select id="detail" resultMap="resultMap" parameterType="java.lang.Long">
+		SELECT <include refid="postColumn"></include>
+		FROM ppsg_discuss_post p
+		left join s_user u on p.user_id = u.id
+		left join ppsg_discuss_post_tag pt on p.id=pt.discuss_id
+		left join ppsg_discuss_post_tags pts on pt.tag_id = pts.id
+		where p.del_flag = 0 and pts.del_flag = 0 and p.id=#{id}
+	</select>
+
 	<select id="selectAll" resultMap="resultMap" parameterType="com.ming.ppsg.entity.DiscussPost">
 		SELECT <include refid="postColumn"></include>
 		FROM ppsg_discuss_post p
@@ -62,6 +71,15 @@
 		left join ppsg_discuss_post_tag pt on p.id=pt.discuss_id
 		left join ppsg_discuss_post_tags pts on pt.tag_id = pts.id
 		where p.del_flag = 0 and pts.del_flag = 0
+		<if test="status != null"> and p.status = #{status} </if>
+		<if test="userId != null"> and p.user_id = #{userId} </if>
+	</select>
+
+	<select id="selectCount" resultType="java.util.HashMap" parameterType="java.lang.Long">
+		SELECT
+			(select count(0) from ppsg_discuss_post where status=0) as count0,
+			(select count(0) from ppsg_discuss_post where status=1) as count1,
+			(select count(0) from ppsg_discuss_post where user_id=#{userId}) as count2
 	</select>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ming.ppsg.entity.DiscussPost">

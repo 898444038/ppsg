@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Log
 @RestController
@@ -31,8 +33,26 @@ public class DiscussPostController {
 
     @Select
     @GetMapping("/list")
-    public ResultMsg list(){
-        return ResultMsg.success(disCussPostService.selectAll());
+    public ResultMsg list(DiscussPost post){
+        if(post.getStatus()==null){
+            return ResultMsg.failed();
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User)authentication.getPrincipal();
+        Long userId = null;
+        if(null!=user){
+            userId = user.getId();
+        }else{
+            return ResultMsg.failed();
+        }
+        if(post.getStatus()==2){
+            post.setUserId(userId);
+            post.setStatus(null);
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("list",disCussPostService.selectAll(post));
+        map.put("total",disCussPostService.selectCount(userId));
+        return ResultMsg.success(map);
     }
 
     @Insert

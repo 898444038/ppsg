@@ -63,22 +63,24 @@ public class LogAspect {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();//获取request
         //HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();//获取response
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.getPrincipal() instanceof User){
-            User user = (User)authentication.getPrincipal();
-            Log log = new Log();
-            log.setUserId(user.getId());
-            log.setUsername(user.getUsername());
-            log.setIp(IpUtils.getIpAddress(request));
-            log.setStartTime(new Date(startTime));
-            log.setEndTime(new Date(endTime));
-            String time = df.format((float)(endTime-startTime)/1000);
-            log.setTime(Integer.valueOf(time));
-            log.setMethod(method.getName());
-            log.setMapping(AspectUtils.getMapping(clazz,method));
-            log.setArgs(args);
-            log.setResult(obj.toString());
-            log.setType(AspectUtils.getMethodType(method));
-            logService.insertLog(log);
+        if(authentication!=null){
+            if(authentication.getPrincipal() instanceof User){
+                User user = (User)authentication.getPrincipal();
+                Log log = new Log();
+                log.setUserId(user.getId());
+                log.setUsername(user.getUsername());
+                log.setIp(IpUtils.getIpAddress(request));
+                log.setStartTime(new Date(startTime));
+                log.setEndTime(new Date(endTime));
+                String time = df.format((float)(endTime-startTime)/1000);
+                log.setTime(Integer.valueOf(time));
+                log.setMethod(method.getName());
+                log.setMapping(AspectUtils.getMapping(clazz,method));
+                log.setArgs(args);
+                log.setResult(obj.toString());
+                log.setType(AspectUtils.getMethodType(method));
+                logService.insertLog(log);
+            }
         }
         return obj;
     }

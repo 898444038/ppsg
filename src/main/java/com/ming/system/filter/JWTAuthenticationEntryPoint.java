@@ -21,25 +21,28 @@ public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
 
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        String reason = "token失效，请重新登录："+authException.getMessage();
-        response.getWriter().write(new ObjectMapper().writeValueAsString(reason));
+//        response.setCharacterEncoding("UTF-8");
+//        response.setContentType("application/json; charset=utf-8");
+//        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
-//        String reason = "没有访问权限：" + e.getMessage();
-//        Gson gson = new Gson();
-//        String result = gson.toJson(ResultMsg.auth(reason));
-//        PrintWriter out = null;
-//        try {
-//            out = httpServletResponse.getWriter();
-//            out.append(result);
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        } finally {
-//            if (out != null) {
-//                out.close();
-//            }
-//        }
+        //String reason = "token失效，请重新登录："+authException.getMessage();
+        //response.getWriter().write(new ObjectMapper().writeValueAsString(reason));
+
+        /*String reason = "token失效，请重新登录：" + authException.getMessage();
+        Gson gson = new Gson();
+        String result = gson.toJson(ResultMsg.auth(reason));
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+            out.append(result);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }*/
+        request.getRequestDispatcher("/403").forward(request, response);
+//        response.sendRedirect("/403");
     }
 }
