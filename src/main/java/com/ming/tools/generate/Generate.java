@@ -262,22 +262,7 @@ public class Generate {
 
         System.out.println(gs.toString());
     }
-
-    public static void main(String[] args) {
-        //Comment comment = new Comment();
-        //comment.setAuthor("wang");
-        //comment.setDesc("用户");
-        //comment.setCreateTime(new Date());
-
-        /*String s = GenerateString.build().appendDesc(comment,DescType.INSERT,0).toString();
-        System.out.println(s);*/
-
-        //generateController();
-        //generateService(User.class,comment);
-        //generateServiceImpl(User.class,comment);
-        //generateEntity(User.class,comment);
-        //generateMapper(User.class,comment);
-        //generateMapperXml(User.class,comment);
+    public void generateCreateSql(Class clazz,String tableName){
 
     }
 
@@ -290,12 +275,12 @@ public class Generate {
         String path = GenerateConfig.path;
         for (Class<?> cls : classSet) {
             Comment comment = GenerateUtil.getComment(cls);
-            //generateEntity(cls,comment);
-//            generateController(cls,comment);
-//            generateService(cls,comment);
-//            generateServiceImpl(cls,comment);
+            generateController(cls,comment);
+            generateService(cls,comment);
+            generateServiceImpl(cls,comment);
             generateMapper(cls,comment);
             generateMapperXml(cls, GenerateUtil.getTableName(cls));
+            generateCreateSql(cls, GenerateUtil.getTableName(cls));
         }
         System.out.println("create");
     }
