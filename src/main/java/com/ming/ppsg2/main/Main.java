@@ -1,17 +1,38 @@
 package com.ming.ppsg2.main;
 
 
-import com.ming.ppsg2.entity.*;
+import com.ming.ppsg2.entity.ArmsBook;
+import com.ming.ppsg2.entity.Destiny;
+import com.ming.ppsg2.entity.Generals;
+import com.ming.ppsg2.entity.Result;
+import com.ming.ppsg2.entity.Symbols;
+import com.ming.ppsg2.entity.ThreeDimensional;
+import com.ming.ppsg2.entity.Warpath;
 import com.ming.ppsg2.enums.GeneralsEnum;
-import com.ming.ppsg2.utils.*;
+import com.ming.ppsg2.utils.DestinyData;
+import com.ming.ppsg2.utils.ExcelReaderUtil;
+import com.ming.ppsg2.utils.GeneralsUtil;
+import com.ming.ppsg2.utils.NumberUtil;
 import com.ming.ppsg2.utils.jxls.JxlsUtil;
 import org.springframework.beans.BeanUtils;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
 
 public class Main {
 
@@ -182,7 +203,6 @@ public class Main {
                     skinCode = skin1.getCode();
                 }
             }
-            System.out.println(skin);
 
             Integer disobeyCode = null;
             for(GeneralsEnum.Destiny destiny : GeneralsEnum.Destiny.values()){
@@ -499,6 +519,8 @@ public class Main {
             System.out.println(e);
         }
         System.out.println("生成Excel成功!");
+
+        NumberUtil.count(resultList);
     }
 
     public static void zt(){

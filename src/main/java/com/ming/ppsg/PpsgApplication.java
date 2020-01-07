@@ -1,5 +1,6 @@
 package com.ming.ppsg;
 
+import com.ming.tools.generate.annotation.GenerateScan;
 import org.beetl.core.resource.WebAppResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
@@ -21,6 +22,9 @@ import java.io.IOException;
 )
 @MapperScan(
 	basePackages = {"com.ming.ppsg.mapper","com.ming.system.mapper"}
+)
+@GenerateScan(
+    basePackages = {"com.ming"}
 )
 public class PpsgApplication {
 

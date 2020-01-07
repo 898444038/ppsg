@@ -2,12 +2,19 @@ package com.ming.ppsg2.utils;
 
 
 import com.ming.ppsg2.entity.Generals;
+import com.ming.ppsg2.entity.Result;
+import com.ming.ppsg2.entity.Symbols;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class NumberUtil {
 
@@ -194,5 +201,94 @@ public class NumberUtil {
         //不选择第一个元素
         selector.remove(selector.size() -1 );
         combinations2(selector,data.subList(1, data.size()), n); //从第二个元素开始选择，选择两个
+    }
+
+
+    public static void count(List<Result> resultList){
+        System.out.println(resultList.size());
+        Collections.sort(resultList, new Comparator<Result>(){
+            @Override
+            public int compare(Result o1, Result o2) {
+                int type1 = o1.getSymbolsList().get(0).getType().hashCode() - o2.getSymbolsList().get(0).getType().hashCode();
+                int type2 = o1.getSymbolsList().get(2).getType().hashCode() - o2.getSymbolsList().get(2).getType().hashCode();
+                int type3 = o1.getSymbolsList().get(4).getType().hashCode() - o2.getSymbolsList().get(4).getType().hashCode();
+                return type1 + type2 + type3;
+            }
+        });
+        List<String> names = new ArrayList<>();
+        for (Result result : resultList){
+            List<Symbols> symbols = result.getSymbolsList();
+            String s = symbols.get(0).getTypeName()+symbols.get(2).getTypeName()+symbols.get(4).getTypeName();
+            names.add(s);
+        }
+        repeatCount(names);
+
+        resultList.sort(new Comparator<Result>() {
+            @Override
+            public int compare(Result o1, Result o2) {
+                int type1 = o1.getSymbolsList().get(0).getMainAttr().hashCode() - o2.getSymbolsList().get(0).getMainAttr().hashCode();
+                int type2 = o1.getSymbolsList().get(1).getMainAttr().hashCode() - o2.getSymbolsList().get(1).getMainAttr().hashCode();
+                int type3 = o1.getSymbolsList().get(2).getMainAttr().hashCode() - o2.getSymbolsList().get(2).getMainAttr().hashCode();
+                int type4 = o1.getSymbolsList().get(3).getMainAttr().hashCode() - o2.getSymbolsList().get(3).getMainAttr().hashCode();
+                int type5 = o1.getSymbolsList().get(4).getMainAttr().hashCode() - o2.getSymbolsList().get(4).getMainAttr().hashCode();
+                int type6 = o1.getSymbolsList().get(5).getMainAttr().hashCode() - o2.getSymbolsList().get(5).getMainAttr().hashCode();
+                return type1 + type2 + type3 + type4 + type5 + type6;
+            }
+        });
+        names = new ArrayList<>();
+        for (Result result : resultList){
+            List<Symbols> symbols = result.getSymbolsList();
+            String s = symbols.get(0).getMainAttrName()+","+symbols.get(1).getMainAttrName()+","+symbols.get(2).getMainAttrName()+",";
+            s += symbols.get(3).getMainAttrName()+","+symbols.get(4).getMainAttrName()+","+symbols.get(5).getMainAttrName();
+            names.add(s);
+        }
+        repeatCount(names);
+
+
+
+        resultList.sort(new Comparator<Result>() {
+            @Override
+            public int compare(Result o1, Result o2) {
+                int type1 = o1.getSymbolsList().get(0).getAttr1().hashCode() - o2.getSymbolsList().get(0).getAttr1().hashCode();
+                int type2 = o1.getSymbolsList().get(0).getAttr2().hashCode() - o2.getSymbolsList().get(0).getAttr2().hashCode();
+                int type3 = o1.getSymbolsList().get(0).getAttr3().hashCode() - o2.getSymbolsList().get(0).getAttr3().hashCode();
+                int type4 = o1.getSymbolsList().get(0).getAttr4().hashCode() - o2.getSymbolsList().get(0).getAttr4().hashCode();
+                return type1 + type2 + type3 + type4;
+            }
+        });
+        names = new ArrayList<>();
+        for (Result result : resultList){
+            List<Symbols> symbols = result.getSymbolsList();
+            String s = symbols.get(0).getAttrName1()+","+symbols.get(0).getAttrName2()+","+symbols.get(0).getAttrName3()+","+symbols.get(0).getAttrName4();
+            names.add(s);
+        }
+        repeatCount(names);
+    }
+
+
+    public static void repeatCount(List<String> list){
+        boolean sortAsc = true;
+        Map<String,Integer> map = new HashMap<>();
+        for(String str : list){
+            Integer i = 1; //定义一个计数器，用来记录重复数据的个数
+            if(map.get(str) != null){
+                i=map.get(str)+1;
+            }
+            map.put(str,i);
+        }
+        Map<String, Integer> sortedMap = new LinkedHashMap<>();
+        if(sortAsc){
+            map.entrySet().stream()
+               .sorted(Map.Entry.comparingByValue())
+               .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+        }else{
+            map.entrySet().stream()
+               .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+               .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+        }
+
+        for(Map.Entry<String,Integer> entry : sortedMap.entrySet()){
+            System.out.println(entry.getKey()+":"+entry.getValue());
+        }
     }
 }
