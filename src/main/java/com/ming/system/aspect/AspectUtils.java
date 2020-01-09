@@ -2,18 +2,24 @@ package com.ming.system.aspect;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ming.system.annotation.methodtype.*;
+import com.ming.system.annotation.methodtype.Delete;
+import com.ming.system.annotation.methodtype.Insert;
+import com.ming.system.annotation.methodtype.Login;
+import com.ming.system.annotation.methodtype.Page;
+import com.ming.system.annotation.methodtype.Register;
+import com.ming.system.annotation.methodtype.Select;
+import com.ming.system.annotation.methodtype.Update;
+import com.ming.system.annotation.methodtype.Upload;
 import com.ming.system.enums.LogEnum;
-import com.ming.system.utils.StringUtils;
-import org.apache.ibatis.javassist.*;
-import org.apache.ibatis.javassist.bytecode.CodeAttribute;
-import org.apache.ibatis.javassist.bytecode.LocalVariableAttribute;
-import org.apache.ibatis.javassist.bytecode.MethodInfo;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.CodeSignature;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -95,9 +101,25 @@ public class AspectUtils {
         return param;
     }
 
-    private static String[] types = { "java.lang.Integer", "java.lang.Double", "java.lang.Float", "java.lang.Long",
-            "java.lang.Short", "java.lang.Byte", "java.lang.Boolean", "java.lang.Char", "java.lang.String", "int",
-            "double", "long", "short", "byte", "boolean", "char", "float" };
+    private static String[] types = {
+            "java.lang.Integer",
+            "java.lang.Double",
+            "java.lang.Float",
+            "java.lang.Long",
+            "java.lang.Short",
+            "java.lang.Byte",
+            "java.lang.Boolean",
+            "java.lang.Character",
+            "java.lang.String",
+            "int",
+            "double",
+            "long",
+            "short",
+            "byte",
+            "boolean",
+            "char",
+            "float"
+    };
 
     /**
      * 获取方法参数名及对应值
