@@ -39,9 +39,9 @@ public class Main {
     public static void main(String[] args) {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：狼顾司马懿、独目夏侯惇、恶来典韦、征南曹仁、七星诸葛亮、麒麟姜维、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、战姬吕玲绮、修罗吕布\n" +
                 "安卓1服熾陽✵天下出品,如发现错误之处，欢迎指正！建议使用WPS查看表格。啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增武将：砺战赵云\n" +
-                "特别感谢：熾陽✵火麟斷浪⸙(安卓1服)提供的砺战赵云三维数据";
-        String advert = "火麟斷浪：安卓一区熾陽公会向所有服务器招收活跃玩家";
+                "更新内容：1.新增武将：绝情张春华(张春华兵书命格三维为预估值，仅供参考)\n";
+        //top += "特别感谢：熾陽✵火麟斷浪⸙(安卓1服)提供的砺战赵云三维数据";
+        String advert = "";//"火麟斷浪：安卓一区熾陽公会向所有服务器招收活跃玩家";
 
         long t1 = System.currentTimeMillis();
         xzl(top,advert);
@@ -508,7 +508,7 @@ public class Main {
         }
 
         try{
-            ///保存属性到data.properties文件
+            //保存属性到data.properties文件
             FileOutputStream oFile = new FileOutputStream("data.properties", false);//true表示追加打开
             for(Map.Entry<String,String> maps : generalsMapSort.entrySet()){
                 prop.setProperty(maps.getKey(), maps.getValue());
