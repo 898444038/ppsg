@@ -40,6 +40,7 @@ public class Main {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：狼顾司马懿、独目夏侯惇、恶来典韦、征南曹仁、七星诸葛亮、麒麟姜维、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、战姬吕玲绮、修罗吕布\n" +
                 "安卓1服熾陽✵天下出品,如发现错误之处，欢迎指正！建议使用WPS查看表格。啪啪三国技术交流群：913083053\n" +
                 "更新内容：1.新增武将：绝情张春华(张春华兵书命格三维为预估值，仅供参考)\n";
+        top  += "         2.最佳随从排名表";
         //top += "特别感谢：熾陽✵火麟斷浪⸙(安卓1服)提供的砺战赵云三维数据";
         String advert = "";//"火麟斷浪：安卓一区熾陽公会向所有服务器招收活跃玩家";
 
@@ -52,7 +53,7 @@ public class Main {
 
     public static void xzl(String top,String advert){
         //"","","","",""
-        String[] sz = {};
+        String[] sz = {"虎涧典韦","霸业曹操","墨衍荀彧","砺战赵云","鬼谋郭嘉_限"};
 
         List<Generals> nimingList = new ArrayList<>();
         List<Generals> generalsAll = new ArrayList<>();
@@ -67,10 +68,6 @@ public class Main {
         try {
             InputStream inStream = new FileInputStream("data.properties");
             prop.load(inStream);     ///加载属性列表
-            //Iterator<String> it = prop.stringPropertyNames().iterator();
-            //while (it.hasNext()) {
-            //    String key = it.next();
-            //}
             Enumeration enu = prop.keys();
             while (enu.hasMoreElements()) {
                 Object obj = enu.nextElement();
@@ -316,14 +313,23 @@ public class Main {
             map = GeneralsUtil.getEntourage(generals,generalsAll);//随从三维
         }
 
+        //随从榜
         List<Generals> allEntourageList = new ArrayList<>();
         for(Generals g : generalsAll){
             Generals copy = new Generals();
             BeanUtils.copyProperties(g,copy);
             allEntourageList.add(g);
         }
-
         Map<Integer,List<Generals>> allEntourage = GeneralsUtil.getAllEntourage(allEntourageList);//随从三维
+
+        //最佳随从表
+        List<Generals> optimumEntourageList = new ArrayList<>();
+        for(Generals g : generalsAll){
+            Generals copy = new Generals();
+            BeanUtils.copyProperties(g,copy);
+            optimumEntourageList.add(g);
+        }
+        List<Generals> optimumEntourage = GeneralsUtil.getOptimumEntourage(nimingList,optimumEntourageList);
 
         long t1 = System.currentTimeMillis();
         List<List<Generals>> all = NumberUtil.getNoRepeatList(nimingList,5);
@@ -401,7 +407,7 @@ public class Main {
                 grilResultList.add(result);
             }
 
-            int zhanli = 375000;
+            int zhanli = 377000;
             int flag = 0;
             //跳过战力低于zhanli的
             if(allTotalSword<zhanli && sz.length==0){
@@ -489,23 +495,17 @@ public class Main {
 
         model.put("top",top);
         model.put("advert",advert);
-        model.put("simplifyList1",GeneralsUtil.getSimplifyList(resultList));//简表
+        //model.put("simplifyList1",GeneralsUtil.getSimplifyList(resultList));//简表
         model.put("simplifyList2",GeneralsUtil.getSimplifyList(resultList2));//简表（特殊战器）
-        model.put("list",resultList);//虚战力表
-        model.put("list2",resultList2);//虚战力表（特殊战器）
+        resultList = null;
+        //model.put("list",resultList);//虚战力表
+        model.put("list2",GeneralsUtil.getExcludeList(resultList2,380000));//虚战力表（特殊战器）
         model.put("grilList",grilResultList);//虚战力表（女队）
         model.put("forceTopList",forceTopList);
         model.put("intellectTopList",intellectTopList);
         model.put("troopsTopList",troopsTopList);
+        model.put("optimumEntourageList",optimumEntourage);//最佳随从表
         model.put("destinyMap",destinyMap);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        try {
-            InputStream is = ExcelReaderUtil.class.getResourceAsStream("/excel/result_temp.xlsx");
-            OutputStream os = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\虚战力表"+sdf.format(new Date())+".xlsx");
-            JxlsUtil.export2Excel(is,os,model);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
         try{
             //保存属性到data.properties文件
@@ -518,9 +518,19 @@ public class Main {
         }catch(Exception e){
             System.out.println(e);
         }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        try {
+            InputStream is = ExcelReaderUtil.class.getResourceAsStream("/excel/result_temp2.xlsx");
+            OutputStream os = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\虚战力表"+sdf.format(new Date())+".xlsx");
+            JxlsUtil.export2Excel(is,os,model);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         System.out.println("生成Excel成功!");
 
-        NumberUtil.count(resultList);
+        NumberUtil.count(resultList2);
     }
 
     public static void zt(){

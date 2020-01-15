@@ -45,6 +45,8 @@ public class Generals {
     private Integer generalsType;
     //是否是随从
     private Boolean isEntourage;
+    //是否是联协
+    private Boolean isAssociation;
     //联协
     private List<Integer> entourages;
     //武力联协
@@ -53,6 +55,12 @@ public class Generals {
     private Generals intellectEntourage;
     //兵力联协
     private Generals troopsEntourage;
+    //最佳武力联协
+    private List<Generals> forceEntourageList;
+    //最佳智力联协
+    private List<Generals> intellectEntourageList;
+    //最佳兵力联协
+    private List<Generals> troopsEntourageList;
     //国家 GeneralsEnum.country
     private Integer country;
     //兵种 GeneralsEnum.Arms
@@ -133,6 +141,13 @@ public class Generals {
     //武将兵力(联协加成)只限于显示
     private Integer t;
 
+    //武将武力(判断有无联协后结果)只限于显示
+    private Integer rf;
+    //武将智力(判断有无联协后结果)只限于显示
+    private Integer ri;
+    //武将兵力(判断有无联协后结果)只限于显示
+    private Integer rt;
+
     //武将总武力(联协加成)
     private Integer totalAddForce;
     //武将总智力(联协加成)
@@ -140,8 +155,25 @@ public class Generals {
     //武将总兵力(联协加成)
     private Integer totalAddTroops;
 
+    private String remark;
+
     public Generals(){}
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Boolean getIsAssociation() {
+        return isAssociation;
+    }
+
+    public void setIsAssociation(Boolean isAssociation) {
+        this.isAssociation = isAssociation;
+    }
 
     public String getName() {
         return name;
@@ -181,6 +213,30 @@ public class Generals {
 
     public void setGeneralsType(Integer generalsType) {
         this.generalsType = generalsType;
+    }
+
+    public Integer getRf() {
+        return rf;
+    }
+
+    public void setRf(Integer rf) {
+        this.rf = rf;
+    }
+
+    public Integer getRi() {
+        return ri;
+    }
+
+    public void setRi(Integer ri) {
+        this.ri = ri;
+    }
+
+    public Integer getRt() {
+        return rt;
+    }
+
+    public void setRt(Integer rt) {
+        this.rt = rt;
     }
 
     public Integer getForce() {
@@ -541,6 +597,30 @@ public class Generals {
 
     public void setWarDevice2ThreeDimensional(ThreeDimensional warDevice2ThreeDimensional) {
         this.warDevice2ThreeDimensional = warDevice2ThreeDimensional;
+    }
+
+    public List<Generals> getForceEntourageList() {
+        return forceEntourageList;
+    }
+
+    public void setForceEntourageList(List<Generals> forceEntourageList) {
+        this.forceEntourageList = forceEntourageList;
+    }
+
+    public List<Generals> getIntellectEntourageList() {
+        return intellectEntourageList;
+    }
+
+    public void setIntellectEntourageList(List<Generals> intellectEntourageList) {
+        this.intellectEntourageList = intellectEntourageList;
+    }
+
+    public List<Generals> getTroopsEntourageList() {
+        return troopsEntourageList;
+    }
+
+    public void setTroopsEntourageList(List<Generals> troopsEntourageList) {
+        this.troopsEntourageList = troopsEntourageList;
     }
 
     public Integer getTotalSword2() {

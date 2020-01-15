@@ -55,9 +55,208 @@ public class GeneralsUtil {
         return three;
     }
 
-    public static Map<Integer,List<Generals>> getAllEntourage(List<Generals> all) {
-        //List<Integer> entourages = generals.getEntourages();
+    //最佳随从表  // todo:获取随从三维
+    public static List<Generals> getOptimumEntourage(List<Generals> nimingList,List<Generals> all) {
+        Map<String,Map<Integer,List<Generals>>> map = new LinkedHashMap<>();
+        List<Generals> resultList = new ArrayList<>();
+        for (Generals generals : nimingList){
+            Generals gs = new Generals();
+            gs.setName(generals.getName());
 
+            List<Integer> entourages = generals.getEntourages();
+            List<Generals> list = new ArrayList<>();
+            for(Generals generals1 : all){
+                generals1.setIsEntourage(true);
+
+                generals1.getArmsBook().setEnableType(null);
+                generals1.getArmsBook().setEnableTypeName(null);
+                generals1.getArmsBook().setBook1(null);
+                generals1.getArmsBook().setBookName1(null);
+                generals1.getArmsBook().setBook2(null);
+                generals1.getArmsBook().setBookName2(null);
+                generals1.getArmsBook().setBook3(null);
+                generals1.getArmsBook().setBookName3(null);
+                generals1.getArmsBook().setBook4(null);
+                generals1.getArmsBook().setBookName4(null);
+                generals1.getArmsBook().setBook5(null);
+                generals1.getArmsBook().setBookName5(null);
+                list.add(generals1);
+            }
+            List<Generals> forceList = new ArrayList<>();//最佳武随榜
+            List<Generals> intellectList = new ArrayList<>();//最佳智随榜
+            List<Generals> troopsList = new ArrayList<>();//最佳兵随榜
+            for(Generals generals1 : list){
+                Generals copy1 = new Generals();
+                BeanUtils.copyProperties(generals1,copy1);
+                ArmsBook copyBook1 = new ArmsBook();
+                BeanUtils.copyProperties(generals1.getArmsBook(),copyBook1);
+                copy1.setArmsBook(copyBook1);
+
+                Generals copy2 = new Generals();
+                BeanUtils.copyProperties(generals1,copy2);
+                ArmsBook copyBook2 = new ArmsBook();
+                BeanUtils.copyProperties(generals1.getArmsBook(),copyBook2);
+                copy2.setArmsBook(copyBook2);
+
+                Generals copy3 = new Generals();
+                BeanUtils.copyProperties(generals1,copy3);
+                ArmsBook copyBook3 = new ArmsBook();
+                BeanUtils.copyProperties(generals1.getArmsBook(),copyBook3);
+                copy3.setArmsBook(copyBook3);
+
+                Integer totalForce = 0;
+                Integer totalIntellect = 0;
+                Integer totalTroops = 0;
+                ThreeDimensional maxLevelThree =  getMaxLevel(generals1);
+                totalForce += maxLevelThree.getForce();
+                totalIntellect += maxLevelThree.getIntellect();
+                totalTroops += maxLevelThree.getTroops();
+
+                ThreeDimensional scienceThree =  getScience(generals1);
+                totalForce += scienceThree.getForce();
+                totalIntellect += scienceThree.getIntellect();
+                totalTroops += scienceThree.getTroops();
+
+                ThreeDimensional holyStoneThree =  getHolyStone(generals1);
+                totalForce += holyStoneThree.getForce();
+                totalIntellect += holyStoneThree.getIntellect();
+                totalTroops += holyStoneThree.getTroops();
+
+                ThreeDimensional skinStoneThree =  getSkin(generals1);
+                totalForce += skinStoneThree.getForce();
+                totalIntellect += skinStoneThree.getIntellect();
+                totalTroops += skinStoneThree.getTroops();
+
+                //兵书最大武力
+                ThreeDimensional armsBookThree1 =  getArmsBook(copy1,GeneralsEnum.ThreeCircles.Force.getCode());
+
+                //兵书最大智力
+                ThreeDimensional armsBookThree2 =  getArmsBook(copy2,GeneralsEnum.ThreeCircles.Intellect.getCode());
+
+                //兵书最大兵力
+                ThreeDimensional armsBookThree3 =  getArmsBook(copy3,GeneralsEnum.ThreeCircles.Troops.getCode());
+
+
+                //将魂
+                ThreeDimensional willSoulThree =  getWillSoul(generals1);
+                totalForce += willSoulThree.getForce();
+                totalIntellect += willSoulThree.getIntellect();
+                totalTroops += willSoulThree.getTroops();
+
+                //命格
+                ThreeDimensional destinyThree =  getDestiny(generals1);
+                totalForce += destinyThree.getForce();
+                totalIntellect += destinyThree.getIntellect();
+                totalTroops += destinyThree.getTroops();
+
+                Double rate = 1.25;//联协倍率
+                Integer add = 100;//作为随从+100属性
+
+                copy1.setTotalForce(totalForce + armsBookThree1.getForce());
+                copy1.setTotalIntellect(totalIntellect + armsBookThree1.getIntellect());
+                copy1.setTotalTroops(totalTroops + armsBookThree1.getTroops());
+                boolean b1 = entourages.contains(Integer.valueOf(copy1.getCode()));//是否联协
+                //武力联协
+                if(b1){
+                    Double d1 = (copy1.getTotalForce()/2+add) * rate;
+                    copy1.setTotalAddForce(d1.intValue());
+                    Double d2 = (copy1.getTotalIntellect()/2+add) * rate;
+                    copy1.setTotalAddIntellect(d2.intValue());
+                    Double d3 = (copy1.getTotalTroops()/2+add) * rate;
+                    copy1.setTotalAddTroops(d3.intValue());
+                    copy1.setIsAssociation(true);
+                    copy1.setRemark("联协");
+                }else{
+                    copy1.setTotalAddForce(copy1.getTotalForce()/2+add);
+                    copy1.setTotalAddIntellect(copy1.getTotalIntellect()/2+add);
+                    copy1.setTotalAddTroops(copy1.getTotalTroops()/2+add);
+                    copy1.setIsAssociation(false);
+                    copy1.setRemark("");
+                }
+
+                copy2.setTotalForce(totalForce + armsBookThree2.getForce());
+                copy2.setTotalIntellect(totalIntellect + armsBookThree2.getIntellect());
+                copy2.setTotalTroops(totalTroops + armsBookThree2.getTroops());
+                boolean b2 = entourages.contains(Integer.valueOf(copy2.getCode()));//是否联协
+                //智力联协
+                if(b2){
+                    Double d1 = (copy2.getTotalForce()/2+add) * rate;
+                    copy2.setTotalAddForce(d1.intValue());
+                    Double d2 = (copy2.getTotalIntellect()/2+add) * rate;
+                    copy2.setTotalAddIntellect(d2.intValue());
+                    Double d3 = (copy2.getTotalTroops()/2+add) * rate;
+                    copy2.setTotalAddTroops(d3.intValue());
+                    copy2.setIsAssociation(true);
+                    copy2.setRemark("联协");
+                }else{
+                    copy2.setTotalAddForce(copy2.getTotalForce()/2+add);
+                    copy2.setTotalAddIntellect(copy2.getTotalIntellect()/2+add);
+                    copy2.setTotalAddTroops(copy2.getTotalTroops()/2+add);
+                    copy2.setIsAssociation(false);
+                    copy2.setRemark("");
+                }
+
+                copy3.setTotalForce(totalForce + armsBookThree3.getForce());
+                copy3.setTotalIntellect(totalIntellect + armsBookThree3.getIntellect());
+                copy3.setTotalTroops(totalTroops + armsBookThree3.getTroops());
+                boolean b3 = entourages.contains(Integer.valueOf(copy3.getCode()));//是否联协
+                //兵力联协
+                if(b3){
+                    Double d1 = (copy3.getTotalForce()/2+add) * rate;
+                    copy3.setTotalAddForce(d1.intValue());
+                    Double d2 = (copy3.getTotalIntellect()/2+add) * rate;
+                    copy3.setTotalAddIntellect(d2.intValue());
+                    Double d3 = (copy3.getTotalTroops()/2+add) * rate;
+                    copy3.setTotalAddTroops(d3.intValue());
+                    copy3.setIsAssociation(true);
+                    copy3.setRemark("联协");
+                }else{
+                    copy3.setTotalAddForce(copy3.getTotalForce()/2+add);
+                    copy3.setTotalAddIntellect(copy3.getTotalIntellect()/2+add);
+                    copy3.setTotalAddTroops(copy3.getTotalTroops()/2+add);
+                    copy3.setIsAssociation(false);
+                    copy3.setRemark("");
+                }
+
+                forceList.add(copy1);
+                intellectList.add(copy2);
+                troopsList.add(copy3);
+            }
+
+            //武力排序（高->低）
+            forceList.sort(new Comparator<Generals>() {
+                @Override
+                public int compare(Generals o1, Generals o2) {
+                    return o2.getTotalAddForce() - o1.getTotalAddForce(); //降序
+                }
+            });
+
+            //智力排序（高->低）
+            intellectList.sort(new Comparator<Generals>() {
+                @Override
+                public int compare(Generals o1, Generals o2) {
+                    return o2.getTotalAddIntellect() - o1.getTotalAddIntellect(); //降序
+                }
+            });
+
+            //兵力排序（高->低）
+            troopsList.sort(new Comparator<Generals>() {
+                @Override
+                public int compare(Generals o1, Generals o2) {
+                    return o2.getTotalAddTroops() - o1.getTotalAddTroops(); //降序
+                }
+            });
+
+            gs.setForceEntourageList(forceList);
+            gs.setIntellectEntourageList(intellectList);
+            gs.setTroopsEntourageList(troopsList);
+            resultList.add(gs);
+        }
+        return resultList;
+    }
+
+    //随从榜
+    public static Map<Integer,List<Generals>> getAllEntourage(List<Generals> all) {
         //排除自身的随从武将
         List<Generals> list = new ArrayList<>();
         for(Generals generals1 : all){
@@ -279,8 +478,8 @@ public class GeneralsUtil {
     public static Map<Integer,List<Generals>> getEntourage(Generals generals,List<Generals> all) {
         List<Integer> entourages = generals.getEntourages();
 
-        String code = generals.getCode();
-        List<Generals> lianxie = new ArrayList<>();
+        //String code = generals.getCode();
+        //List<Generals> lianxie = new ArrayList<>();
 
         //排除自身的随从武将
         List<Generals> list = new ArrayList<>();
@@ -3061,6 +3260,16 @@ public class GeneralsUtil {
             }
         }
         return null;
+    }
+
+    public static List<Result> getExcludeList(List<Result> resultList,int i) {
+        List<Result> list = new ArrayList<>();
+        for (Result result: resultList) {
+            if(result.getTotal2() >= i){
+                list.add(result);
+            }
+        }
+        return list;
     }
 
     public static List<Result> getSimplifyList(List<Result> resultList) {
