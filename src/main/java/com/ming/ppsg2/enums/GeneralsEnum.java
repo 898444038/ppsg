@@ -1083,7 +1083,9 @@ public enum GeneralsEnum {
         skin_1(1,"沉弈忘雪",30,30,80),
         skin_2(2,"繁花一梦",30,30,80),
         skin_3(3,"月落千殇",30,30,80),
-        skin_4(4,"剑影流风",30,30,80);
+        skin_4(4,"剑影流风",30,30,80),
+        skin_5(5,"赤魇苍雷",30,30,80),
+        ;
         private Integer code;
         private String name;
         private Integer force;

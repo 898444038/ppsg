@@ -39,10 +39,9 @@ public class Main {
     public static void main(String[] args) {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：狼顾司马懿、独目夏侯惇、恶来典韦、征南曹仁、七星诸葛亮、麒麟姜维、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、战姬吕玲绮、修罗吕布\n" +
                 "安卓1服熾陽✵天下出品,如发现错误之处，欢迎指正！建议使用WPS查看表格。啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增武将：绝情张春华(张春华兵书命格三维为预估值，仅供参考)\n";
-        top  += "         2.最佳随从排名表";
-        //top += "特别感谢：熾陽✵火麟斷浪⸙(安卓1服)提供的砺战赵云三维数据";
-        String advert = "";//"火麟斷浪：安卓一区熾陽公会向所有服务器招收活跃玩家";
+                "更新内容：1.新增武将：绝情张春华 2.新增武将汉寿亭侯云长(预估三维) 3.新增逆命曹操幻化\n" +
+                "特别感谢：444君浩(安卓444服)提供的绝情张春华三维数据";
+        String advert = "444君浩：安卓444招人,联系凯子qq：865990173";
 
         long t1 = System.currentTimeMillis();
         xzl(top,advert);
@@ -53,7 +52,7 @@ public class Main {
 
     public static void xzl(String top,String advert){
         //"","","","",""
-        String[] sz = {"虎涧典韦","霸业曹操","墨衍荀彧","砺战赵云","鬼谋郭嘉_限"};
+        String[] sz = {};
 
         List<Generals> nimingList = new ArrayList<>();
         List<Generals> generalsAll = new ArrayList<>();
@@ -404,7 +403,9 @@ public class Main {
                 generalsList.get(4).getGender().toString().equals(grilCode.toString())
             ){
                 Result result = GeneralsUtil.getResult(generalsList,symbolsList,allTotalSword,allTotalSword2);
-                grilResultList.add(result);
+                if(allTotalSword2 > 350000){
+                    grilResultList.add(result);
+                }
             }
 
             int zhanli = 377000;
@@ -499,7 +500,7 @@ public class Main {
         model.put("simplifyList2",GeneralsUtil.getSimplifyList(resultList2));//简表（特殊战器）
         resultList = null;
         //model.put("list",resultList);//虚战力表
-        model.put("list2",GeneralsUtil.getExcludeList(resultList2,380000));//虚战力表（特殊战器）
+        model.put("list2",GeneralsUtil.getExcludeList(resultList2,382000));//虚战力表（特殊战器）
         model.put("grilList",grilResultList);//虚战力表（女队）
         model.put("forceTopList",forceTopList);
         model.put("intellectTopList",intellectTopList);
@@ -518,6 +519,7 @@ public class Main {
         }catch(Exception e){
             System.out.println(e);
         }
+        System.gc();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         try {

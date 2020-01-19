@@ -246,7 +246,15 @@ public class GeneralsUtil {
                     return o2.getTotalAddTroops() - o1.getTotalAddTroops(); //降序
                 }
             });
-
+            if(forceList.size()>9){
+                forceList = forceList.subList(0, 10);
+            }
+            if(intellectList.size()>9){
+                intellectList = intellectList.subList(0, 10);
+            }
+            if(troopsList.size()>9){
+                troopsList = troopsList.subList(0, 10);
+            }
             gs.setForceEntourageList(forceList);
             gs.setIntellectEntourageList(intellectList);
             gs.setTroopsEntourageList(troopsList);
