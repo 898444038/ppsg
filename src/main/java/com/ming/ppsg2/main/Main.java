@@ -39,18 +39,19 @@ public class Main {
     public static void main(String[] args) {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：狼顾司马懿、独目夏侯惇、恶来典韦、征南曹仁、七星诸葛亮、麒麟姜维、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、战姬吕玲绮、修罗吕布\n" +
                 "安卓1服熾陽✵天下出品,如发现错误之处，欢迎指正！建议使用WPS查看表格。啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增武将：绝情张春华 2.新增武将汉寿亭侯云长(预估三维) 3.新增逆命曹操幻化\n" +
-                "特别感谢：444君浩(安卓444服)提供的绝情张春华三维数据";
-        String advert = "444君浩：安卓444招人,联系凯子qq：865990173";
+                "更新内容：1.新增武将：汉寿亭侯云长 2.新增逆命刘备幻化 3.新增逆命孙权幻化\n" +
+                "";
+        String advert = "";
+        String fileRemark = "(汉寿亭候云长)";
 
         long t1 = System.currentTimeMillis();
-        xzl(top,advert);
+        xzl(top,advert,fileRemark);
         long t2 = System.currentTimeMillis();
         DecimalFormat df=new DecimalFormat("0.000");
         System.out.println("共耗时："+df.format((float)(t2-t1)/1000)+"s");
     }
 
-    public static void xzl(String top,String advert){
+    public static void xzl(String top,String advert,String fileRemark){
         //"","","","",""
         String[] sz = {};
 
@@ -524,7 +525,7 @@ public class Main {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         try {
             InputStream is = ExcelReaderUtil.class.getResourceAsStream("/excel/result_temp2.xlsx");
-            OutputStream os = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\虚战力表"+sdf.format(new Date())+".xlsx");
+            OutputStream os = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\虚战力表"+sdf.format(new Date())+fileRemark+".xlsx");
             JxlsUtil.export2Excel(is,os,model);
         }catch (Exception e){
             e.printStackTrace();
