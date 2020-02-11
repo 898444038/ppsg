@@ -909,6 +909,7 @@ public enum GeneralsEnum {
         wu_xiaoqiao(3018,"小乔"),
         wu_wufuren(3019,"吴夫人"),
         wu_daqiao(3020,"大乔"),
+        wu_zhuran(3021,"朱然"),
 
         qun_lvji(4001,"吕姬"),
         qun_tongyuan(4002,"童渊"),

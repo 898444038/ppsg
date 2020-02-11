@@ -39,10 +39,10 @@ public class Main {
     public static void main(String[] args) {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：狼顾司马懿、独目夏侯惇、恶来典韦、征南曹仁、七星诸葛亮、麒麟姜维、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、战姬吕玲绮、修罗吕布\n" +
                 "安卓1服熾陽✵天下出品,如发现错误之处，欢迎指正！建议使用WPS查看表格。啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增武将：汉寿亭侯云长 2.新增逆命刘备幻化 3.新增逆命孙权幻化\n" +
-                "";
+                "更新内容：1.新增突破武将：赤羽朱然(预估值) \n" +
+                "2.新增突破武将:天子汉献帝 3.新增突破武将:乱武贾诩";
         String advert = "";
-        String fileRemark = "(汉寿亭候云长)";
+        String fileRemark = "(赤羽朱然)";
 
         long t1 = System.currentTimeMillis();
         xzl(top,advert,fileRemark);
