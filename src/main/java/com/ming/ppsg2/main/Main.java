@@ -415,12 +415,12 @@ public class Main {
                 generalsList.get(4).getGender().toString().equals(grilCode.toString())
             ){
                 Result result = GeneralsUtil.getResult(generalsList,symbolsList,allTotalSword,allTotalSword2);
-                if(allTotalSword2 > 350000){
+                if(allTotalSword2 > 355000){
                     grilResultList.add(result);
                 }
             }
 
-            int zhanli = 379000;
+            int zhanli = 378000;
             int flag = 0;
             //跳过战力低于zhanli的
             if(allTotalSword<zhanli && sz.length==0){

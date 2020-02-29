@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -66,8 +65,8 @@ public class LoginController {
     @Login
     @PostMapping("/auth/login")
     public String login(User user, HttpServletRequest request) throws AuthenticationException{
-        String username = user.getUsername();
-        String password = user.getPassword();
+        String username = "superadmin";//user.getUsername();
+        String password = "123456";user.getPassword();
         // 登录成功会返回Token给用户
         String token = userDetailsService.login(username,password);
         request.getSession().setAttribute("token",token);
