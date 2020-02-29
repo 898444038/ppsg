@@ -37,22 +37,27 @@ import java.util.UUID;
 public class Main {
 
     public static void main(String[] args) {
-        String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：狼顾司马懿、独目夏侯惇、恶来典韦、征南曹仁、七星诸葛亮、麒麟姜维、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、战姬吕玲绮、修罗吕布\n" +
-                "安卓1服熾陽✵天下出品,如发现错误之处，欢迎指正！建议使用WPS查看表格。啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增突破武将：赤羽朱然(预估值) \n" +
-                "2.新增突破武将:天子汉献帝 3.新增突破武将:乱武贾诩";
-        String advert = "";
-        String fileRemark = "(赤羽朱然)";
-
+        String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
+                "安卓1服熾陽✵天下出品,如发现错误之处，欢迎指正！啪啪三国技术交流群：913083053\n" +
+                "更新内容：1.新增武将：御甲张辽\n" +
+                "\n";
+        top+= "特别感谢安卓444区君浩提供的御甲张辽数据";
+        String advert = "444区招人，联系865990173";//广告
+        String fileRemark = "(御甲张辽)(单砺战单御甲)(幻化随从表)";
+        //计算：992/658/1895
+        //实际：988/654/1947
+        String[] dan = {"砺战赵云","御甲张辽"};
+        boolean isHuanHua = true;//随从是否有幻化
         long t1 = System.currentTimeMillis();
-        xzl(top,advert,fileRemark);
+        xzl(top,advert,fileRemark,dan,isHuanHua);
         long t2 = System.currentTimeMillis();
         DecimalFormat df=new DecimalFormat("0.000");
         System.out.println("共耗时："+df.format((float)(t2-t1)/1000)+"s");
     }
 
-    public static void xzl(String top,String advert,String fileRemark){
+    public static void xzl(String top,String advert,String fileRemark,String[] dan,boolean isHuanHua){
         //"","","","",""
+        //"诡骑张飞","神武刘备","陨星庞统","砺战赵云","龙驹马云禄"
         String[] sz = {};
 
         List<Generals> nimingList = new ArrayList<>();
@@ -61,7 +66,6 @@ public class Main {
 
         List<List<String>> lists = ExcelReaderUtil.readExcel("/excel/data_temp.xlsx");
         System.out.println("获取初始数据："+lists.size()+"条");
-
 
         Map<String,String> generalsMapSort = new LinkedHashMap<>();
         Properties prop = new Properties();
@@ -307,10 +311,10 @@ public class Main {
             generalsAll.remove(gList2.get(i));
         }
 
-
+        // 计算随从
         Map<Integer,List<Generals>> map = null;
         for(Generals generals : nimingList){
-            map = GeneralsUtil.getEntourage(generals,generalsAll);//随从三维
+            map = GeneralsUtil.getEntourage(generals,generalsAll,isHuanHua);//随从三维
         }
 
         //随从榜
@@ -320,7 +324,7 @@ public class Main {
             BeanUtils.copyProperties(g,copy);
             allEntourageList.add(g);
         }
-        Map<Integer,List<Generals>> allEntourage = GeneralsUtil.getAllEntourage(allEntourageList);//随从三维
+        Map<Integer,List<Generals>> allEntourage = GeneralsUtil.getAllEntourage(allEntourageList,isHuanHua);//随从三维
 
         //最佳随从表
         List<Generals> optimumEntourageList = new ArrayList<>();
@@ -329,7 +333,7 @@ public class Main {
             BeanUtils.copyProperties(g,copy);
             optimumEntourageList.add(g);
         }
-        List<Generals> optimumEntourage = GeneralsUtil.getOptimumEntourage(nimingList,optimumEntourageList);
+        List<Generals> optimumEntourage = GeneralsUtil.getOptimumEntourage(nimingList,optimumEntourageList,isHuanHua);
 
         long t1 = System.currentTimeMillis();
         List<List<Generals>> all = NumberUtil.getNoRepeatList(nimingList,5);
@@ -382,13 +386,20 @@ public class Main {
             //极限兵符
             List<Symbols> symbolsList = GeneralsUtil.getSymbols(generalsList);
             ThreeDimensional td = GeneralsUtil.countSymbols(generalsList,symbolsList);
+            //战意三维
+            GeneralsUtil.getWarpath(generalsList);
 
-            GeneralsUtil.getWarpath(generalsList);//战意三维
             // 总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
             // 武将战力 =（总武力+总智力+总兵力）*2+ 命格被动战力 + 战器被动战力
-            Integer allTotalSword = GeneralsUtil.getAllTotalSword(generalsList);
-            Integer allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
-
+            Integer allTotalSword = null;
+            Integer allTotalSword2 = null;
+            if(dan.length>0){
+                allTotalSword = GeneralsUtil.getAllTotalSword3(generalsList,dan);
+                allTotalSword2 = GeneralsUtil.getAllTotalSword4(generalsList,dan);
+            }else{
+                allTotalSword = GeneralsUtil.getAllTotalSword(generalsList);
+                allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
+            }
 
             BigDecimal b1 = new BigDecimal(Double.toString(count));
             BigDecimal b2 = new BigDecimal(Double.toString(finalCount));
@@ -409,7 +420,7 @@ public class Main {
                 }
             }
 
-            int zhanli = 377000;
+            int zhanli = 379000;
             int flag = 0;
             //跳过战力低于zhanli的
             if(allTotalSword<zhanli && sz.length==0){
@@ -501,7 +512,8 @@ public class Main {
         model.put("simplifyList2",GeneralsUtil.getSimplifyList(resultList2));//简表（特殊战器）
         resultList = null;
         //model.put("list",resultList);//虚战力表
-        model.put("list2",GeneralsUtil.getExcludeList(resultList2,382000));//虚战力表（特殊战器）
+
+        model.put("list2",GeneralsUtil.getExcludeList(resultList2,390000));//虚战力表（特殊战器）
         model.put("grilList",grilResultList);//虚战力表（女队）
         model.put("forceTopList",forceTopList);
         model.put("intellectTopList",intellectTopList);

@@ -13,6 +13,10 @@ public class Warpath {
     private Integer intellect = 0;
     private Integer troops = 0;
 
+    private Double force0 = 0d;
+    private Double intellect0 = 0d;
+    private Double troops0 = 0d;
+
     public Warpath() {
     }
 
@@ -78,6 +82,33 @@ public class Warpath {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public Double getForce0() {
+        return force0;
+    }
+
+    public void setForce0(Double force0) {
+        this.force = force0.intValue();
+        this.force0 = force0;
+    }
+
+    public Double getIntellect0() {
+        return intellect0;
+    }
+
+    public void setIntellect0(Double intellect0) {
+        this.intellect = intellect0.intValue();
+        this.intellect0 = intellect0;
+    }
+
+    public Double getTroops0() {
+        return troops0;
+    }
+
+    public void setTroops0(Double troops0) {
+        this.troops = troops0.intValue();
+        this.troops0 = troops0;
     }
 
     @Override

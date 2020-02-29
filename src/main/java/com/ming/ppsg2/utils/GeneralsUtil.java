@@ -56,7 +56,7 @@ public class GeneralsUtil {
     }
 
     //最佳随从表  // todo:获取随从三维
-    public static List<Generals> getOptimumEntourage(List<Generals> nimingList,List<Generals> all) {
+    public static List<Generals> getOptimumEntourage(List<Generals> nimingList,List<Generals> all,boolean isHuanHua) {
         Map<String,Map<Integer,List<Generals>>> map = new LinkedHashMap<>();
         List<Generals> resultList = new ArrayList<>();
         for (Generals generals : nimingList){
@@ -122,10 +122,12 @@ public class GeneralsUtil {
                 totalIntellect += holyStoneThree.getIntellect();
                 totalTroops += holyStoneThree.getTroops();
 
-                ThreeDimensional skinStoneThree =  getSkin(generals1);
-                totalForce += skinStoneThree.getForce();
-                totalIntellect += skinStoneThree.getIntellect();
-                totalTroops += skinStoneThree.getTroops();
+                if(isHuanHua){
+                    ThreeDimensional skinStoneThree =  getSkin(generals1);
+                    totalForce += skinStoneThree.getForce();
+                    totalIntellect += skinStoneThree.getIntellect();
+                    totalTroops += skinStoneThree.getTroops();
+                }
 
                 //兵书最大武力
                 ThreeDimensional armsBookThree1 =  getArmsBook(copy1,GeneralsEnum.ThreeCircles.Force.getCode());
@@ -258,13 +260,16 @@ public class GeneralsUtil {
             gs.setForceEntourageList(forceList);
             gs.setIntellectEntourageList(intellectList);
             gs.setTroopsEntourageList(troopsList);
+            generals.setForceEntourageList(forceList);
+            generals.setIntellectEntourageList(intellectList);
+            generals.setTroopsEntourageList(troopsList);
             resultList.add(gs);
         }
         return resultList;
     }
 
     //随从榜
-    public static Map<Integer,List<Generals>> getAllEntourage(List<Generals> all) {
+    public static Map<Integer,List<Generals>> getAllEntourage(List<Generals> all,boolean isHuanHua) {
         //排除自身的随从武将
         List<Generals> list = new ArrayList<>();
         for(Generals generals1 : all){
@@ -326,10 +331,12 @@ public class GeneralsUtil {
             totalIntellect += holyStoneThree.getIntellect();
             totalTroops += holyStoneThree.getTroops();
 
-            ThreeDimensional skinStoneThree =  getSkin(generals1);
-            totalForce += skinStoneThree.getForce();
-            totalIntellect += skinStoneThree.getIntellect();
-            totalTroops += skinStoneThree.getTroops();
+            if(isHuanHua){
+                ThreeDimensional skinStoneThree =  getSkin(generals1);
+                totalForce += skinStoneThree.getForce();
+                totalIntellect += skinStoneThree.getIntellect();
+                totalTroops += skinStoneThree.getTroops();
+            }
 
             //兵书最大武力
             ThreeDimensional armsBookThree1 =  getArmsBook(copy1,GeneralsEnum.ThreeCircles.Force.getCode());
@@ -483,7 +490,7 @@ public class GeneralsUtil {
     // todo:获取随从三维
     // 随从三维 = 基础(满级) + 科技 + 四圣石 + 兵种 + 将魂 + 命格突破 + 幻化
     // 加成 = (随从三维/2+100)*(1+(0~0.25))
-    public static Map<Integer,List<Generals>> getEntourage(Generals generals,List<Generals> all) {
+    public static Map<Integer,List<Generals>> getEntourage(Generals generals,List<Generals> all,boolean isHuanHua) {
         List<Integer> entourages = generals.getEntourages();
 
         //String code = generals.getCode();
@@ -552,10 +559,12 @@ public class GeneralsUtil {
             totalIntellect += holyStoneThree.getIntellect();
             totalTroops += holyStoneThree.getTroops();
 
-            ThreeDimensional skinStoneThree =  getSkin(generals1);
-            totalForce += skinStoneThree.getForce();
-            totalIntellect += skinStoneThree.getIntellect();
-            totalTroops += skinStoneThree.getTroops();
+            if(isHuanHua){
+                ThreeDimensional skinStoneThree =  getSkin(generals1);
+                totalForce += skinStoneThree.getForce();
+                totalIntellect += skinStoneThree.getIntellect();
+                totalTroops += skinStoneThree.getTroops();
+            }
 
             //兵书最大武力
             ThreeDimensional armsBookThree1 =  getArmsBook(copy1,GeneralsEnum.ThreeCircles.Force.getCode());
@@ -2142,11 +2151,11 @@ public class GeneralsUtil {
         Warpath warpath3 = copyList.get(2).getWarpath();
         Warpath warpath4 = copyList.get(3).getWarpath();
         Warpath warpath5 = copyList.get(4).getWarpath();
-        ThreeDimensional three1 = new ThreeDimensional(warpath1.getForce(),warpath1.getIntellect(),warpath1.getTroops());
-        ThreeDimensional three2 = new ThreeDimensional(warpath2.getForce(),warpath2.getIntellect(),warpath2.getTroops());
-        ThreeDimensional three3 = new ThreeDimensional(warpath3.getForce(),warpath3.getIntellect(),warpath3.getTroops());
-        ThreeDimensional three4 = new ThreeDimensional(warpath4.getForce(),warpath4.getIntellect(),warpath4.getTroops());
-        ThreeDimensional three5 = new ThreeDimensional(warpath5.getForce(),warpath5.getIntellect(),warpath5.getTroops());
+        ThreeDimensional three1 = new ThreeDimensional(warpath1.getForce0().intValue(),warpath1.getIntellect0().intValue(),warpath1.getTroops0().intValue());
+        ThreeDimensional three2 = new ThreeDimensional(warpath2.getForce0().intValue(),warpath2.getIntellect0().intValue(),warpath2.getTroops0().intValue());
+        ThreeDimensional three3 = new ThreeDimensional(warpath3.getForce0().intValue(),warpath3.getIntellect0().intValue(),warpath3.getTroops0().intValue());
+        ThreeDimensional three4 = new ThreeDimensional(warpath4.getForce0().intValue(),warpath4.getIntellect0().intValue(),warpath4.getTroops0().intValue());
+        ThreeDimensional three5 = new ThreeDimensional(warpath5.getForce0().intValue(),warpath5.getIntellect0().intValue(),warpath5.getTroops0().intValue());
 
         generalsList.get(0).setWarpathThreeDimensional(three1);
         generalsList.get(1).setWarpathThreeDimensional(three2);
@@ -2170,72 +2179,72 @@ public class GeneralsUtil {
         int code = 0;
         String name = "";
         for(GeneralsEnum.Warpath warpath : GeneralsEnum.Warpath.values()){
-            int t = 0;
+            Double t = 0d;
             for(Generals g : allList){
                 if(warpath.getCode().equals(GeneralsEnum.Warpath.countryForce.getCode())){//同国家上阵武力加成
                     Warpath wp = new Warpath();
                     if(g.getCountry().equals(generals1.getCountry())){
                         Double d = g.getMaxThreeDimensional().getForce() * warpath.getRate();
-                        wp.setForce(d.intValue());
+                        wp.setForce0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
                         wp.setGeneralsCode(g.getCode());
-                        t += d.intValue();
+                        t += d;
                     }
                     warpathList1.add(wp);
                 }else if(warpath.getCode().equals(GeneralsEnum.Warpath.countryIntellect.getCode())){//同国家上阵智力加成
                     Warpath wp = new Warpath();
                     if(g.getCountry().equals(generals1.getCountry())){
                         Double d = g.getMaxThreeDimensional().getIntellect() * warpath.getRate();
-                        wp.setIntellect(d.intValue());
+                        wp.setIntellect0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
                         wp.setGeneralsCode(g.getCode());
-                        t += d.intValue();
+                        t += d;
                     }
                     warpathList2.add(wp);
                 }else if(warpath.getCode().equals(GeneralsEnum.Warpath.countryTroops.getCode())){//同国家上阵兵力加成
                     Warpath wp = new Warpath();
                     if(g.getCountry().equals(generals1.getCountry())){
                         Double d = g.getMaxThreeDimensional().getTroops() * warpath.getRate();
-                        wp.setTroops(d.intValue());
+                        wp.setTroops0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
                         wp.setGeneralsCode(g.getCode());
-                        t += d.intValue();
+                        t += d;
                     }
                     warpathList3.add(wp);
                 }else if(warpath.getCode().equals(GeneralsEnum.Warpath.armsForce.getCode())){//同兵种上阵武力加成
                     Warpath wp = new Warpath();
                     if(g.getArms().equals(generals1.getArms())){
                         Double d = g.getMaxThreeDimensional().getForce() * warpath.getRate();
-                        wp.setForce(d.intValue());
+                        wp.setForce0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
                         wp.setGeneralsCode(g.getCode());
-                        t += d.intValue();
+                        t += d;
                     }
                     warpathList4.add(wp);
                 }else if(warpath.getCode().equals(GeneralsEnum.Warpath.armsIntellect.getCode())){//同兵种上阵智力加成
                     Warpath wp = new Warpath();
                     if(g.getArms().equals(generals1.getArms())){
                         Double d = g.getMaxThreeDimensional().getIntellect() * warpath.getRate();
-                        wp.setIntellect(d.intValue());
+                        wp.setIntellect0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
                         wp.setGeneralsCode(g.getCode());
-                        t += d.intValue();
+                        t += d;
                     }
                     warpathList5.add(wp);
                 }else if(warpath.getCode().equals(GeneralsEnum.Warpath.armsTroops.getCode())){//同兵种上阵兵力加成
                     Warpath wp = new Warpath();
                     if(g.getArms().equals(generals1.getArms())){
                         Double d = g.getMaxThreeDimensional().getTroops() * warpath.getRate();
-                        wp.setTroops(d.intValue());
+                        wp.setTroops0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
                         wp.setGeneralsCode(g.getCode());
-                        t += d.intValue();
+                        t += d;
                     }
                     warpathList6.add(wp);
                 }
@@ -2243,7 +2252,7 @@ public class GeneralsUtil {
             }
 
             if(t>total){
-                total = t;
+                total = t.intValue();
                 index = warpath.getCode()-1;
                 code = warpath.getCode();
                 name = warpath.getName();
@@ -2272,14 +2281,16 @@ public class GeneralsUtil {
             if(warpath.getGeneralsCode() != null){
                 for(Generals generals : allList){
                     if(warpath.getGeneralsCode().equals(generals.getCode())){
-                        generals.getWarpath().setForce(generals.getWarpath().getForce() + warpath.getForce());
-                        generals.getWarpath().setIntellect(generals.getWarpath().getIntellect() + warpath.getIntellect());
-                        generals.getWarpath().setTroops(generals.getWarpath().getTroops() + warpath.getTroops());
+                        generals.getWarpath().setForce0(generals.getWarpath().getForce0() + warpath.getForce0());
+                        generals.getWarpath().setIntellect0(generals.getWarpath().getIntellect0() + warpath.getIntellect0());
+                        generals.getWarpath().setTroops0(generals.getWarpath().getTroops0() + warpath.getTroops0());
                         break;
                     }
                 }
             }
         }
+
+
     }
 
     //战阵
@@ -2574,6 +2585,105 @@ public class GeneralsUtil {
         }
         return total;
     }
+
+    //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
+    public static Integer getAllTotalSword3(List<Generals> generalsList,String[] danList) {
+        /*boolean szlz = false;//判断上阵武将有没有砺战
+        int size = 0;
+        for (Generals generals : generalsList){
+            for (String dan : danList){
+                if(dan.equalsIgnoreCase(generals.getName())){
+                    szlz = true;
+                }
+            }
+        }
+        // 76710  75072   75060  72510  71394
+        Integer total = 10152;
+        for (Generals generals : generalsList){
+            if(szlz == false){
+                for (String dan : danList){
+                    if(dan.equalsIgnoreCase(generals.getTroopsEntourage().getName())){
+                        size++;
+                    }
+                }
+                if(size==1){
+                    total += getTotalSword3(generals,szlz,true);
+                }else{
+                    total += getTotalSword3(generals,szlz,false);
+                }
+            }else{
+                total += getTotalSword3(generals,szlz,false);
+            }
+        }*/
+        Integer total = 10152;
+        Map<String,Integer> map = new HashMap<>();
+        for (String dan : danList){
+            map.put(dan,0);
+        }
+        //判断上阵武将有没有danList
+        for (Generals generals : generalsList){
+            for (String dan : danList){
+                if(dan.equalsIgnoreCase(generals.getName())){
+                    map.put(generals.getName(),1);
+                }
+            }
+        }
+
+        for (Generals generals : generalsList){
+            total += getTotalSword3(generals,map);
+        }
+        return total;
+    }
+
+    //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
+    public static Integer getAllTotalSword4(List<Generals> generalsList,String[] danList) {
+        /*boolean szlz = false;//判断上阵武将有没有砺战
+        int size = 0;
+        for (Generals generals : generalsList){
+            for (String dan : danList){
+                if(dan.equalsIgnoreCase(generals.getName())){
+                    szlz = true;
+                }
+            }
+        }
+        // 76710  75072   75060  72510  71394
+        Integer total = 10152;
+        for (Generals generals : generalsList){
+            if(szlz == false){
+                for (String dan : danList) {
+                    if (dan.equalsIgnoreCase(generals.getTroopsEntourage().getName())) {
+                        size++;
+                    }
+                }
+                if(size==1){
+                    total += getTotalSword4(generals,szlz,true);
+                }else{
+                    total += getTotalSword4(generals,szlz,false);
+                }
+            }else{
+                total += getTotalSword4(generals,szlz,false);
+            }
+        }*/
+        Integer total = 10152;
+        Map<String,Integer> map = new HashMap<>();
+        for (String dan : danList){
+            map.put(dan,0);
+        }
+        //判断上阵武将有没有danList
+        for (Generals generals : generalsList){
+            for (String dan : danList){
+                if(dan.equalsIgnoreCase(generals.getName())){
+                    map.put(generals.getName(),1);
+                }
+            }
+        }
+
+        for (Generals generals : generalsList){
+            total += getTotalSword4(generals,map);
+        }
+        return total;
+    }
+
 
     //计算固定战意
     private static List<Warpath> countWarpath(List<Generals> generalsList){
@@ -3379,5 +3489,374 @@ public class GeneralsUtil {
     }
 
 
+    public static Integer getTotalSword3(Generals generals,Map<String,Integer> danMap) {
+        Integer force = 0;
+        Integer intellect = 0;
+        Integer troops = 0;
 
+        //120满级三维
+        ThreeDimensional maxThreeDimensional = generals.getMaxThreeDimensional();
+        force += maxThreeDimensional.getForce();
+        intellect += maxThreeDimensional.getIntellect();
+        troops += maxThreeDimensional.getTroops();
+
+        //科技三维
+        ThreeDimensional scienceThreeDimensional = generals.getScienceThreeDimensional();
+        force += scienceThreeDimensional.getForce();
+        intellect += scienceThreeDimensional.getIntellect();
+        troops += scienceThreeDimensional.getTroops();
+
+        //随从三维
+        /*if(b1 || (b2==false && generals.getTroopsEntourage().getName().equalsIgnoreCase("砺战赵云"))){
+            List<Generals> entourageList = generals.getTroopsEntourageList();
+            Generals g = null;
+            for(Generals entourage : entourageList){
+                if(!entourage.getCode().equals(GeneralsEnum.GeneralsCode.shu_zhaoyun.getCode().toString())){
+                    if(entourage.getCode().equals(generals.getForceEntourage().getCode())){
+                        continue;
+                    }
+                    if(entourage.getCode().equals(generals.getIntellectEntourage().getCode())){
+                        continue;
+                    }
+                    g = entourage;
+                    break;
+                }
+            }
+            generals.setTroopsEntourage(g);
+            generals.getEntourageThreeDimensional().setTroops(g.getTotalAddTroops());
+        }*/
+        for(Map.Entry<String,Integer> entry : danMap.entrySet()){
+            if(generals.getForceEntourage().getName().equalsIgnoreCase(entry.getKey())){
+                if(entry.getValue()>0) {
+                    List<Generals> forceEntourageList = generals.getForceEntourageList();
+                    Generals g = null;
+                    for (Generals entourage : forceEntourageList) {
+                        if (!entourage.getCode().equals(generals.getForceEntourage().getCode())) {
+                            if (entourage.getCode().equals(generals.getIntellectEntourage().getCode())) {
+                                continue;
+                            }
+                            if (entourage.getCode().equals(generals.getTroopsEntourage().getCode())) {
+                                continue;
+                            }
+                            g = entourage;
+                            break;
+                        }
+                    }
+                    generals.setForceEntourage(g);
+                    generals.getEntourageThreeDimensional().setForce(g.getTotalAddForce());
+                }
+                danMap.put(entry.getKey(),entry.getValue()+1);
+            }
+            if(generals.getIntellectEntourage().getName().equalsIgnoreCase(entry.getKey())){
+                if(entry.getValue()>0){
+                    List<Generals> intellectEntourageList = generals.getIntellectEntourageList();
+                    Generals g = null;
+                    for(Generals entourage : intellectEntourageList){
+                        if(!entourage.getCode().equals(generals.getIntellectEntourage().getCode())){
+                            if(entourage.getCode().equals(generals.getForceEntourage().getCode())){
+                                continue;
+                            }
+                            if(entourage.getCode().equals(generals.getTroopsEntourage().getCode())){
+                                continue;
+                            }
+                            g = entourage;
+                            break;
+                        }
+                    }
+                    generals.setIntellectEntourage(g);
+                    generals.getEntourageThreeDimensional().setIntellect(g.getTotalAddIntellect());
+                }
+                danMap.put(entry.getKey(),entry.getValue()+1);
+            }
+            if(generals.getTroopsEntourage().getName().equalsIgnoreCase(entry.getKey())){
+                if(entry.getValue()>0){
+                    List<Generals> entourageList = generals.getTroopsEntourageList();
+                    Generals g = null;
+                    for(Generals entourage : entourageList){
+                        if(!entourage.getCode().equals(generals.getTroopsEntourage().getCode())){
+                            if(entourage.getCode().equals(generals.getForceEntourage().getCode())){
+                                continue;
+                            }
+                            if(entourage.getCode().equals(generals.getIntellectEntourage().getCode())){
+                                continue;
+                            }
+                            g = entourage;
+                            break;
+                        }
+                    }
+                    generals.setTroopsEntourage(g);
+                    generals.getEntourageThreeDimensional().setTroops(g.getTotalAddTroops());
+                }
+                danMap.put(entry.getKey(),entry.getValue()+1);
+            }
+        }
+
+
+
+        ThreeDimensional entourageThreeDimensional = generals.getEntourageThreeDimensional();
+        force += entourageThreeDimensional.getForce();
+        intellect += entourageThreeDimensional.getIntellect();
+        troops += entourageThreeDimensional.getTroops();
+
+        //圣石三维
+        ThreeDimensional holyStoneThreeDimensional = generals.getHolyStoneThreeDimensional();
+        force += holyStoneThreeDimensional.getForce();
+        intellect += holyStoneThreeDimensional.getIntellect();
+        troops += holyStoneThreeDimensional.getTroops();
+
+        //战器三维
+        ThreeDimensional warDeviceThreeDimensional = generals.getWarDeviceThreeDimensional();
+        force += warDeviceThreeDimensional.getForce();
+        intellect += warDeviceThreeDimensional.getIntellect();
+        troops += warDeviceThreeDimensional.getTroops();
+
+        //特殊战器三维
+        //ThreeDimensional warDeviceThreeDimensional2 = generals.getWarDevice2ThreeDimensional();
+        //int f = warDeviceThreeDimensional2.getForce();
+        //int i = warDeviceThreeDimensional2.getIntellect();
+        //int t = warDeviceThreeDimensional2.getTroops();
+
+        //兵种兵书三维
+        ThreeDimensional armsBookThreeDimensional = generals.getArmsBookThreeDimensional();
+        force += armsBookThreeDimensional.getForce();
+        intellect += armsBookThreeDimensional.getIntellect();
+        troops += armsBookThreeDimensional.getTroops();
+
+        //将魂三维
+        ThreeDimensional willSoulThreeDimensional = generals.getWillSoulThreeDimensional();
+        force += willSoulThreeDimensional.getForce();
+        intellect += willSoulThreeDimensional.getIntellect();
+        troops += willSoulThreeDimensional.getTroops();
+
+        //兵符三维
+        ThreeDimensionals symbolsThreeDimensional = generals.getSymbolsThreeDimensionals();
+        force += symbolsThreeDimensional.getForce().intValue();
+        intellect += symbolsThreeDimensional.getIntellect().intValue();
+        troops += symbolsThreeDimensional.getTroops().intValue();
+
+        //战阵三维
+        ThreeDimensional battleArrayThreeDimensional = generals.getBattleArrayThreeDimensional();
+        force += battleArrayThreeDimensional.getForce();
+        intellect += battleArrayThreeDimensional.getIntellect();
+        troops += battleArrayThreeDimensional.getTroops();
+
+        //战意三维
+        ThreeDimensional warpathThreeDimensional = generals.getWarpathThreeDimensional();
+        force += warpathThreeDimensional.getForce();
+        intellect += warpathThreeDimensional.getIntellect();
+        troops += warpathThreeDimensional.getTroops();
+//        Warpath warpath = generals.getWarpath();
+//        force += warpath.getForce();
+//        intellect += warpath.getIntellect();
+//        troops += warpath.getTroops();
+//        System.out.println(generals.getName()+" 战意："+warpathThreeDimensional);
+
+        //命格被动战力
+        Destiny destiny = generals.getDestiny();
+        force += destiny.getForce();
+        intellect += destiny.getIntellect();
+        troops += destiny.getTroops();
+
+        //幻化三维
+        ThreeDimensional skinThreeDimensional = generals.getSkinThreeDimensional();
+        force += skinThreeDimensional.getForce();
+        intellect += skinThreeDimensional.getIntellect();
+        troops += skinThreeDimensional.getTroops();
+
+        //命格被动战力
+        Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
+
+        //战器三被动战力
+        Integer warDeviceSword = 458 + 458 + 1220;
+
+        //武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
+        Integer total = force + intellect + troops;
+        Integer totalSword = (total) * 2 + destinySword + warDeviceSword;
+        generals.setTotalSword(totalSword);
+        generals.setTotalForce(force);
+        generals.setTotalIntellect(intellect);
+        generals.setTotalTroops(troops);
+        return totalSword;
+    }
+
+    public static Integer getTotalSword4(Generals generals,Map<String,Integer> danMap) {
+        Integer force = 0;
+        Integer intellect = 0;
+        Integer troops = 0;
+
+        //120满级三维
+        ThreeDimensional maxThreeDimensional = generals.getMaxThreeDimensional();
+        force += maxThreeDimensional.getForce();
+        intellect += maxThreeDimensional.getIntellect();
+        troops += maxThreeDimensional.getTroops();
+
+        //科技三维
+        ThreeDimensional scienceThreeDimensional = generals.getScienceThreeDimensional();
+        force += scienceThreeDimensional.getForce();
+        intellect += scienceThreeDimensional.getIntellect();
+        troops += scienceThreeDimensional.getTroops();
+
+        //随从三维
+        /*if(b1 || (b2==false && generals.getTroopsEntourage().getName().equalsIgnoreCase("砺战赵云"))){
+            List<Generals> entourageList = generals.getTroopsEntourageList();
+            Generals g = null;
+            for(Generals entourage : entourageList){
+                if(!entourage.getCode().equals(GeneralsEnum.GeneralsCode.shu_zhaoyun.getCode().toString())){
+                    if(entourage.getCode().equals(generals.getForceEntourage().getCode())){
+                        continue;
+                    }
+                    if(entourage.getCode().equals(generals.getIntellectEntourage().getCode())){
+                        continue;
+                    }
+                    g = entourage;
+                    break;
+                }
+            }
+            generals.setTroopsEntourage(g);
+            generals.getEntourageThreeDimensional().setTroops(g.getTotalAddTroops());
+        }*/
+        for(Map.Entry<String,Integer> entry : danMap.entrySet()){
+            if(generals.getForceEntourage().getName().equalsIgnoreCase(entry.getKey())){
+                if(entry.getValue()>0) {
+                    List<Generals> forceEntourageList = generals.getForceEntourageList();
+                    Generals g = null;
+                    for (Generals entourage : forceEntourageList) {
+                        if (!entourage.getCode().equals(generals.getForceEntourage().getCode())) {
+                            if (entourage.getCode().equals(generals.getIntellectEntourage().getCode())) {
+                                continue;
+                            }
+                            if (entourage.getCode().equals(generals.getTroopsEntourage().getCode())) {
+                                continue;
+                            }
+                            g = entourage;
+                            break;
+                        }
+                    }
+                    generals.setForceEntourage(g);
+                    generals.getEntourageThreeDimensional().setForce(g.getTotalAddForce());
+                }
+                danMap.put(entry.getKey(),entry.getValue()+1);
+            }
+            if(generals.getIntellectEntourage().getName().equalsIgnoreCase(entry.getKey())){
+                if(entry.getValue()>0){
+                    List<Generals> intellectEntourageList = generals.getIntellectEntourageList();
+                    Generals g = null;
+                    for(Generals entourage : intellectEntourageList){
+                        if(!entourage.getCode().equals(generals.getIntellectEntourage().getCode())){
+                            if(entourage.getCode().equals(generals.getForceEntourage().getCode())){
+                                continue;
+                            }
+                            if(entourage.getCode().equals(generals.getTroopsEntourage().getCode())){
+                                continue;
+                            }
+                            g = entourage;
+                            break;
+                        }
+                    }
+                    generals.setIntellectEntourage(g);
+                    generals.getEntourageThreeDimensional().setIntellect(g.getTotalAddIntellect());
+                }
+                danMap.put(entry.getKey(),entry.getValue()+1);
+            }
+            if(generals.getTroopsEntourage().getName().equalsIgnoreCase(entry.getKey())){
+                if(entry.getValue()>0){
+                    List<Generals> entourageList = generals.getTroopsEntourageList();
+                    Generals g = null;
+                    for(Generals entourage : entourageList){
+                        if(!entourage.getCode().equals(generals.getTroopsEntourage().getCode())){
+                            if(entourage.getCode().equals(generals.getForceEntourage().getCode())){
+                                continue;
+                            }
+                            if(entourage.getCode().equals(generals.getIntellectEntourage().getCode())){
+                                continue;
+                            }
+                            g = entourage;
+                            break;
+                        }
+                    }
+                    generals.setTroopsEntourage(g);
+                    generals.getEntourageThreeDimensional().setTroops(g.getTotalAddTroops());
+                }
+                danMap.put(entry.getKey(),entry.getValue()+1);
+            }
+        }
+        ThreeDimensional entourageThreeDimensional = generals.getEntourageThreeDimensional();
+        force += entourageThreeDimensional.getForce();
+        intellect += entourageThreeDimensional.getIntellect();
+        troops += entourageThreeDimensional.getTroops();
+
+        //圣石三维
+        ThreeDimensional holyStoneThreeDimensional = generals.getHolyStoneThreeDimensional();
+        force += holyStoneThreeDimensional.getForce();
+        intellect += holyStoneThreeDimensional.getIntellect();
+        troops += holyStoneThreeDimensional.getTroops();
+
+        //特殊战器三维
+        ThreeDimensional warDeviceThreeDimensional = generals.getWarDevice2ThreeDimensional();
+        force += warDeviceThreeDimensional.getForce();
+        intellect += warDeviceThreeDimensional.getIntellect();
+        troops += warDeviceThreeDimensional.getTroops();
+
+        //兵种兵书三维
+        ThreeDimensional armsBookThreeDimensional = generals.getArmsBookThreeDimensional();
+        force += armsBookThreeDimensional.getForce();
+        intellect += armsBookThreeDimensional.getIntellect();
+        troops += armsBookThreeDimensional.getTroops();
+
+        //将魂三维
+        ThreeDimensional willSoulThreeDimensional = generals.getWillSoulThreeDimensional();
+        force += willSoulThreeDimensional.getForce();
+        intellect += willSoulThreeDimensional.getIntellect();
+        troops += willSoulThreeDimensional.getTroops();
+
+        //兵符三维
+        ThreeDimensionals symbolsThreeDimensional = generals.getSymbolsThreeDimensionals();
+        force += symbolsThreeDimensional.getForce().intValue();
+        intellect += symbolsThreeDimensional.getIntellect().intValue();
+        troops += symbolsThreeDimensional.getTroops().intValue();
+
+        //战阵三维
+        ThreeDimensional battleArrayThreeDimensional = generals.getBattleArrayThreeDimensional();
+        force += battleArrayThreeDimensional.getForce();
+        intellect += battleArrayThreeDimensional.getIntellect();
+        troops += battleArrayThreeDimensional.getTroops();
+
+        //战意三维
+        ThreeDimensional warpathThreeDimensional = generals.getWarpathThreeDimensional();
+        force += warpathThreeDimensional.getForce();
+        intellect += warpathThreeDimensional.getIntellect();
+        troops += warpathThreeDimensional.getTroops();
+//        Warpath warpath = generals.getWarpath();
+//        force += warpath.getForce();
+//        intellect += warpath.getIntellect();
+//        troops += warpath.getTroops();
+//        System.out.println(generals.getName()+" 战意："+warpathThreeDimensional);
+
+        //命格三维
+        Destiny destiny = generals.getDestiny();
+        force += destiny.getForce();
+        intellect += destiny.getIntellect();
+        troops += destiny.getTroops();
+
+        //幻化三维
+        ThreeDimensional skinThreeDimensional = generals.getSkinThreeDimensional();
+        force += skinThreeDimensional.getForce();
+        intellect += skinThreeDimensional.getIntellect();
+        troops += skinThreeDimensional.getTroops();
+
+        //命格被动战力
+        Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
+
+        //战器三被动战力
+        Integer warDeviceSword = 458 + 458 + 1220;
+
+        //武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
+        Integer total = force + intellect + troops;
+        Integer totalSword = (total) * 2 + destinySword + warDeviceSword;
+        generals.setTotalSword2(totalSword);
+        generals.setTotalForce2(force);
+        generals.setTotalIntellect2(intellect);
+        generals.setTotalTroops2(troops);
+        return totalSword;
+    }
 }

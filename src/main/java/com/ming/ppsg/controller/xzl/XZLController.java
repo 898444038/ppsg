@@ -60,6 +60,7 @@ public class XZLController {
 
 
     private Map<String,Object> xzl(String[] sz){
+        boolean isHuanhua = true;
         List<Generals> nimingList = new ArrayList<>();
         List<Generals> generalsAll = new ArrayList<>();
 
@@ -313,7 +314,7 @@ public class XZLController {
 
         Map<Integer,List<Generals>> map = null;
         for(Generals generals : nimingList){
-            map = GeneralsUtil.getEntourage(generals,generalsAll);//随从三维
+            map = GeneralsUtil.getEntourage(generals,generalsAll,isHuanhua);//随从三维
         }
 
         List<Generals> allEntourageList = new ArrayList<>();
@@ -323,7 +324,7 @@ public class XZLController {
             allEntourageList.add(g);
         }
 
-        Map<Integer,List<Generals>> allEntourage = GeneralsUtil.getAllEntourage(allEntourageList);//随从三维
+        Map<Integer,List<Generals>> allEntourage = GeneralsUtil.getAllEntourage(allEntourageList,isHuanhua);//随从三维
 
         long t1 = System.currentTimeMillis();
         NumberUtil.clear();

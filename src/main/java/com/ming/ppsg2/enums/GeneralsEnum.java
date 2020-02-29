@@ -1088,6 +1088,7 @@ public enum GeneralsEnum {
         skin_5(5,"赤魇苍雷",30,30,80),
         skin_6(6,"锦绣丹心",30,30,80),
         skin_7(7,"醉梦千秋",30,30,80),
+        skin_8(8,"魔影祸战",30,30,80),
         ;
         private Integer code;
         private String name;
