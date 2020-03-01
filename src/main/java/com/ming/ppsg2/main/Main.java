@@ -47,7 +47,7 @@ public class Main {
         //计算：992/658/1895
         //实际：988/654/1947
         String[] dan = {"砺战赵云","御甲张辽"};
-        boolean isHuanHua = true;//随从是否有幻化
+        boolean isHuanHua = false;//随从是否有幻化
         long t1 = System.currentTimeMillis();
         xzl(top,advert,fileRemark,dan,isHuanHua);
         long t2 = System.currentTimeMillis();
@@ -420,7 +420,7 @@ public class Main {
                 }
             }
 
-            int zhanli = 378000;
+            int zhanli = 375000;
             int flag = 0;
             //跳过战力低于zhanli的
             if(allTotalSword<zhanli && sz.length==0){

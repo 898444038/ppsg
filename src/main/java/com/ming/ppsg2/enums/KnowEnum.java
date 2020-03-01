@@ -12,6 +12,7 @@ public enum KnowEnum {
         return this.groupName;
     }
 
+    //将魂
     public enum JiangJun implements KnowEnumInterface {
         //白卡+15 黑卡+20 银卡+60 金卡+300
         //1-18 (1250-5500) 递增250
@@ -41,6 +42,7 @@ public enum KnowEnum {
             return total/300;//411.5
         }
     }
+
     //战意
     public enum ZhanYi implements KnowEnumInterface {
         level1(1,null),
@@ -50,7 +52,7 @@ public enum KnowEnum {
         level5(5,15000),
         level6(6,null),
         level7(7,null),
-        level8(8,null),
+        level8(8,60000),
         level9(9,90000),
         ;
         private Integer code;
@@ -67,6 +69,18 @@ public enum KnowEnum {
             return this.code;
         }
     }
+
+    //战阵
+    /*
+    开启:500战功券
+    1阶（金）：(每次消耗100战功券，+10战纹，X1)190战纹，上阵三维+1%，国战额外兵力+50
+    2阶（木）：(每次消耗100战功券，+10战纹，X1、X2)820战纹，上阵三维+2%，国战额外兵力+100
+    3阶（水）：(每次消耗100战功券，+10战纹，X1、X2、X5)1780战纹，上阵三维+3%，国战额外兵力+150
+
+
+    */
+
+
 
     //兵符
     /*
