@@ -1,13 +1,7 @@
 package com.ming.ppsg2.main;
 
 
-import com.ming.ppsg2.entity.ArmsBook;
-import com.ming.ppsg2.entity.Destiny;
-import com.ming.ppsg2.entity.Generals;
-import com.ming.ppsg2.entity.Result;
-import com.ming.ppsg2.entity.Symbols;
-import com.ming.ppsg2.entity.ThreeDimensional;
-import com.ming.ppsg2.entity.Warpath;
+import com.ming.ppsg2.entity.*;
 import com.ming.ppsg2.enums.GeneralsEnum;
 import com.ming.ppsg2.utils.DestinyData;
 import com.ming.ppsg2.utils.ExcelReaderUtil;
@@ -23,16 +17,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.*;
 
 public class Main {
 
@@ -46,25 +31,54 @@ public class Main {
         String fileRemark = "(御甲张辽)(单砺战单御甲)(幻化随从表)";
         //计算：992/658/1895
         //实际：988/654/1947
-        String[] dan = {"砺战赵云","御甲张辽"};
+
+        List<AppointGenerals> appointGeneralsList = new ArrayList<>();
+        appointGeneralsList.add(new AppointGenerals("诡骑张飞"));
+        appointGeneralsList.add(new AppointGenerals("神武刘备"));
+        appointGeneralsList.add(new AppointGenerals("陨星庞统"));
+        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
+        appointGeneralsList.add(new AppointGenerals("龙驹马云禄"));
+
+        List<AppointExcludeGenerals> excludeGeneralsList = new ArrayList<>();
+        excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
+        excludeGeneralsList.add(new AppointExcludeGenerals("御甲张辽",0));
+
+        List<AppointSymbols> appointSymbolsList = new ArrayList<>();
+        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.huoFeng.getCode(),GeneralsEnum.SymbolsType.huoFeng.getName()));
+        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.qiongQi.getCode(),GeneralsEnum.SymbolsType.qiongQi.getName()));
+        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.yaCi.getCode(),GeneralsEnum.SymbolsType.yaCi.getName()));
+
         boolean isHuanHua = false;//随从是否有幻化
         long t1 = System.currentTimeMillis();
-        xzl(top,advert,fileRemark,dan,isHuanHua);
+        xzl(top,advert,fileRemark,appointGeneralsList,excludeGeneralsList,appointSymbolsList,isHuanHua);
         long t2 = System.currentTimeMillis();
         DecimalFormat df=new DecimalFormat("0.000");
         System.out.println("共耗时："+df.format((float)(t2-t1)/1000)+"s");
     }
 
-    public static void xzl(String top,String advert,String fileRemark,String[] dan,boolean isHuanHua){
-        //"","","","",""
-        //"诡骑张飞","神武刘备","陨星庞统","砺战赵云","龙驹马云禄"
-        String[] sz = {};
-
-        List<Generals> nimingList = new ArrayList<>();
+    public static void xzl(String top,String advert,String fileRemark,
+                           List<AppointGenerals> appointGeneralsList,
+                           List<AppointExcludeGenerals> excludeGeneralsList,
+                           List<AppointSymbols> appointSymbolsList,
+                           boolean isHuanHua){
+        List<Generals> nimingList = new ArrayList<>();//全部
+        List<Generals> nimingList2 = new ArrayList<>();//指定武将
+        List<Generals> nimingList3 = new ArrayList<>();//非指定武将
         List<Generals> generalsAll = new ArrayList<>();
         Map<String,Destiny> destinyMap = new HashMap<>();//命格材料
 
         List<List<String>> lists = ExcelReaderUtil.readExcel("/excel/data_temp.xlsx");
+
+        //排除武将
+        Iterator<List<String>> iterator = lists.iterator();
+        while (iterator.hasNext()) {
+            List<String> list = iterator.next();
+            for (AppointExcludeGenerals excludeGenerals : excludeGeneralsList) {
+                if (excludeGenerals.getName().equalsIgnoreCase(list.get(0)) && excludeGenerals.getMaxSize()==0) {
+                    iterator.remove();
+                }
+            }
+        }
         System.out.println("获取初始数据："+lists.size()+"条");
 
         Map<String,String> generalsMapSort = new LinkedHashMap<>();
@@ -250,17 +264,19 @@ public class Main {
 
                 BeanUtils.copyProperties(generals,copy);
 
-                //if(copy.getGender().equals(GeneralsEnum.Gender.gril.getCode())){
-                //    nimingList.add(copy);
-                //}
-                if(sz.length!=0){
-                    for(String s : sz){
-                        if(copy.getName().equals(s)){
-                            nimingList.add(copy);
+                if(!appointGeneralsList.isEmpty()){
+                    boolean flag = true;
+                    for(AppointGenerals appointGenerals : appointGeneralsList){
+                        if(copy.getName().equals(appointGenerals.getName())){
+                            nimingList2.add(copy);
+                            flag = false;
                         }
                     }
+                    if (flag){
+                        nimingList3.add(copy);
+                    }
                 }else{
-                    nimingList.add(copy);
+                    nimingList3.add(copy);
                 }
 
                 destinyMap.put(generals.getName(),copyDestiny);
@@ -275,6 +291,9 @@ public class Main {
             generals.setDestiny(copyDestiny);
             generalsAll.add(generals);
         }
+
+        nimingList.addAll(nimingList2);
+        nimingList.addAll(nimingList3);
 
         //去除重复卡，保留异化卡
         System.out.println("上阵武将："+nimingList.size());
@@ -336,7 +355,7 @@ public class Main {
         List<Generals> optimumEntourage = GeneralsUtil.getOptimumEntourage(nimingList,optimumEntourageList,isHuanHua);
 
         long t1 = System.currentTimeMillis();
-        List<List<Generals>> all = NumberUtil.getNoRepeatList(nimingList,5);
+        List<List<Generals>> all = NumberUtil.getNoRepeatList(nimingList,5,appointGeneralsList);
         System.out.println("上阵武将组合个数："+all.size());
         List<Result> resultList = new ArrayList<>();
         List<Result> resultList2 = new ArrayList<>();
@@ -384,7 +403,9 @@ public class Main {
             }
 
             //极限兵符
-            List<Symbols> symbolsList = GeneralsUtil.getSymbols(generalsList);
+            List<Symbols> symbolsList = GeneralsUtil.getSymbols(generalsList,appointSymbolsList);
+
+
             ThreeDimensional td = GeneralsUtil.countSymbols(generalsList,symbolsList);
             //战意三维
             GeneralsUtil.getWarpath(generalsList);
@@ -393,9 +414,9 @@ public class Main {
             // 武将战力 =（总武力+总智力+总兵力）*2+ 命格被动战力 + 战器被动战力
             Integer allTotalSword = null;
             Integer allTotalSword2 = null;
-            if(dan.length>0){
-                allTotalSword = GeneralsUtil.getAllTotalSword3(generalsList,dan);
-                allTotalSword2 = GeneralsUtil.getAllTotalSword4(generalsList,dan);
+            if(excludeGeneralsList.size() > 0){
+                allTotalSword = GeneralsUtil.getAllTotalSword3(generalsList,excludeGeneralsList);
+                allTotalSword2 = GeneralsUtil.getAllTotalSword4(generalsList,excludeGeneralsList);
             }else{
                 allTotalSword = GeneralsUtil.getAllTotalSword(generalsList);
                 allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
@@ -423,7 +444,7 @@ public class Main {
             int zhanli = 375000;
             int flag = 0;
             //跳过战力低于zhanli的
-            if(allTotalSword<zhanli && sz.length==0){
+            if(allTotalSword<zhanli && appointGeneralsList.isEmpty()){
                 if(allTotalSword2>zhanli){
                     flag = 1;
                 }else{
@@ -521,16 +542,18 @@ public class Main {
         model.put("optimumEntourageList",optimumEntourage);//最佳随从表
         model.put("destinyMap",destinyMap);
 
-        try{
-            //保存属性到data.properties文件
-            FileOutputStream oFile = new FileOutputStream("data.properties", false);//true表示追加打开
-            for(Map.Entry<String,String> maps : generalsMapSort.entrySet()){
-                prop.setProperty(maps.getKey(), maps.getValue());
+        if(excludeGeneralsList.isEmpty()){
+            try{
+                //保存属性到data.properties文件
+                FileOutputStream oFile = new FileOutputStream("data.properties", false);//true表示追加打开
+                for(Map.Entry<String,String> maps : generalsMapSort.entrySet()){
+                    prop.setProperty(maps.getKey(), maps.getValue());
+                }
+                prop.store(oFile, "Number:"+generalsMapSort.size());
+                oFile.close();
+            }catch(Exception e){
+                System.out.println(e);
             }
-            prop.store(oFile, "Number:"+generalsMapSort.size());
-            oFile.close();
-        }catch(Exception e){
-            System.out.println(e);
         }
         System.gc();
 
@@ -549,7 +572,7 @@ public class Main {
     }
 
     public static void zt(){
-        String[] g = {"命世孙权","诡骑张飞","典军夏侯渊"};
+        /*String[] g = {"命世孙权","诡骑张飞","典军夏侯渊"};
 
         String[] sz = {"凤仪步练师","儒将陆逊","郡主孙尚香","倾世貂蝉","惊鸿黄舞蝶"};
         List<Integer> index_sz = new ArrayList<>();
@@ -580,7 +603,7 @@ public class Main {
             }
             System.out.println();
         }
-        System.out.println(zhenRong.size());
+        System.out.println(zhenRong.size());*/
     }
 
 

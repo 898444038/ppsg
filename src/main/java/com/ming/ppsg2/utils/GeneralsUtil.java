@@ -1360,7 +1360,7 @@ public class GeneralsUtil {
     }
 
     // 兵符
-    public static List<Symbols> getSymbols(List<Generals> generalsList) {
+    public static List<Symbols> getSymbols(List<Generals> generalsList,List<AppointSymbols> appointSymbolsList) {
         Symbols symbols1 = new Symbols();
         Symbols symbols2 = new Symbols();
         Symbols symbols3 = new Symbols();
@@ -1400,7 +1400,7 @@ public class GeneralsUtil {
         intList.add(12);
         intList.add(13);
         intList.add(14);
-        List<List<Integer>> integerList = NumberUtil.getResult(intList,4);
+        List<List<Integer>> integerList = NumberUtil.getResult(intList,4,new ArrayList<>());
 
         List<Generals> generalsAll = new ArrayList<>();//全部
         List<Generals> generalsWei = new ArrayList<>();//魏
@@ -1695,7 +1695,7 @@ public class GeneralsUtil {
         indexList.add(10);
         indexList.add(11);
         indexList.add(12);
-        List<List<Integer>> resultList = NumberUtil.getResult(indexList,3);
+        List<List<Integer>> resultList = NumberUtil.getResult(indexList,3,appointSymbolsList);
 
         int typeTotal = 0;
         ThreeDimensional finalTypeThree = null;
@@ -2587,99 +2587,37 @@ public class GeneralsUtil {
     }
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
-    public static Integer getAllTotalSword3(List<Generals> generalsList,String[] danList) {
-        /*boolean szlz = false;//判断上阵武将有没有砺战
-        int size = 0;
-        for (Generals generals : generalsList){
-            for (String dan : danList){
-                if(dan.equalsIgnoreCase(generals.getName())){
-                    szlz = true;
-                }
-            }
-        }
-        // 76710  75072   75060  72510  71394
+    public static Integer getAllTotalSword3(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {
         Integer total = 10152;
-        for (Generals generals : generalsList){
-            if(szlz == false){
-                for (String dan : danList){
-                    if(dan.equalsIgnoreCase(generals.getTroopsEntourage().getName())){
-                        size++;
-                    }
-                }
-                if(size==1){
-                    total += getTotalSword3(generals,szlz,true);
-                }else{
-                    total += getTotalSword3(generals,szlz,false);
-                }
-            }else{
-                total += getTotalSword3(generals,szlz,false);
-            }
-        }*/
-        Integer total = 10152;
-        Map<String,Integer> map = new HashMap<>();
-        for (String dan : danList){
-            map.put(dan,0);
-        }
         //判断上阵武将有没有danList
         for (Generals generals : generalsList){
-            for (String dan : danList){
-                if(dan.equalsIgnoreCase(generals.getName())){
-                    map.put(generals.getName(),1);
+            for (AppointExcludeGenerals exclude : excludeGeneralsList){
+                if(exclude.getName().equalsIgnoreCase(generals.getName())){
+                    exclude.setCurrentSize(1);
                 }
             }
         }
 
         for (Generals generals : generalsList){
-            total += getTotalSword3(generals,map);
+            total += getTotalSword3(generals,excludeGeneralsList);
         }
         return total;
     }
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
-    public static Integer getAllTotalSword4(List<Generals> generalsList,String[] danList) {
-        /*boolean szlz = false;//判断上阵武将有没有砺战
-        int size = 0;
-        for (Generals generals : generalsList){
-            for (String dan : danList){
-                if(dan.equalsIgnoreCase(generals.getName())){
-                    szlz = true;
-                }
-            }
-        }
-        // 76710  75072   75060  72510  71394
+    public static Integer getAllTotalSword4(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {
         Integer total = 10152;
-        for (Generals generals : generalsList){
-            if(szlz == false){
-                for (String dan : danList) {
-                    if (dan.equalsIgnoreCase(generals.getTroopsEntourage().getName())) {
-                        size++;
-                    }
-                }
-                if(size==1){
-                    total += getTotalSword4(generals,szlz,true);
-                }else{
-                    total += getTotalSword4(generals,szlz,false);
-                }
-            }else{
-                total += getTotalSword4(generals,szlz,false);
-            }
-        }*/
-        Integer total = 10152;
-        Map<String,Integer> map = new HashMap<>();
-        for (String dan : danList){
-            map.put(dan,0);
-        }
         //判断上阵武将有没有danList
         for (Generals generals : generalsList){
-            for (String dan : danList){
-                if(dan.equalsIgnoreCase(generals.getName())){
-                    map.put(generals.getName(),1);
+            for (AppointExcludeGenerals exclude : excludeGeneralsList){
+                if(exclude.getName().equalsIgnoreCase(generals.getName())){
+                    exclude.setCurrentSize(1);
                 }
             }
         }
 
         for (Generals generals : generalsList){
-            total += getTotalSword4(generals,map);
+            total += getTotalSword4(generals,excludeGeneralsList);
         }
         return total;
     }
@@ -3489,7 +3427,7 @@ public class GeneralsUtil {
     }
 
 
-    public static Integer getTotalSword3(Generals generals,Map<String,Integer> danMap) {
+    public static Integer getTotalSword3(Generals generals,List<AppointExcludeGenerals> excludeGeneralsList) {
         Integer force = 0;
         Integer intellect = 0;
         Integer troops = 0;
@@ -3507,27 +3445,9 @@ public class GeneralsUtil {
         troops += scienceThreeDimensional.getTroops();
 
         //随从三维
-        /*if(b1 || (b2==false && generals.getTroopsEntourage().getName().equalsIgnoreCase("砺战赵云"))){
-            List<Generals> entourageList = generals.getTroopsEntourageList();
-            Generals g = null;
-            for(Generals entourage : entourageList){
-                if(!entourage.getCode().equals(GeneralsEnum.GeneralsCode.shu_zhaoyun.getCode().toString())){
-                    if(entourage.getCode().equals(generals.getForceEntourage().getCode())){
-                        continue;
-                    }
-                    if(entourage.getCode().equals(generals.getIntellectEntourage().getCode())){
-                        continue;
-                    }
-                    g = entourage;
-                    break;
-                }
-            }
-            generals.setTroopsEntourage(g);
-            generals.getEntourageThreeDimensional().setTroops(g.getTotalAddTroops());
-        }*/
-        for(Map.Entry<String,Integer> entry : danMap.entrySet()){
-            if(generals.getForceEntourage().getName().equalsIgnoreCase(entry.getKey())){
-                if(entry.getValue()>0) {
+        for(AppointExcludeGenerals excludeGenerals : excludeGeneralsList){
+            if(generals.getForceEntourage().getName().equalsIgnoreCase(excludeGenerals.getName())){
+                if(excludeGenerals.getCurrentSize() >= excludeGenerals.getMaxSize()) {
                     List<Generals> forceEntourageList = generals.getForceEntourageList();
                     Generals g = null;
                     for (Generals entourage : forceEntourageList) {
@@ -3545,10 +3465,10 @@ public class GeneralsUtil {
                     generals.setForceEntourage(g);
                     generals.getEntourageThreeDimensional().setForce(g.getTotalAddForce());
                 }
-                danMap.put(entry.getKey(),entry.getValue()+1);
+                excludeGenerals.setCurrentSize(excludeGenerals.getCurrentSize()+1);
             }
-            if(generals.getIntellectEntourage().getName().equalsIgnoreCase(entry.getKey())){
-                if(entry.getValue()>0){
+            if(generals.getIntellectEntourage().getName().equalsIgnoreCase(excludeGenerals.getName())){
+                if(excludeGenerals.getCurrentSize() >= excludeGenerals.getMaxSize()){
                     List<Generals> intellectEntourageList = generals.getIntellectEntourageList();
                     Generals g = null;
                     for(Generals entourage : intellectEntourageList){
@@ -3566,10 +3486,10 @@ public class GeneralsUtil {
                     generals.setIntellectEntourage(g);
                     generals.getEntourageThreeDimensional().setIntellect(g.getTotalAddIntellect());
                 }
-                danMap.put(entry.getKey(),entry.getValue()+1);
+                excludeGenerals.setCurrentSize(excludeGenerals.getCurrentSize()+1);
             }
-            if(generals.getTroopsEntourage().getName().equalsIgnoreCase(entry.getKey())){
-                if(entry.getValue()>0){
+            if(generals.getTroopsEntourage().getName().equalsIgnoreCase(excludeGenerals.getName())){
+                if(excludeGenerals.getCurrentSize() >= excludeGenerals.getMaxSize()){
                     List<Generals> entourageList = generals.getTroopsEntourageList();
                     Generals g = null;
                     for(Generals entourage : entourageList){
@@ -3587,7 +3507,7 @@ public class GeneralsUtil {
                     generals.setTroopsEntourage(g);
                     generals.getEntourageThreeDimensional().setTroops(g.getTotalAddTroops());
                 }
-                danMap.put(entry.getKey(),entry.getValue()+1);
+                excludeGenerals.setCurrentSize(excludeGenerals.getCurrentSize()+1);
             }
         }
 
@@ -3679,7 +3599,7 @@ public class GeneralsUtil {
         return totalSword;
     }
 
-    public static Integer getTotalSword4(Generals generals,Map<String,Integer> danMap) {
+    public static Integer getTotalSword4(Generals generals,List<AppointExcludeGenerals> excludeGeneralsList) {
         Integer force = 0;
         Integer intellect = 0;
         Integer troops = 0;
@@ -3697,27 +3617,9 @@ public class GeneralsUtil {
         troops += scienceThreeDimensional.getTroops();
 
         //随从三维
-        /*if(b1 || (b2==false && generals.getTroopsEntourage().getName().equalsIgnoreCase("砺战赵云"))){
-            List<Generals> entourageList = generals.getTroopsEntourageList();
-            Generals g = null;
-            for(Generals entourage : entourageList){
-                if(!entourage.getCode().equals(GeneralsEnum.GeneralsCode.shu_zhaoyun.getCode().toString())){
-                    if(entourage.getCode().equals(generals.getForceEntourage().getCode())){
-                        continue;
-                    }
-                    if(entourage.getCode().equals(generals.getIntellectEntourage().getCode())){
-                        continue;
-                    }
-                    g = entourage;
-                    break;
-                }
-            }
-            generals.setTroopsEntourage(g);
-            generals.getEntourageThreeDimensional().setTroops(g.getTotalAddTroops());
-        }*/
-        for(Map.Entry<String,Integer> entry : danMap.entrySet()){
-            if(generals.getForceEntourage().getName().equalsIgnoreCase(entry.getKey())){
-                if(entry.getValue()>0) {
+        for(AppointExcludeGenerals excludeGenerals : excludeGeneralsList){
+            if(generals.getForceEntourage().getName().equalsIgnoreCase(excludeGenerals.getName())){
+                if(excludeGenerals.getCurrentSize() >= excludeGenerals.getMaxSize()) {
                     List<Generals> forceEntourageList = generals.getForceEntourageList();
                     Generals g = null;
                     for (Generals entourage : forceEntourageList) {
@@ -3735,10 +3637,10 @@ public class GeneralsUtil {
                     generals.setForceEntourage(g);
                     generals.getEntourageThreeDimensional().setForce(g.getTotalAddForce());
                 }
-                danMap.put(entry.getKey(),entry.getValue()+1);
+                excludeGenerals.setCurrentSize(excludeGenerals.getCurrentSize()+1);
             }
-            if(generals.getIntellectEntourage().getName().equalsIgnoreCase(entry.getKey())){
-                if(entry.getValue()>0){
+            if(generals.getIntellectEntourage().getName().equalsIgnoreCase(excludeGenerals.getName())){
+                if(excludeGenerals.getCurrentSize() >= excludeGenerals.getMaxSize()){
                     List<Generals> intellectEntourageList = generals.getIntellectEntourageList();
                     Generals g = null;
                     for(Generals entourage : intellectEntourageList){
@@ -3756,10 +3658,10 @@ public class GeneralsUtil {
                     generals.setIntellectEntourage(g);
                     generals.getEntourageThreeDimensional().setIntellect(g.getTotalAddIntellect());
                 }
-                danMap.put(entry.getKey(),entry.getValue()+1);
+                excludeGenerals.setCurrentSize(excludeGenerals.getCurrentSize()+1);
             }
-            if(generals.getTroopsEntourage().getName().equalsIgnoreCase(entry.getKey())){
-                if(entry.getValue()>0){
+            if(generals.getTroopsEntourage().getName().equalsIgnoreCase(excludeGenerals.getName())){
+                if(excludeGenerals.getCurrentSize() >= excludeGenerals.getMaxSize()){
                     List<Generals> entourageList = generals.getTroopsEntourageList();
                     Generals g = null;
                     for(Generals entourage : entourageList){
@@ -3777,9 +3679,10 @@ public class GeneralsUtil {
                     generals.setTroopsEntourage(g);
                     generals.getEntourageThreeDimensional().setTroops(g.getTotalAddTroops());
                 }
-                danMap.put(entry.getKey(),entry.getValue()+1);
+                excludeGenerals.setCurrentSize(excludeGenerals.getCurrentSize()+1);
             }
         }
+
         ThreeDimensional entourageThreeDimensional = generals.getEntourageThreeDimensional();
         force += entourageThreeDimensional.getForce();
         intellect += entourageThreeDimensional.getIntellect();

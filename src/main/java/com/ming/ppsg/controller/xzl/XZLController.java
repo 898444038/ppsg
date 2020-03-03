@@ -328,7 +328,7 @@ public class XZLController {
 
         long t1 = System.currentTimeMillis();
         NumberUtil.clear();
-        List<List<Generals>> all = NumberUtil.getNoRepeatList(nimingList,5);
+        List<List<Generals>> all = NumberUtil.getNoRepeatList(nimingList,5,new ArrayList<>());
         System.out.println("上阵武将组合个数："+all.size());
         List<Result> resultList = new ArrayList<>();
         List<Result> resultList2 = new ArrayList<>();
@@ -376,7 +376,7 @@ public class XZLController {
             }
 
             //极限兵符
-            List<Symbols> symbolsList = GeneralsUtil.getSymbols(generalsList);
+            List<Symbols> symbolsList = GeneralsUtil.getSymbols(generalsList,new ArrayList<>());
             ThreeDimensional td = GeneralsUtil.countSymbols(generalsList,symbolsList);
 
             GeneralsUtil.getWarpath(generalsList);//战意三维

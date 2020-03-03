@@ -1,9 +1,7 @@
 package com.ming.ppsg2.utils;
 
 
-import com.ming.ppsg2.entity.Generals;
-import com.ming.ppsg2.entity.Result;
-import com.ming.ppsg2.entity.Symbols;
+import com.ming.ppsg2.entity.*;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -19,9 +17,8 @@ import java.util.Map;
 public class NumberUtil {
 
     //copy对象
-    public static List<List<Generals>> getNoRepeatList(List<Generals> data, int size) {
-
-        List<List<Generals>> glongList = getList(data,size);
+    public static List<List<Generals>> getNoRepeatList(List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
+        List<List<Generals>> glongList = getList(data,size,appointGeneralsList);
         for(List<Generals> generalsList : glongList){
             List<Generals> copyList = new ArrayList<>();
             for(Generals generals : generalsList){
@@ -39,12 +36,9 @@ public class NumberUtil {
         noRepeatList = new ArrayList<>();
     }
 
-    public static List<List<Generals>> getList(List<Generals> data, int size) {
+    public static List<List<Generals>> getList(List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
         longList = new ArrayList<>();
-        combinations(new ArrayList<>(),data, size);
-        /*for(List<Generals> list : longList){
-            System.out.println(list.toString());
-        }*/
+        combinations(new ArrayList<>(),data, size,appointGeneralsList);
         System.out.println(longList.size());
         return longList;
     }
@@ -56,15 +50,24 @@ public class NumberUtil {
      */
     private static List<List<Generals>> longList = new ArrayList<>();
     private static List<List<Generals>> noRepeatList = new ArrayList<>();
-    public static void combinations(List<Generals> selector,List<Generals> data,int n) {
+    public static void combinations(List<Generals> selector,List<Generals> data,int n,List<AppointGenerals> appointGeneralsList) {
         if(n == 0) {
-            List<Generals> list = new ArrayList<>();
+            int size = appointGeneralsList.size();
+            int total = 0;
             for (Generals generals : selector) {
-                //Generals copy = new Generals();
-                //BeanUtils.copyProperties(generals,copy);
-                list.add(generals);
+                for (AppointGenerals appointGenerals : appointGeneralsList) {
+                    if(generals.getName().equalsIgnoreCase(appointGenerals.getName())){
+                        total++;
+                    }
+                }
             }
-            longList.add(list);
+            if(size == total || appointGeneralsList.isEmpty()){
+                List<Generals> list = new ArrayList<>();
+                for (Generals generals : selector) {
+                    list.add(generals);
+                }
+                longList.add(list);
+            }
             return;
         }
         if(data.isEmpty()) {
@@ -73,10 +76,10 @@ public class NumberUtil {
         //选择第一个元素,将元素放入集合
         Generals generals0 = data.get(0);
         selector.add(generals0);
-        combinations(selector,data.subList(1, data.size()),n - 1); //从第二个元素开始选择，再选择两个
+        combinations(selector,data.subList(1, data.size()),n - 1,appointGeneralsList); //从第二个元素开始选择，再选择两个
         //不选择第一个元素
         selector.remove(selector.size() -1 );
-        combinations(selector,data.subList(1, data.size()), n); //从第二个元素开始选择，选择两个
+        combinations(selector,data.subList(1, data.size()), n,appointGeneralsList); //从第二个元素开始选择，选择两个
     }
 
 
@@ -166,13 +169,9 @@ public class NumberUtil {
 
 
 
-    public static List<List<Integer>> getResult(List<Integer> data, int size) {
+    public static List<List<Integer>> getResult(List<Integer> data, int size, List<AppointSymbols> appointSymbolsList) {
         intList = new ArrayList<>();
-        combinations2(new ArrayList<>(),data, size);
-        /*for(List<Integer> list : intList){
-            System.out.println(list.toString());
-        }
-        System.out.println(intList.size());*/
+        combinations2(new ArrayList<>(),data, size,appointSymbolsList);
         return intList;
     }
 
@@ -183,13 +182,24 @@ public class NumberUtil {
      * @param n			选出的数量
      */
     private static List<List<Integer>> intList = new ArrayList<>();
-    public static void combinations2(List<Integer> selector,List<Integer> data,int n) {
+    public static void combinations2(List<Integer> selector,List<Integer> data,int n,List<AppointSymbols> appointSymbolsList) {
         if(n == 0) {
-            List<Integer> list = new ArrayList<>();
-            for (Integer i : selector) {
-                list.add(i);
+            int size = appointSymbolsList.size();
+            int total = 0;
+            for (Integer integer : selector) {
+                for (AppointSymbols appointSymbols : appointSymbolsList) {
+                    if(integer.equals(appointSymbols.getCode())){
+                        total++;
+                    }
+                }
             }
-            intList.add(list);
+            if(size == total || appointSymbolsList.isEmpty()) {
+                List<Integer> list = new ArrayList<>();
+                for (Integer i : selector) {
+                    list.add(i);
+                }
+                intList.add(list);
+            }
             return;
         }
         if(data.isEmpty()) {
@@ -197,10 +207,10 @@ public class NumberUtil {
         }
         //选择第一个元素,将元素放入集合
         selector.add(data.get(0));
-        combinations2(selector,data.subList(1, data.size()),n - 1); //从第二个元素开始选择，再选择两个
+        combinations2(selector,data.subList(1, data.size()),n - 1,appointSymbolsList); //从第二个元素开始选择，再选择两个
         //不选择第一个元素
         selector.remove(selector.size() -1 );
-        combinations2(selector,data.subList(1, data.size()), n); //从第二个元素开始选择，选择两个
+        combinations2(selector,data.subList(1, data.size()), n,appointSymbolsList); //从第二个元素开始选择，选择两个
     }
 
 
