@@ -1,20 +1,20 @@
 前端：vue\echarts\elementUI\axios\webpack
 
-后端：springboot springcloud webflux/Reactor(https://www.cnblogs.com/javazhiyin/p/11790688.html)
+后端：springboot springcloud webflux/Reactor/stream(https://www.cnblogs.com/javazhiyin/p/11790688.html)
 
 -- 云计算：aws
 大数据：HBase、hadoop
 网络安全：jwt、spring security
 ORM：mybatis
 socket:websocket、netty
-web容器：tomcat、jboss、jetty
+web容器：tomcat、jboss、jetty\undertow\netty
 网络：专用网络VPC、弹性公网IP、CDN
 存储：OSS、NFS、FastDFS、MogileFS
 缓存：Redis（redisson）、Oscache、Memcache、Ehcache
 注册中心：Zookeeper、Redis
 消息队列：RabbitMQ、ZeroMQ、Redis、ActiveMQ、Kafka、rocketMq
 数据库：MySql、Redis、MongoDB、PostgreSQL、Memcache、HBase
-数据库中间件：DRDS （阿里云）、Mycat、360 Atlas、Cobar (不维护了)
+数据库中间件：Mycat
 分布式框架：Dubbo、Motan、Spring-Could
 负载均衡：DNS、F5、LVS、Nginx、OpenResty、HAproxy、负载均衡SLB（阿里云）
 集成部署:Docker、Jenkins、Git、Maven

@@ -7,6 +7,7 @@ import com.ming.ppsg2.utils.DestinyData;
 import com.ming.ppsg2.utils.ExcelReaderUtil;
 import com.ming.ppsg2.utils.GeneralsUtil;
 import com.ming.ppsg2.utils.NumberUtil;
+import com.ming.ppsg2.utils.RWExcel;
 import com.ming.ppsg2.utils.jxls.JxlsUtil;
 import org.springframework.beans.BeanUtils;
 
@@ -24,29 +25,29 @@ public class Main {
     public static void main(String[] args) {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "安卓1服熾陽✵天下出品,如发现错误之处，欢迎指正！啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增武将：御甲张辽\n" +
+                "\n" +
                 "\n";
-        top+= "特别感谢安卓444区君浩提供的御甲张辽数据";
-        String advert = "444区招人，联系865990173";//广告
-        String fileRemark = "(御甲张辽)(单砺战单御甲)(幻化随从表)";
+        top+= "";
+        String advert = "";//广告
+        String fileRemark = "(模拟)";
         //计算：992/658/1895
         //实际：988/654/1947
 
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
-        appointGeneralsList.add(new AppointGenerals("诡骑张飞"));
-        appointGeneralsList.add(new AppointGenerals("神武刘备"));
-        appointGeneralsList.add(new AppointGenerals("陨星庞统"));
-        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
-        appointGeneralsList.add(new AppointGenerals("龙驹马云禄"));
+        appointGeneralsList.add(new AppointGenerals("**吕布"));
+        //appointGeneralsList.add(new AppointGenerals("神武刘备"));
+        //appointGeneralsList.add(new AppointGenerals("陨星庞统"));
+        //appointGeneralsList.add(new AppointGenerals("砺战赵云"));
+        //appointGeneralsList.add(new AppointGenerals("龙驹马云禄"));
 
         List<AppointExcludeGenerals> excludeGeneralsList = new ArrayList<>();
-        excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
-        excludeGeneralsList.add(new AppointExcludeGenerals("御甲张辽",0));
+        //excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
+        //excludeGeneralsList.add(new AppointExcludeGenerals("御甲张辽",0));
 
         List<AppointSymbols> appointSymbolsList = new ArrayList<>();
-        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.huoFeng.getCode(),GeneralsEnum.SymbolsType.huoFeng.getName()));
-        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.qiongQi.getCode(),GeneralsEnum.SymbolsType.qiongQi.getName()));
-        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.yaCi.getCode(),GeneralsEnum.SymbolsType.yaCi.getName()));
+        //appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.huoFeng.getCode(),GeneralsEnum.SymbolsType.huoFeng.getName()));
+        //appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.qiongQi.getCode(),GeneralsEnum.SymbolsType.qiongQi.getName()));
+        //appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.yaCi.getCode(),GeneralsEnum.SymbolsType.yaCi.getName()));
 
         boolean isHuanHua = false;//随从是否有幻化
         long t1 = System.currentTimeMillis();
@@ -68,7 +69,7 @@ public class Main {
         Map<String,Destiny> destinyMap = new HashMap<>();//命格材料
 
         List<List<String>> lists = ExcelReaderUtil.readExcel("/excel/data_temp.xlsx");
-
+        List<List> lists2 = new RWExcel("/excel/data_temp.xlsx",0).ReadExcel();
         //排除武将
         Iterator<List<String>> iterator = lists.iterator();
         while (iterator.hasNext()) {
@@ -534,8 +535,17 @@ public class Main {
         resultList = null;
         //model.put("list",resultList);//虚战力表
 
-        model.put("list2",GeneralsUtil.getExcludeList(resultList2,390000));//虚战力表（特殊战器）
-        model.put("grilList",grilResultList);//虚战力表（女队）
+        //model.put("list2",GeneralsUtil.getExcludeList(resultList2,390000));//虚战力表（特殊战器）
+        if(resultList2.size()>200){
+            model.put("list2",resultList2.subList(0,100));//虚战力表（特殊战器）
+        }else{
+            model.put("list2",resultList2);//虚战力表（特殊战器）
+        }
+        if(grilResultList.size()>200) {
+            model.put("grilList", grilResultList.subList(0, 100));//虚战力表（女队）
+        }else{
+            model.put("grilList", grilResultList);
+        }
         model.put("forceTopList",forceTopList);
         model.put("intellectTopList",intellectTopList);
         model.put("troopsTopList",troopsTopList);
@@ -543,7 +553,7 @@ public class Main {
         model.put("destinyMap",destinyMap);
 
         if(excludeGeneralsList.isEmpty()){
-            try{
+            /*try{
                 //保存属性到data.properties文件
                 FileOutputStream oFile = new FileOutputStream("data.properties", false);//true表示追加打开
                 for(Map.Entry<String,String> maps : generalsMapSort.entrySet()){
@@ -553,7 +563,7 @@ public class Main {
                 oFile.close();
             }catch(Exception e){
                 System.out.println(e);
-            }
+            }*/
         }
         System.gc();
 
