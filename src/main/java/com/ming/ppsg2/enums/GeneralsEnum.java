@@ -933,6 +933,7 @@ public enum GeneralsEnum {
         qun_zoushi(4020,"邹氏"),
         qun_tianzihanxiandi(4021,"天子汉献帝"),
         qun_zhurongfuren(4022,"祝融夫人"),
+        qun_gongsunzan(4023,"公孙瓒"),
         ;
         private Integer code;
         private String name;
