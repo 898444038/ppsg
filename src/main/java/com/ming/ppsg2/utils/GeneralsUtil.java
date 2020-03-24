@@ -1361,6 +1361,7 @@ public class GeneralsUtil {
 
     // 兵符
     public static List<Symbols> getSymbols(List<Generals> generalsList,List<AppointSymbols> appointSymbolsList) {
+        long time1 = System.currentTimeMillis();
         Symbols symbols1 = new Symbols();
         Symbols symbols2 = new Symbols();
         Symbols symbols3 = new Symbols();
@@ -1445,10 +1446,7 @@ public class GeneralsUtil {
                 finalSecondThree = three;
                 finalSecondList = list;
             }
-            //System.out.println("three:"+three);
         }
-        //System.out.println("finalSecondThree:"+finalSecondThree);
-        //System.out.println("finalSecondList:"+finalSecondList);
 
         // 设置副属性
         symbols1.setAttr1(finalSecondList.get(0));
@@ -1517,7 +1515,8 @@ public class GeneralsUtil {
         }
 
         //计算2号位主属性
-        Integer[] n2 = {4,7,10,13};
+//        Integer[] n2 = {4,7,10,13};
+        Integer[] n2 = {10};
         double total2 = 0;
         ThreeDimensionals finalMainThree2 = null;
         Integer finalN2 = null;
@@ -1572,7 +1571,8 @@ public class GeneralsUtil {
 
 
         //计算4号位主属性
-        Integer[] n4 = {5,8,11,14};
+//        Integer[] n4 = {5,8,11,14};
+        Integer[] n4 = {11};
         double total4 = 0;
         ThreeDimensionals finalMainThree4 = null;
         Integer finalN4 = null;
@@ -1626,7 +1626,8 @@ public class GeneralsUtil {
         symbols4.setMainAttrName(finalNameN4);
 
         //计算6号位主属性
-        Integer[] n6 = {6,9,12,15};
+//        Integer[] n6 = {6,9,12,15};
+        Integer[] n6 = {12};
         double total6 = 0;
         ThreeDimensionals finalMainThree6 = null;
         Integer finalN6 = null;
@@ -1679,7 +1680,7 @@ public class GeneralsUtil {
         symbols6.setMainAttr(finalN6);
         symbols6.setMainAttrName(finalNameN6);
 
-
+        long time2 = System.currentTimeMillis();
 
         //取兵符类型的所有可能
         List<Integer> indexList = new ArrayList<>();
@@ -1816,6 +1817,7 @@ public class GeneralsUtil {
             }
         }
 
+
         Map<String,String> map = new HashMap<>();
         for(Integer i : finalTypeResult) {
             for (GeneralsEnum.SymbolsType type : GeneralsEnum.SymbolsType.values()) {
@@ -1847,6 +1849,10 @@ public class GeneralsUtil {
         symbolsList.add(symbols4);
         symbolsList.add(symbols5);
         symbolsList.add(symbols6);
+
+        long time3 = System.currentTimeMillis();
+        System.out.println("("+(time2-time1)+")"+"("+(time3-time2)+")");
+
         return symbolsList;
     }
 

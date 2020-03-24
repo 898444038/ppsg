@@ -1,7 +1,15 @@
 package com.ming.ppsg2.main;
 
 
-import com.ming.ppsg2.entity.*;
+import com.ming.ppsg2.entity.AppointExcludeGenerals;
+import com.ming.ppsg2.entity.AppointGenerals;
+import com.ming.ppsg2.entity.AppointSymbols;
+import com.ming.ppsg2.entity.ArmsBook;
+import com.ming.ppsg2.entity.Destiny;
+import com.ming.ppsg2.entity.Generals;
+import com.ming.ppsg2.entity.Result;
+import com.ming.ppsg2.entity.Symbols;
+import com.ming.ppsg2.entity.Warpath;
 import com.ming.ppsg2.enums.GeneralsEnum;
 import com.ming.ppsg2.utils.DestinyData;
 import com.ming.ppsg2.utils.ExcelReaderUtil;
@@ -17,18 +25,28 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
 
 public class Main {
 
     public static void main(String[] args) {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：新增武将白马公孙瓒（预估）\n" +
+                "更新内容：新增武将桀骜孙策（预估）\n" +
                 "\n";
         top+= "";
         String advert = "";//广告
-        String fileRemark = "(白马公孙瓒)";
+        String fileRemark = "(桀骜孙策)";
         //计算：992/658/1895
         //实际：988/654/1947
 
@@ -68,6 +86,7 @@ public class Main {
         Map<String,Destiny> destinyMap = new HashMap<>();//命格材料
 
         List<List<String>> lists = ExcelReaderUtil.readExcel("/excel/data_temp.xlsx");
+        lists = lists.subList(0,lists.size()-1);
         //List<List> lists2 = new RWExcel("/excel/data_temp.xlsx",0).ReadExcel();
         //排除武将
         Iterator<List<String>> iterator = lists.iterator();
@@ -355,7 +374,13 @@ public class Main {
         List<Generals> optimumEntourage = GeneralsUtil.getOptimumEntourage(nimingList,optimumEntourageList,isHuanHua);
 
         long t1 = System.currentTimeMillis();
-        List<List<Generals>> all = NumberUtil.getNoRepeatList(nimingList,5,appointGeneralsList);
+        List<Generals> nmList = new ArrayList<>();
+        for(Generals generals : nimingList){
+            if(generals.getDestiny().getDisobey()==1 || generals.getDestiny().getDisobey()==3){
+                nmList.add(generals);
+            }
+        }
+        List<List<Generals>> all = NumberUtil.getNoRepeatList(nmList,5,appointGeneralsList);
         System.out.println("上阵武将组合个数："+all.size());
         List<Result> resultList = new ArrayList<>();
         List<Result> resultList2 = new ArrayList<>();
@@ -403,13 +428,13 @@ public class Main {
             }
 
             //极限兵符
+            long time1 = System.currentTimeMillis();
             List<Symbols> symbolsList = GeneralsUtil.getSymbols(generalsList,appointSymbolsList);
-
-
-            ThreeDimensional td = GeneralsUtil.countSymbols(generalsList,symbolsList);
+            long time2 = System.currentTimeMillis();
+            GeneralsUtil.countSymbols(generalsList,symbolsList);
+            long time3 = System.currentTimeMillis();
             //战意三维
             GeneralsUtil.getWarpath(generalsList);
-
             // 总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
             // 武将战力 =（总武力+总智力+总兵力）*2+ 命格被动战力 + 战器被动战力
             Integer allTotalSword = null;
@@ -421,11 +446,9 @@ public class Main {
                 allTotalSword = GeneralsUtil.getAllTotalSword(generalsList);
                 allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
             }
-
             BigDecimal b1 = new BigDecimal(Double.toString(count));
             BigDecimal b2 = new BigDecimal(Double.toString(finalCount));
             Double d = b1.divide(b2, 2, BigDecimal.ROUND_HALF_UP).doubleValue()*100;
-            System.out.println(count+" / "+finalCount + "  " + (d.intValue())+"%");
 
             //女队
             if(
@@ -440,8 +463,9 @@ public class Main {
                     grilResultList.add(result);
                 }
             }
+            System.out.println(count+" / "+finalCount + "  " + (d.intValue())+"%"+"("+(time2-time1)+")"+"("+(time3-time2)+")");
 
-            int zhanli = 375000;
+            int zhanli = 390000;
             int flag = 0;
             //跳过战力低于zhanli的
             if(allTotalSword<zhanli && appointGeneralsList.isEmpty()){
@@ -460,6 +484,7 @@ public class Main {
                 resultList.add(result);
                 resultList2.add(result);
             }
+
         }
 
         //结果排序

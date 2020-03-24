@@ -32,6 +32,8 @@ public class Generals {
     private String code;
     //是否‘限’卡
     private Boolean limit;
+    //是否逆命
+    private Boolean isDestiny;
     //性别
     private Integer gender;
     //初始武将等级
@@ -159,6 +161,13 @@ public class Generals {
     private String remark;
 
     public Generals(){}
+
+    public void setIsDestiny(Boolean isDestiny) {
+        this.isDestiny = isDestiny;
+    }
+    public Boolean getIsDestiny() {
+        return isDestiny;
+    }
 
     public String getRemark() {
         return remark;
