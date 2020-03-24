@@ -60,12 +60,18 @@ public class GeneralsUtil {
         Map<String,Map<Integer,List<Generals>>> map = new LinkedHashMap<>();
         List<Generals> resultList = new ArrayList<>();
         for (Generals generals : nimingList){
+            if(generals.getName().equalsIgnoreCase("桀骜孙策")){
+                System.out.println();
+            }
             Generals gs = new Generals();
             gs.setName(generals.getName());
 
             List<Integer> entourages = generals.getEntourages();
             List<Generals> list = new ArrayList<>();
             for(Generals generals1 : all){
+                if(generals1.getCode().equals(generals.getCode())){
+                    continue;
+                }
                 generals1.setIsEntourage(true);
 
                 generals1.getArmsBook().setEnableType(null);
@@ -1361,7 +1367,6 @@ public class GeneralsUtil {
 
     // 兵符
     public static List<Symbols> getSymbols(List<Generals> generalsList,List<AppointSymbols> appointSymbolsList) {
-        long time1 = System.currentTimeMillis();
         Symbols symbols1 = new Symbols();
         Symbols symbols2 = new Symbols();
         Symbols symbols3 = new Symbols();
@@ -1680,8 +1685,6 @@ public class GeneralsUtil {
         symbols6.setMainAttr(finalN6);
         symbols6.setMainAttrName(finalNameN6);
 
-        long time2 = System.currentTimeMillis();
-
         //取兵符类型的所有可能
         List<Integer> indexList = new ArrayList<>();
         indexList.add(1);
@@ -1849,9 +1852,6 @@ public class GeneralsUtil {
         symbolsList.add(symbols4);
         symbolsList.add(symbols5);
         symbolsList.add(symbols6);
-
-        long time3 = System.currentTimeMillis();
-        System.out.println("("+(time2-time1)+")"+"("+(time3-time2)+")");
 
         return symbolsList;
     }

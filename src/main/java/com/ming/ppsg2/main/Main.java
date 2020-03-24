@@ -46,7 +46,7 @@ public class Main {
                 "\n";
         top+= "";
         String advert = "";//广告
-        String fileRemark = "(桀骜孙策)";
+        String fileRemark = "(桀骜孙策)(临时文件)";
         //计算：992/658/1895
         //实际：988/654/1947
 
@@ -83,6 +83,7 @@ public class Main {
         List<Generals> nimingList2 = new ArrayList<>();//指定武将
         List<Generals> nimingList3 = new ArrayList<>();//非指定武将
         List<Generals> generalsAll = new ArrayList<>();
+        List<Generals> generalsAll2 = new ArrayList<>();//重复的
         Map<String,Destiny> destinyMap = new HashMap<>();//命格材料
 
         List<List<String>> lists = ExcelReaderUtil.readExcel("/excel/data_temp.xlsx");
@@ -346,6 +347,7 @@ public class Main {
             }
         }
         for(int i=0;i<gList2.size();i++){
+            generalsAll2.add(gList2.get(i));
             generalsAll.remove(gList2.get(i));
         }
 
@@ -362,6 +364,11 @@ public class Main {
             BeanUtils.copyProperties(g,copy);
             allEntourageList.add(g);
         }
+        for(Generals g : generalsAll2){
+            Generals copy = new Generals();
+            BeanUtils.copyProperties(g,copy);
+            allEntourageList.add(g);
+        }
         Map<Integer,List<Generals>> allEntourage = GeneralsUtil.getAllEntourage(allEntourageList,isHuanHua);//随从三维
 
         //最佳随从表
@@ -369,16 +376,16 @@ public class Main {
         for(Generals g : generalsAll){
             Generals copy = new Generals();
             BeanUtils.copyProperties(g,copy);
-            optimumEntourageList.add(g);
+            optimumEntourageList.add(copy);
         }
         List<Generals> optimumEntourage = GeneralsUtil.getOptimumEntourage(nimingList,optimumEntourageList,isHuanHua);
 
         long t1 = System.currentTimeMillis();
         List<Generals> nmList = new ArrayList<>();
         for(Generals generals : nimingList){
-            if(generals.getDestiny().getDisobey()==1 || generals.getDestiny().getDisobey()==3){
+            //if(generals.getDestiny().getDisobey()==1 || generals.getDestiny().getDisobey()==3){
                 nmList.add(generals);
-            }
+            //}
         }
         List<List<Generals>> all = NumberUtil.getNoRepeatList(nmList,5,appointGeneralsList);
         System.out.println("上阵武将组合个数："+all.size());
@@ -428,11 +435,8 @@ public class Main {
             }
 
             //极限兵符
-            long time1 = System.currentTimeMillis();
             List<Symbols> symbolsList = GeneralsUtil.getSymbols(generalsList,appointSymbolsList);
-            long time2 = System.currentTimeMillis();
             GeneralsUtil.countSymbols(generalsList,symbolsList);
-            long time3 = System.currentTimeMillis();
             //战意三维
             GeneralsUtil.getWarpath(generalsList);
             // 总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
@@ -463,9 +467,9 @@ public class Main {
                     grilResultList.add(result);
                 }
             }
-            System.out.println(count+" / "+finalCount + "  " + (d.intValue())+"%"+"("+(time2-time1)+")"+"("+(time3-time2)+")");
+            System.out.println(count+" / "+finalCount + "  " + (d.intValue())+"%");
 
-            int zhanli = 390000;
+            int zhanli = 383000;
             int flag = 0;
             //跳过战力低于zhanli的
             if(allTotalSword<zhanli && appointGeneralsList.isEmpty()){
@@ -577,7 +581,7 @@ public class Main {
         model.put("destinyMap",destinyMap);
 
         if(excludeGeneralsList.isEmpty()){
-            /*try{
+            try{
                 //保存属性到data.properties文件
                 FileOutputStream oFile = new FileOutputStream("data.properties", false);//true表示追加打开
                 for(Map.Entry<String,String> maps : generalsMapSort.entrySet()){
@@ -587,7 +591,7 @@ public class Main {
                 oFile.close();
             }catch(Exception e){
                 System.out.println(e);
-            }*/
+            }
         }
         System.gc();
 
