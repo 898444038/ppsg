@@ -1,4 +1,4 @@
-package com.ming.ppsg2.entity;
+package com.ming.ppsg2.utils;
 
 
 //命格详情
