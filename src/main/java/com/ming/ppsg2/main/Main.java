@@ -42,16 +42,19 @@ public class Main {
     public static void main(String[] args) {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：新增武将桀骜孙策（预估）\n" +
-                "\n";
-        top+= "";
-        String advert = "";//广告
-        String fileRemark = "(桀骜孙策)(临时文件)";
+                "更新内容：1.新增突破武将诛心孙大虎\n" +
+                "2.新增逆命武将飞将吕布\n";
+        top+= "特别感谢安卓444区君浩提供的诛心孙大虎数据";
+        String advert = "444区招人，联系865990173";//广告
+        String fileRemark = "(飞将吕布)";
         //计算：992/658/1895
         //实际：988/654/1947
 
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
-        //appointGeneralsList.add(new AppointGenerals("**吕布"));
+        //appointGeneralsList.add(new AppointGenerals("飞将吕布"));
+        //appointGeneralsList.add(new AppointGenerals("砺战赵云"));
+        //appointGeneralsList.add(new AppointGenerals("御甲张辽"));
+        //appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
         //appointGeneralsList.add(new AppointGenerals("神武刘备"));
         //appointGeneralsList.add(new AppointGenerals("陨星庞统"));
         //appointGeneralsList.add(new AppointGenerals("砺战赵云"));
