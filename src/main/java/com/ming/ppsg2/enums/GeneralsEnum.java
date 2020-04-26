@@ -817,6 +817,8 @@ public enum GeneralsEnum {
         hunDUN(10,"混沌","全体全属性加8%",0.08),
         qiongQi(11,"穷奇","全体武力加24%",0.24),
         yaCi(12,"睚眦","全体兵力加24%",0.24),
+
+        píxiū(13,"貔貅","骑兵全属性加12%",0.12),
         ;
 
         private Integer code;

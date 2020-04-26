@@ -14,6 +14,7 @@ public class Destiny {
     // not(0,"未开命格",0,0,0,0,0,0),
     // disobey(1,"逆命",1220,1220,300,680,1220,1920),
     // breach(2,"突破",0,0,300,680,680,680);
+    // disobey5(3,"逆命5",1220,1220,1220,1220,300,680,1220,1920,2380,200,40);
     private Integer disobey;
 
     private Integer destinyEffect1;//效果1战力

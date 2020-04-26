@@ -1699,6 +1699,7 @@ public class GeneralsUtil {
         indexList.add(10);
         indexList.add(11);
         indexList.add(12);
+        indexList.add(13);
         List<List<Integer>> resultList = NumberUtil.getResult(indexList,3,appointSymbolsList);
 
         int typeTotal = 0;
@@ -1805,6 +1806,15 @@ public class GeneralsUtil {
                             }
                         }else if(i==12){//睚眦,全体兵力加24%
                             for (Generals generals : generalsAll){
+                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
+                                three.setTroops(three.getTroops() + d3.intValue());
+                            }
+                        }else if(i==13 ){//貔貅,骑兵全属性加12%
+                            for (Generals generals : generalsQi){
+                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
+                                three.setForce(three.getForce() + d1.intValue());
+                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
+                                three.setIntellect(three.getIntellect() + d2.intValue());
                                 Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
                                 three.setTroops(three.getTroops() + d3.intValue());
                             }
@@ -3314,6 +3324,16 @@ public class GeneralsUtil {
                     }else if(i==12){//睚眦,全体兵力加24%
                         for (Generals generals : generalsAll){
                             ThreeDimensionals three = generals.getSymbolsThreeDimensionals();
+                            Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
+                            three.setTroops(three.getTroops() + d3);
+                        }
+                    }else if(i==13 ){//貔貅,骑兵全属性加12%
+                        for (Generals generals : generalsQi){
+                            ThreeDimensionals three = generals.getSymbolsThreeDimensionals();
+                            Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
+                            three.setForce(three.getForce() + d1);
+                            Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
+                            three.setIntellect(three.getIntellect() + d2);
                             Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
                             three.setTroops(three.getTroops() + d3);
                         }
