@@ -1,7 +1,12 @@
 package com.ming.ppsg2.utils;
 
 
-import com.ming.ppsg2.entity.*;
+import com.ming.ppsg2.entity.AppointGenerals;
+import com.ming.ppsg2.entity.AppointSymbols;
+import com.ming.ppsg2.entity.Generals;
+import com.ming.ppsg2.entity.Result;
+import com.ming.ppsg2.entity.Symbols;
+import com.ming.ppsg2.enums.GeneralsEnum;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -9,17 +14,68 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CyclicBarrier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class NumberUtil {
 
     //copy对象
-    public static List<List<Generals>> getNoRepeatList(List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
+    public static List<List<Generals>> getNoRepeatList(Map<String,String> generalsMapSort,List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
+        long t1 = System.currentTimeMillis();
         List<List<Generals>> glongList = getList(data,size,appointGeneralsList);
-        for(List<Generals> generalsList : glongList){
+        System.out.println("排列组合时间："+(System.currentTimeMillis()-t1)+"ms");
+
+        final int threadNum = 1;//线程数
+        List<List<List<Generals>>> splitList = split(glongList,threadNum);
+        CyclicBarrier cb0 = new CyclicBarrier(threadNum + 1);//注意：2个子线程 + 1个主线程
+        for (int i = 0; i < threadNum; i++) {
+            new Thread(new MyRunable0(cb0, i, splitList.get(i), generalsMapSort)).start();
+        }
+
+        try {
+            cb0.await();
+            System.out.println("-----------\n所有thread执行完成！");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /*StringBuilder ids = null;
+        Integer grilCode = GeneralsEnum.Gender.gril.getCode();
+        Iterator<List<Generals>> iterator = splitList.get(splitList.size()-1).iterator();
+        List<Generals> gList = null;
+        int finalCount = glongList.size();
+        int count = 0;
+        while (iterator.hasNext()) {
+            gList = iterator.next();
+
+            ids = new StringBuilder();
+            ids.append(gList.get(0).getId());
+            ids.append(gList.get(1).getId());
+            ids.append(gList.get(2).getId());
+            ids.append(gList.get(3).getId());
+            ids.append(gList.get(4).getId());
+
+            boolean isGril = gList.get(0).getGender().equals(grilCode)
+                    && gList.get(1).getGender().equals(grilCode)
+                    && gList.get(2).getGender().equals(grilCode)
+                    && gList.get(3).getGender().equals(grilCode)
+                    && gList.get(4).getGender().equals(grilCode);
+            if(generalsMapSort.get(ids.toString())!=null && !isGril){
+                iterator.remove();
+            }
+            ids = null;
+            count++;
+            System.out.println(count);
+        }
+        ids = null;*/
+
+        /*for(List<Generals> generalsList : glongList){
             List<Generals> copyList = new ArrayList<>();
             for(Generals generals : generalsList){
                 Generals copy = new Generals();
@@ -27,8 +83,112 @@ public class NumberUtil {
                 copyList.add(copy);
             }
             noRepeatList.add(copyList);
+        }*/
+        List<List<List<Generals>>> splitList2 = split(glongList,threadNum);
+        CyclicBarrier cb = new CyclicBarrier(threadNum + 1);//注意：10个子线程 + 1个主线程
+        for (int i = 0; i < threadNum; i++) {
+            new Thread(new MyRunable(cb, 0,splitList2.get(i))).start();
+        }
+        try {
+            cb.await();
+            System.out.println("-----------\n所有thread执行完成！");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return noRepeatList;
+    }
+
+    public static List<List<List<Generals>>> split(List<List<Generals>> glongList,Integer num){
+        int finalSize = glongList.size();
+        int splitSize = finalSize/num;
+        return ListUtils.partition(glongList,splitSize);
+    }
+
+    static class MyRunable0 implements Runnable {
+        CyclicBarrier _cb;
+        int _i = 0;
+        List<List<Generals>> glongList = null;
+        Map<String,String> generalsMapSort = null;
+
+        public MyRunable0(CyclicBarrier cb, int i,List<List<Generals>> glongList,Map<String,String> generalsMapSort) {
+            this._cb = cb;
+            this._i = i;
+            this.glongList = glongList;
+            this.generalsMapSort = generalsMapSort;
+        }
+
+        @Override
+        public void run() {
+            StringBuilder ids = null;
+            Integer grilCode = GeneralsEnum.Gender.gril.getCode();
+            try {
+                Iterator<List<Generals>> iterator = glongList.iterator();
+                List<Generals> gList = null;
+                int finalCount = glongList.size();
+                int count = 0;
+                while (iterator.hasNext()) {
+                    gList = iterator.next();
+
+                    ids = new StringBuilder();
+                    ids.append(gList.get(0).getId());
+                    ids.append(gList.get(1).getId());
+                    ids.append(gList.get(2).getId());
+                    ids.append(gList.get(3).getId());
+                    ids.append(gList.get(4).getId());
+
+                    boolean isGril = gList.get(0).getGender().equals(grilCode)
+                            && gList.get(1).getGender().equals(grilCode)
+                            && gList.get(2).getGender().equals(grilCode)
+                            && gList.get(3).getGender().equals(grilCode)
+                            && gList.get(4).getGender().equals(grilCode);
+                    if(generalsMapSort.get(ids.toString())!=null && !isGril){
+                        iterator.remove();
+                    }
+                    ids = null;
+                    count++;
+                    System.out.println(_i+":"+count);
+                }
+                ids = null;
+                System.out.println("thread " + _i + " done，正在等候其它线程完成...");
+                _cb.await();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    static class MyRunable implements Runnable {
+        CyclicBarrier _cb;
+        int _i = 0;
+        List<List<Generals>> glongList = null;
+
+        public MyRunable(CyclicBarrier cb, int i,List<List<Generals>> glongList) {
+            this._cb = cb;
+            this._i = i;
+            this.glongList = glongList;
+        }
+
+        @Override
+        public void run() {
+            try {
+                int count = 0;
+                for(List<Generals> generalsList : glongList){
+                    List<Generals> copyList = new ArrayList<>();
+                    for(Generals generals : generalsList){
+                        Generals copy = new Generals();
+                        BeanUtils.copyProperties(generals,copy);
+                        copyList.add(copy);
+                    }
+                    count++;
+                    System.out.println(_i+":"+count);
+                    noRepeatList.add(copyList);
+                }
+                System.out.println("thread " + _i + " done，正在等候其它线程完成...");
+                _cb.await();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void clear(){
@@ -300,5 +460,19 @@ public class NumberUtil {
         for(Map.Entry<String,Integer> entry : sortedMap.entrySet()){
             System.out.println(entry.getKey()+":"+entry.getValue());
         }
+    }
+
+    /**
+     * 利用正则表达式判断字符串是否是数字
+     * @param str
+     * @return
+     */
+    public static boolean isNumeric(String str){
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(str);
+        if( !isNum.matches() ){
+            return false;
+        }
+        return true;
     }
 }

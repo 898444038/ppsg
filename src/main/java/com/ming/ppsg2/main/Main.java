@@ -15,10 +15,10 @@ import com.ming.ppsg2.utils.DestinyData;
 import com.ming.ppsg2.utils.ExcelReaderUtil;
 import com.ming.ppsg2.utils.GeneralsUtil;
 import com.ming.ppsg2.utils.NumberUtil;
+import com.ming.ppsg2.utils.ReadWriteExcel;
 import com.ming.ppsg2.utils.jxls.JxlsUtil;
 import org.springframework.beans.BeanUtils;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -35,27 +35,26 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.UUID;
 
 public class Main {
 
     public static void main(String[] args) {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增突破武将诛心孙大虎\n" +
-                "2.新增逆命武将飞将吕布 3.新增兵符类型：貔貅\n";
-        top+= "特别感谢安卓444区君浩提供的诛心孙大虎数据";
-        String advert = "444区招人，联系865990173";//广告
-        String fileRemark = "(飞将吕布)";
+                "更新内容：1.新增兵符类型【狰】【蛊雕】\n" +
+                "2.新增异化【豹魂祝融夫人】【奇谋法正】\n";
+        top+= "";
+        String advert = "";//广告
+        String fileRemark = "(test)";
         //计算：992/658/1895
         //实际：988/654/1947
 
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
-        //appointGeneralsList.add(new AppointGenerals("飞将吕布"));
-        //appointGeneralsList.add(new AppointGenerals("砺战赵云"));
-        //appointGeneralsList.add(new AppointGenerals("御甲张辽"));
-        //appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
-        //appointGeneralsList.add(new AppointGenerals("神武刘备"));
+        appointGeneralsList.add(new AppointGenerals("虎涧典韦"));
+        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
+        appointGeneralsList.add(new AppointGenerals("御甲张辽"));
+        appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
+        appointGeneralsList.add(new AppointGenerals("飞将吕布"));
         //appointGeneralsList.add(new AppointGenerals("陨星庞统"));
         //appointGeneralsList.add(new AppointGenerals("砺战赵云"));
         //appointGeneralsList.add(new AppointGenerals("龙驹马云禄"));
@@ -89,15 +88,17 @@ public class Main {
         List<Generals> generalsAll2 = new ArrayList<>();//重复的
         Map<String,Destiny> destinyMap = new HashMap<>();//命格材料
 
-        List<List<String>> lists = ExcelReaderUtil.readExcel("/excel/data_temp.xlsx");
-        lists = lists.subList(0,lists.size()-1);
-        //List<List> lists2 = new RWExcel("/excel/data_temp.xlsx",0).ReadExcel();
+        ReadWriteExcel readWriteExcel = new ReadWriteExcel();
+        readWriteExcel.setRow(1);
+        List<List<String>> dataList = readWriteExcel.readRelativeExcel("/excel/data_temp2.xlsx");
+        List<Map<String,String>> lists = readWriteExcel.transformMap(dataList);
+
         //排除武将
-        Iterator<List<String>> iterator = lists.iterator();
+        Iterator<Map<String,String>> iterator = lists.iterator();
         while (iterator.hasNext()) {
-            List<String> list = iterator.next();
+            Map<String,String> list = iterator.next();
             for (AppointExcludeGenerals excludeGenerals : excludeGeneralsList) {
-                if (excludeGenerals.getName().equalsIgnoreCase(list.get(0)) && excludeGenerals.getMaxSize()==0) {
+                if (excludeGenerals.getName().equalsIgnoreCase(list.get("name")) && excludeGenerals.getMaxSize()==0) {
                     iterator.remove();
                 }
             }
@@ -107,8 +108,8 @@ public class Main {
         Map<String,String> generalsMapSort = new LinkedHashMap<>();
         Properties prop = new Properties();
         try {
-            InputStream inStream = new FileInputStream("data.properties");
-            prop.load(inStream);     ///加载属性列表
+            InputStream inStream = Main.class.getResourceAsStream("/data/data.properties");
+            prop.load(inStream);//加载属性列表
             Enumeration enu = prop.keys();
             while (enu.hasMoreElements()) {
                 Object obj = enu.nextElement();
@@ -121,53 +122,53 @@ public class Main {
         }
         System.out.println("获取排除数据："+generalsMapSort.size()+"条");
 
-        lists.remove(0);
-        for (List<String> list : lists) {
-            if(list.size()<30 || "".equals(list.get(14))){
+        for (Map<String,String> map : lists) {
+            if(null == map.get("armsBook1") || "".equals(map.get("armsBook1"))){
                 continue;
             }
-            String name = list.get(0);
+
+            String name = map.get("name");
             Integer code = null;
             for(GeneralsEnum.GeneralsCode generalsCode : GeneralsEnum.GeneralsCode.values()){
-                if(generalsCode.getName().equals(list.get(1))){
+                if(generalsCode.getName().equals(map.get("generalsCode"))){
                     code = generalsCode.getCode();
                 }
             }
-            Integer level = Integer.valueOf(list.get(3));
-            Integer force = Integer.valueOf(list.get(4));
-            Integer intellect = Integer.valueOf(list.get(5));
-            Integer troops = Integer.valueOf(list.get(6));
+            Integer level = Integer.valueOf(Double.valueOf(map.get("level")).intValue());
+            Integer force = Integer.valueOf(Double.valueOf(map.get("force")).intValue());
+            Integer intellect = Integer.valueOf(Double.valueOf(map.get("intellect")).intValue());
+            Integer troops = Integer.valueOf(Double.valueOf(map.get("troops")).intValue());
             Integer gender = GeneralsEnum.Gender.boy.getCode();
             for(GeneralsEnum.Gender genders : GeneralsEnum.Gender.values()){
-                if(genders.getName().equals(list.get(7))){
+                if(genders.getName().equals(map.get("gender"))){
                     gender = genders.getCode();
                 }
             }
 
             Integer generalsType = GeneralsEnum.GeneralsType.GeneralsType_6.getCode();
             for(GeneralsEnum.GeneralsType generalsTypes : GeneralsEnum.GeneralsType.values()){
-                if(generalsTypes.getName().equals(list.get(8))){
+                if(generalsTypes.getName().equals(map.get("generalsType"))){
                     generalsType = generalsTypes.getCode();
                 }
             }
 
             Integer arms = GeneralsEnum.Arms.gun.getCode();
             for(GeneralsEnum.Arms arms1 : GeneralsEnum.Arms.values()){
-                if(arms1.getName().equals(list.get(9))){
+                if(arms1.getName().equals(map.get("arms"))){
                     arms = arms1.getCode();
                 }
             }
 
             Integer country = GeneralsEnum.Country.qun.getCode();
             for(GeneralsEnum.Country countrys : GeneralsEnum.Country.values()){
-                if(countrys.getName().equals(list.get(2))){
+                if(countrys.getName().equals(map.get("country"))){
                     country = countrys.getCode();
                 }
             }
 
 
             Boolean isEntourage = false;
-            String[] entourageArr = list.get(11).split(",");
+            String[] entourageArr = map.get("entourage").split(",");
             List<Integer> entourageList = new ArrayList<>();
             for(String entourage : entourageArr){
                 for(GeneralsEnum.GeneralsCode generalsCode : GeneralsEnum.GeneralsCode.values()){
@@ -183,7 +184,7 @@ public class Main {
 
             Integer warDevicesCode = null;
             for(GeneralsEnum.WarDevice warDevice : GeneralsEnum.WarDevice.values()){
-                if(warDevice.getName().equals(list.get(10))){
+                if(warDevice.getName().equals(map.get("warDevice"))){
                     warDevicesCode = warDevice.getCode();
                 }
             }
@@ -193,10 +194,10 @@ public class Main {
             Integer armsType1 = null;
             Integer armsType2 = null;
             for(GeneralsEnum.ArmsType armsType : GeneralsEnum.ArmsType.values()){
-                if(armsType.getName().equals(list.get(12))){
+                if(armsType.getName().equals(map.get("armsType1"))){
                     armsType1 = armsType.getCode();
                 }
-                if(armsType.getName().equals(list.get(13))){
+                if(armsType.getName().equals(map.get("armsType2"))){
                     armsType2 = armsType.getCode();
                 }
             }
@@ -212,17 +213,16 @@ public class Main {
             Integer book5 = null;
             Integer book55 = null;
             for(GeneralsEnum.ArmsBook armsBook : GeneralsEnum.ArmsBook.values()){
-                if(armsBook.getName().equals(list.get(14))){book1 = armsBook.getCode();}
-                if(armsBook.getName().equals(list.get(15))){book11 = armsBook.getCode();}
-                if(armsBook.getName().equals(list.get(16))){book2 = armsBook.getCode();}
-                if(armsBook.getName().equals(list.get(17))){book22 = armsBook.getCode();}
-                if(armsBook.getName().equals(list.get(18))){book3 = armsBook.getCode();}
-                if(armsBook.getName().equals(list.get(19))){book33 = armsBook.getCode();}
-                if(armsBook.getName().equals(list.get(20))){book4 = armsBook.getCode();}
-                if(armsBook.getName().equals(list.get(21))){book44 = armsBook.getCode();}
-                if(armsBook.getName().equals(list.get(22))){book5 = armsBook.getCode();}
-                if(armsBook.getName().equals(list.get(23))){book55 = armsBook.getCode();}
-
+                if(armsBook.getName().equals(map.get("armsBook1"))){book1 = armsBook.getCode();}
+                if(armsBook.getName().equals(map.get("armsBook11"))){book11 = armsBook.getCode();}
+                if(armsBook.getName().equals(map.get("armsBook2"))){book2 = armsBook.getCode();}
+                if(armsBook.getName().equals(map.get("armsBook22"))){book22 = armsBook.getCode();}
+                if(armsBook.getName().equals(map.get("armsBook3"))){book3 = armsBook.getCode();}
+                if(armsBook.getName().equals(map.get("armsBook33"))){book33 = armsBook.getCode();}
+                if(armsBook.getName().equals(map.get("armsBook4"))){book4 = armsBook.getCode();}
+                if(armsBook.getName().equals(map.get("armsBook44"))){book44 = armsBook.getCode();}
+                if(armsBook.getName().equals(map.get("armsBook5"))){book5 = armsBook.getCode();}
+                if(armsBook.getName().equals(map.get("armsBook55"))){book55 = armsBook.getCode();}
             }
 
             Integer[][] armsBooks = {
@@ -234,7 +234,7 @@ public class Main {
                     {book5,book55},
             };
 
-            String skin = list.get(24);
+            String skin = map.get("skin");
             Integer skinCode = null;
             for(GeneralsEnum.Skin skin1 : GeneralsEnum.Skin.values()){
                 if(skin1.getName().equals(skin)){
@@ -244,12 +244,14 @@ public class Main {
 
             Integer disobeyCode = null;
             for(GeneralsEnum.Destiny destiny : GeneralsEnum.Destiny.values()){
-                if(destiny.getName().equals(list.get(29))){
+                if(destiny.getName().equals(map.get("destiny"))){
                     disobeyCode = destiny.getCode();
                 }
             }
-
-            Object[] destinys = {Integer.valueOf(list.get(25)),Integer.valueOf(list.get(26)),Integer.valueOf(list.get(27)),Boolean.valueOf(list.get(28)),disobeyCode,null,null,null};
+            Integer destinyForce = map.get("destinyForce")==null?null:Double.valueOf(map.get("destinyForce")).intValue();
+            Integer destinyIntellect = map.get("destinyIntellect")==null?null:Double.valueOf(map.get("destinyIntellect")).intValue();
+            Integer destinyTroops = map.get("destinyTroops")==null?null:Double.valueOf(map.get("destinyTroops")).intValue();
+            Object[] destinys = {destinyForce,destinyIntellect,destinyTroops,Boolean.valueOf(map.get("isDestiny")),disobeyCode,null,null,null};
 
             Generals generals = DestinyData.getGenerals(name,code,level,force,intellect,troops,gender,generalsType,arms,country,isEntourage,entourages,warDevices,armsBooks,destinys,skinCode);
 
@@ -271,7 +273,7 @@ public class Main {
             }else{
                 generals.setLimit(false);
             }
-            generals.setId(UUID.randomUUID().toString().replace("-", ""));
+            generals.setId(Double.valueOf(map.get("id")).intValue()+"");
 
             if(1 == disobeyCode || 2 == disobeyCode || 3 == disobeyCode){
                 Generals copy = new Generals();
@@ -390,7 +392,7 @@ public class Main {
                 nmList.add(generals);
             //}
         }
-        List<List<Generals>> all = NumberUtil.getNoRepeatList(nmList,5,appointGeneralsList);
+        List<List<Generals>> all = NumberUtil.getNoRepeatList(generalsMapSort,nmList,5,appointGeneralsList);
         System.out.println("上阵武将组合个数："+all.size());
         List<Result> resultList = new ArrayList<>();
         List<Result> resultList2 = new ArrayList<>();
@@ -399,25 +401,16 @@ public class Main {
         int count = 0;
         int finalCount = all.size();
         Integer grilCode = GeneralsEnum.Gender.gril.getCode();
-
+        StringBuilder ids = null;
         for(List<Generals> generalsList : all){
             count++;
-            StringBuffer names = new StringBuffer();
-            names.append(generalsList.get(0).getName()+"_");
-            names.append(generalsList.get(1).getName()+"_");
-            names.append(generalsList.get(2).getName()+"_");
-            names.append(generalsList.get(3).getName()+"_");
-            names.append(generalsList.get(4).getName());
 
-            boolean isGril = generalsList.get(0).getGender().equals(grilCode)
-                    && generalsList.get(1).getGender().equals(grilCode)
-                    && generalsList.get(2).getGender().equals(grilCode)
-                    && generalsList.get(3).getGender().equals(grilCode)
-                    && generalsList.get(4).getGender().equals(grilCode);
-
-            if(generalsMapSort.get(names.toString())!=null && !isGril){
-                continue;
-            }
+            ids = new StringBuilder();
+            ids.append(generalsList.get(0).getId());
+            ids.append(generalsList.get(1).getId());
+            ids.append(generalsList.get(2).getId());
+            ids.append(generalsList.get(3).getId());
+            ids.append(generalsList.get(4).getId());
 
             //排除主阵容重复武将
             boolean no = true;
@@ -438,7 +431,8 @@ public class Main {
             }
 
             //极限兵符
-            List<Symbols> symbolsList = GeneralsUtil.getSymbols(generalsList,appointSymbolsList);
+            Map<String,Object> symbolsMap = GeneralsUtil.getSymbols(generalsList,appointSymbolsList);
+            List<Symbols> symbolsList = (List<Symbols>)symbolsMap.get("symbolsList");
             GeneralsUtil.countSymbols(generalsList,symbolsList);
             //战意三维
             GeneralsUtil.getWarpath(generalsList);
@@ -466,20 +460,20 @@ public class Main {
                 generalsList.get(4).getGender().toString().equals(grilCode.toString())
             ){
                 Result result = GeneralsUtil.getResult(generalsList,symbolsList,allTotalSword,allTotalSword2);
-                if(allTotalSword2 > 355000){
+                if(allTotalSword2 > 360000){
                     grilResultList.add(result);
                 }
             }
             System.out.println(count+" / "+finalCount + "  " + (d.intValue())+"%");
 
-            int zhanli = 383000;
+            int zhanli = 394000;
             int flag = 0;
             //跳过战力低于zhanli的
             if(allTotalSword<zhanli && appointGeneralsList.isEmpty()){
                 if(allTotalSword2>zhanli){
                     flag = 1;
                 }else{
-                    generalsMapSort.put(names.toString(),allTotalSword+","+allTotalSword2);
+                    generalsMapSort.put(ids.toString(),allTotalSword+","+allTotalSword2);
                     continue;
                 }
             }
@@ -586,7 +580,7 @@ public class Main {
         if(excludeGeneralsList.isEmpty()){
             try{
                 //保存属性到data.properties文件
-                FileOutputStream oFile = new FileOutputStream("data.properties", false);//true表示追加打开
+                FileOutputStream oFile = new FileOutputStream("src/main/resources/data/data.properties", false);//true表示追加打开
                 for(Map.Entry<String,String> maps : generalsMapSort.entrySet()){
                     prop.setProperty(maps.getKey(), maps.getValue());
                 }

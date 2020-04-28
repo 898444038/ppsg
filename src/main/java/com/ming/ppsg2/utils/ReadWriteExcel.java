@@ -1,6 +1,5 @@
 package com.ming.ppsg2.utils;
 
-import com.ming.ppsg2.entity.Generals;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -11,7 +10,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2020/3/6 0006.
@@ -80,11 +81,11 @@ public class ReadWriteExcel {
             // 指向sheet下标为0的sheet 即第一个sheet 也可以按在sheet的名称来寻找
             Sheet sheet = workbook.getSheetAt(sheetNum);
             // 获取sheet1中的总行数
-            int rowTotalCount = sheet.getLastRowNum();
+            int rowTotalCount = sheet.getLastRowNum()+row;
             //获取总列数
             int columnCount = sheet.getRow(0).getPhysicalNumberOfCells();
 
-            System.out.println("行数为："+rowTotalCount+"列数为："+columnCount);
+            System.out.println(rowTotalCount+"行,"+columnCount+"列");
 
             for (int i = row; i < rowTotalCount; i++) {
                 // 获取第i列的row对象
@@ -97,12 +98,16 @@ public class ReadWriteExcel {
                     String cell = null;
                     //如果未null则加上""组装成非null的字符串
                     if(row.getCell(j) == null){
-                        cell = row.getCell(j)+"";
-                        listRow.add(cell);
+                        //cell = row.getCell(j)+"";
+                        listRow.add(null);
                         //如果读取到额cell不为null 则直接加入	listRow集合
                     }else{
-                        cell = row.getCell(j).toString().trim();
-                        listRow.add(cell);
+                        if("".equals(row.getCell(j).toString())){
+                            listRow.add(null);
+                        }else{
+                            cell = row.getCell(j).toString().trim();
+                            listRow.add(cell);
+                        }
                     }
                     // 在第i列 依次获取第i列的第j个位置上的值 %15s表示前后间隔15个字节输出
                     System.out.printf("%15s", cell);
@@ -189,15 +194,30 @@ public class ReadWriteExcel {
         return list;
     }
 
+
+    public List<Map<String,String>> transformMap(List<List<String>> list) {
+        List<String> titleList = list.subList(0,1).get(0);
+        List<List<String>> dataList = list.subList(1,list.size());
+        List<Map<String,String>> mapList = new ArrayList<>();
+        Map<String,String> map = null;
+        // 遍历数据
+        for (List<String> data : dataList) {
+            map = new LinkedHashMap<>();
+            for(int i=0;i<data.size();i++){
+                map.put(titleList.get(i),data.get(i));
+            }
+            mapList.add(map);
+        }
+        return mapList;
+    }
+
     public static void main(String[] args) {
         ReadWriteExcel readWriteExcel = new ReadWriteExcel();
         readWriteExcel.setRow(1);
-        List<List<String>> lists = readWriteExcel.readRelativeExcel("/excel/data_temp.xlsx");
-        System.out.println();
-        /*for (List list : lists) {
-            System.out.println(list.toString());
-        }*/
-        List<Generals> list = readWriteExcel.transform(lists,Generals.class);
-        List<GeneralsUtil> list2 = readWriteExcel.transform(lists,GeneralsUtil.class);
+        List<List<String>> lists = readWriteExcel.readRelativeExcel("/excel/data_temp2.xlsx");
+        List<Map<String,String>> mapList = readWriteExcel.transformMap(lists);
+        System.out.println(mapList);
+
+
     }
 }

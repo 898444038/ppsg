@@ -1,8 +1,10 @@
 package com.ming.ppsg2.utils;
 
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Properties;
 
 /**
  * Created by Administrator on 2020/3/26 0026.
@@ -10,6 +12,17 @@ import java.math.RoundingMode;
 public class TestUtil {
 
     public static void main(String[] args) {
+        try {
+            FileOutputStream oFile = new FileOutputStream("src/main/resources/data/data2.properties", false);//true表示追加打开
+            Properties prop = new Properties();
+            for(int i=0;i<100;i++){
+                prop.setProperty(i+"", i+"");
+            }
+            prop.store(oFile, "Number:");
+            oFile.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //0.7,1.72
 
         //a=0.78 , b=1.351 , c=1.56 , width:3.12 , height:2.70200
@@ -22,8 +35,8 @@ public class TestUtil {
             a = a.divide(b);
             sjx(a);
         }*/
-        BigDecimal a = new BigDecimal("0.78");
-        sjx(a);
+        //BigDecimal a = new BigDecimal("0.78");
+        //sjx(a);
     }
 
     public static void sjx(BigDecimal a){

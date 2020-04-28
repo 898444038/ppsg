@@ -328,7 +328,7 @@ public class XZLController {
 
         long t1 = System.currentTimeMillis();
         NumberUtil.clear();
-        List<List<Generals>> all = NumberUtil.getNoRepeatList(nimingList,5,new ArrayList<>());
+        List<List<Generals>> all = NumberUtil.getNoRepeatList(generalsMapSort,nimingList,5,new ArrayList<>());
         System.out.println("上阵武将组合个数："+all.size());
         List<Result> resultList = new ArrayList<>();
         List<Result> resultList2 = new ArrayList<>();
