@@ -376,7 +376,7 @@ public class XZLController {
             }
 
             //极限兵符
-            List<Symbols> symbolsList = GeneralsUtil.getSymbols(generalsList,new ArrayList<>());
+            List<Symbols> symbolsList = null;//GeneralsUtil.getSymbols(generalsList,new ArrayList<>());
             ThreeDimensional td = GeneralsUtil.countSymbols(generalsList,symbolsList);
 
             GeneralsUtil.getWarpath(generalsList);//战意三维
