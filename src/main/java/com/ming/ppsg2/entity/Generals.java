@@ -76,6 +76,7 @@ public class Generals {
     private Warpath warpath;
     //兵符
     private Symbols symbols;
+
     //专属战器类型
     private List<Integer> warDevices;
     //战器

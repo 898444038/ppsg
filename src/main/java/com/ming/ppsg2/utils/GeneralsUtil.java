@@ -9,6 +9,7 @@ import com.ming.ppsg2.entity.Device;
 import com.ming.ppsg2.entity.Generals;
 import com.ming.ppsg2.entity.Result;
 import com.ming.ppsg2.entity.Symbols;
+import com.ming.ppsg2.entity.SymbolsTop;
 import com.ming.ppsg2.entity.ThreeDimensional;
 import com.ming.ppsg2.entity.ThreeDimensionals;
 import com.ming.ppsg2.entity.Warpath;
@@ -16,7 +17,6 @@ import com.ming.ppsg2.enums.GeneralsEnum;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1705,14 +1705,14 @@ public class GeneralsUtil {
         symbols6.setMainAttrName(finalNameN6);
 
 
-        Integer totalForce = 0;
+        /*Integer totalForce = 0;
         Integer totalIntellect = 0;
         Integer totalTroops = 0;
         for(Generals g : generalsList){
             totalForce += g.getForce();
             totalIntellect += g.getIntellect();
             totalTroops += g.getTroops();
-        }
+        }*/
         Map<GeneralsEnum.SymbolsType,Integer> typeMap = new HashMap<>();
         for(GeneralsEnum.SymbolsType type : GeneralsEnum.SymbolsType.values()){
             int force = 0;
@@ -1854,8 +1854,8 @@ public class GeneralsUtil {
             }
         }
 
-        List<Map.Entry<GeneralsEnum.SymbolsType, Integer>> list = new ArrayList<Map.Entry<GeneralsEnum.SymbolsType, Integer>>(typeMap.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<GeneralsEnum.SymbolsType, Integer>>() {
+        List<Map.Entry<GeneralsEnum.SymbolsType, Integer>> list = new ArrayList<>(typeMap.entrySet());
+        list.sort(new Comparator<Map.Entry<GeneralsEnum.SymbolsType, Integer>>() {
             // 降序排序
             public int compare(Map.Entry<GeneralsEnum.SymbolsType, Integer> o1, Map.Entry<GeneralsEnum.SymbolsType, Integer> o2) {
                 return -o1.getValue().compareTo(o2.getValue());
@@ -1879,6 +1879,11 @@ public class GeneralsUtil {
         symbols5.setTypeName(top3.getName());
         symbols6.setType(top3.getCode());
         symbols6.setTypeName(top3.getName());
+
+        List<SymbolsTop> symbolsTopList = new ArrayList<>();
+        for(Map.Entry<GeneralsEnum.SymbolsType, Integer> map : list){
+            symbolsTopList.add(new SymbolsTop(map.getKey().getName(),map.getValue()));
+        }
 
         //取兵符类型的所有可能
         /*List<Integer> indexList = new ArrayList<>();
@@ -2079,7 +2084,7 @@ public class GeneralsUtil {
         symbolsList.add(symbols5);
         symbolsList.add(symbols6);
         map.put("symbolsList",symbolsList);
-        map.put("symbolsTop",list);
+        map.put("symbolsTop",symbolsTopList);
         return map;
     }
 
@@ -2182,208 +2187,19 @@ public class GeneralsUtil {
 
     // 战意
     public static void getWarpath(List<Generals> generalsList) {
-        /*String[] g = {"0","1","2","3","4"};
-        String[] w = {"1","2","3","4","5","6"};
-        String[][] temp = { g , w };
-        LinkedList<String[]> list = new LinkedList<String[]>();
-        NumberUtil.recursionSub(list, temp.length, temp, 0, -1);
-
-        List<Generals> generalsList1 = new ArrayList<>();
-        List<Generals> generalsList2 = new ArrayList<>();
-        List<Generals> generalsList3 = new ArrayList<>();
-        List<Generals> generalsList4 = new ArrayList<>();
-        List<Generals> generalsList5 = new ArrayList<>();
-
-        for ( int i = 0; i < list.size (); i++ ){
-            Integer index1 = Integer.valueOf(list.get(i)[0]);
-            Integer index2 = Integer.valueOf(list.get(i)[1]);
-            if(list.get(i)[0].equals(g[0])){
-                Generals generals = generalsList.get(index1);
-                Generals copy = new Generals();
-                BeanUtils.copyProperties(generals,copy);
-                Warpath warpath = new Warpath();
-                warpath.setGroup(index2);
-                copy.setWarpath(warpath);
-                generalsList1.add(copy);
-            }else if(list.get(i)[0].equals(g[1])){
-                Generals generals = generalsList.get(index1);
-                Generals copy = new Generals();
-                BeanUtils.copyProperties(generals,copy);
-                Warpath warpath = new Warpath();
-                warpath.setGroup(index2);
-                copy.setWarpath(warpath);
-                generalsList2.add(copy);
-            }else if(list.get(i)[0].equals(g[2])){
-                Generals generals = generalsList.get(index1);
-                Generals copy = new Generals();
-                BeanUtils.copyProperties(generals,copy);
-                Warpath warpath = new Warpath();
-                warpath.setGroup(index2);
-                copy.setWarpath(warpath);
-                generalsList3.add(copy);
-            }else if(list.get(i)[0].equals(g[3])){
-                Generals generals = generalsList.get(index1);
-                Generals copy = new Generals();
-                BeanUtils.copyProperties(generals,copy);
-                Warpath warpath = new Warpath();
-                warpath.setGroup(index2);
-                copy.setWarpath(warpath);
-                generalsList4.add(copy);
-            }else if(list.get(i)[0].equals(g[4])){
-                Generals generals = generalsList.get(index1);
-                Generals copy = new Generals();
-                BeanUtils.copyProperties(generals,copy);
-                Warpath warpath = new Warpath();
-                warpath.setGroup(index2);
-                copy.setWarpath(warpath);
-                generalsList5.add(copy);
-            }
-        }*/
-
-
-        /*String[] s1 = { "0", "1", "2", "3", "4", "5" };
-        String[] s2 = { "0", "1", "2", "3", "4", "5" };
-        String[] s3 = { "0", "1", "2", "3", "4", "5" };
-        String[] s4 = { "0", "1", "2", "3", "4", "5" };
-        String[] s5 = { "0", "1", "2", "3", "4", "5" };
-        String[][] temps = { s1, s2, s3, s4, s5 };
-        LinkedList<String[]> lists = new LinkedList<String[]>();
-        NumberUtil.recursionSub(lists, temps.length, temps, 0, -1);*/
-
-        /*Integer total = 0;
-        Integer i1 = null;
-        Integer i2 = null;
-        Integer i3 = null;
-        Integer i4 = null;
-        Integer i5 = null;*/
-        //List<Generals> finalList = new ArrayList<>();
-        //List<Warpath> finalWarpathList = new ArrayList<>();
-
-        /*for ( int i = 0; i < lists.size (); i++ ) {
-            Integer index1 = Integer.valueOf(lists.get(i)[0]);
-            Integer index2 = Integer.valueOf(lists.get(i)[1]);
-            Integer index3 = Integer.valueOf(lists.get(i)[2]);
-            Integer index4 = Integer.valueOf(lists.get(i)[3]);
-            Integer index5 = Integer.valueOf(lists.get(i)[4]);
-            //System.out.println (Arrays.toString (lists.get (i)).replaceAll ("[\\[\\]\\,\\s]", ""));
-
-            Integer force = 0;
-            Integer intellect = 0;
-            Integer troops = 0;
-
-            Generals generals1 = generalsList1.get(index1);
-            Generals copy1 = new Generals();
-            BeanUtils.copyProperties(generals1,copy1);
-            Warpath warpath1 = new Warpath();
-            warpath1.setGroup(generals1.getWarpath().getGroup());
-            copy1.setWarpath(warpath1);
-
-            Generals generals2 = generalsList2.get(index2);
-            Generals copy2 = new Generals();
-            BeanUtils.copyProperties(generals2,copy2);
-            Warpath warpath2 = new Warpath();
-            warpath2.setGroup(generals2.getWarpath().getGroup());
-            copy2.setWarpath(warpath2);
-
-            Generals generals3 = generalsList3.get(index3);
-            Generals copy3 = new Generals();
-            BeanUtils.copyProperties(generals3,copy3);
-            Warpath warpath3 = new Warpath();
-            warpath3.setGroup(generals3.getWarpath().getGroup());
-            copy3.setWarpath(warpath3);
-
-            Generals generals4 = generalsList4.get(index4);
-            Generals copy4 = new Generals();
-            BeanUtils.copyProperties(generals4,copy4);
-            Warpath warpath4 = new Warpath();
-            warpath4.setGroup(generals4.getWarpath().getGroup());
-            copy4.setWarpath(warpath4);
-
-            Generals generals5 = generalsList5.get(index5);
-            Generals copy5 = new Generals();
-            BeanUtils.copyProperties(generals5,copy5);
-            Warpath warpath5 = new Warpath();
-            warpath5.setGroup(generals5.getWarpath().getGroup());
-            copy5.setWarpath(warpath5);
-
-            List<Generals> generalsLists = new ArrayList<>();
-            generalsLists.add(copy1);
-            generalsLists.add(copy2);
-            generalsLists.add(copy3);
-            generalsLists.add(copy4);
-            generalsLists.add(copy5);
-
-            List<Warpath> warpathList = countWarpath(generalsLists);
-            ThreeDimensional three = new ThreeDimensional();
-            Integer totalForce = copy1.getWarpath().getForce() + copy2.getWarpath().getForce() + copy3.getWarpath().getForce() + copy4.getWarpath().getForce() + copy5.getWarpath().getForce();
-            Integer totalIntellect = copy1.getWarpath().getIntellect() + copy2.getWarpath().getIntellect() + copy3.getWarpath().getIntellect() + copy4.getWarpath().getIntellect() + copy5.getWarpath().getIntellect();
-            Integer totalTroops = copy1.getWarpath().getTroops() + copy2.getWarpath().getTroops() + copy3.getWarpath().getTroops() + copy4.getWarpath().getTroops() + copy5.getWarpath().getTroops();
-            three.setForce(totalForce);
-            three.setIntellect(totalIntellect);
-            three.setTroops(totalTroops);
-            three.setTotal(totalForce + totalIntellect + totalTroops);
-
-            if(three.getTotal() >= total){
-                total = three.getTotal();
-                i1 = index1;
-                i2 = index2;
-                i3 = index3;
-                i4 = index4;
-                i5 = index5;
-                finalList = generalsLists;
-                finalWarpathList = warpathList;
-            }
-        }*/
-
-
-        /*for (Warpath warpath : finalWarpathList){
-            for(GeneralsEnum.Warpath warpaths : GeneralsEnum.Warpath.values()){
-                if(warpath.getGroup().equals(warpaths.getCode())){
-                    warpath.setGroupName(warpaths.getName());
-                }
-            }
-        }*/
-
-        /*ThreeDimensional three = new ThreeDimensional();
-        Integer force = 0;
-        Integer intellect = 0;
-        Integer troops = 0;*/
-
-
-        /*Warpath warpath1 = finalWarpathList.get(0);
-        Warpath warpath2 = finalWarpathList.get(1);
-        Warpath warpath3 = finalWarpathList.get(2);
-        Warpath warpath4 = finalWarpathList.get(3);
-        Warpath warpath5 = finalWarpathList.get(4);
-
-        generalsList.get(0).setWarpath(warpath1);
-        generalsList.get(1).setWarpath(warpath2);
-        generalsList.get(2).setWarpath(warpath3);
-        generalsList.get(3).setWarpath(warpath4);
-        generalsList.get(4).setWarpath(warpath5);*/
-
-        /*ThreeDimensional three1 = new ThreeDimensional(warpath1.getForce(),warpath1.getIntellect(),warpath1.getTroops());
-        ThreeDimensional three2 = new ThreeDimensional(warpath2.getForce(),warpath2.getIntellect(),warpath2.getTroops());
-        ThreeDimensional three3 = new ThreeDimensional(warpath3.getForce(),warpath3.getIntellect(),warpath3.getTroops());
-        ThreeDimensional three4 = new ThreeDimensional(warpath4.getForce(),warpath4.getIntellect(),warpath4.getTroops());
-        ThreeDimensional three5 = new ThreeDimensional(warpath5.getForce(),warpath5.getIntellect(),warpath5.getTroops());*/
-
-        List<Generals> copyList = new ArrayList<>();
-        for(Generals generals : generalsList) {
-            Generals copy = new Generals();
-            BeanUtils.copyProperties(generals,copy);
-            copyList.add(copy);
+        for(Generals generals : generalsList){
+            generals.setWarpath(new Warpath());
         }
 
         for(Generals generals : generalsList) {
-            countWarpath2(generals,copyList);
+            countWarpath2(generals,generalsList);
         }
 
-        Warpath warpath1 = copyList.get(0).getWarpath();
-        Warpath warpath2 = copyList.get(1).getWarpath();
-        Warpath warpath3 = copyList.get(2).getWarpath();
-        Warpath warpath4 = copyList.get(3).getWarpath();
-        Warpath warpath5 = copyList.get(4).getWarpath();
+        Warpath warpath1 = generalsList.get(0).getWarpath();
+        Warpath warpath2 = generalsList.get(1).getWarpath();
+        Warpath warpath3 = generalsList.get(2).getWarpath();
+        Warpath warpath4 = generalsList.get(3).getWarpath();
+        Warpath warpath5 = generalsList.get(4).getWarpath();
         ThreeDimensional three1 = new ThreeDimensional(warpath1.getForce0().intValue(),warpath1.getIntellect0().intValue(),warpath1.getTroops0().intValue());
         ThreeDimensional three2 = new ThreeDimensional(warpath2.getForce0().intValue(),warpath2.getIntellect0().intValue(),warpath2.getTroops0().intValue());
         ThreeDimensional three3 = new ThreeDimensional(warpath3.getForce0().intValue(),warpath3.getIntellect0().intValue(),warpath3.getTroops0().intValue());
@@ -3621,7 +3437,7 @@ public class GeneralsUtil {
         return map;
     }
 
-    public static Result getResult(List<Generals> generalsList,List<Symbols> symbolsList,int allTotalSword,int allTotalSword2){
+    public static Result getResult(List<Generals> generalsList, List<Symbols> symbolsList, List<SymbolsTop> symbolsTopList, int allTotalSword, int allTotalSword2){
         Result result = new Result();
         Integer weiCount = 0;//魏国数量
         Integer shuCount = 0;//蜀国数量
@@ -3671,6 +3487,10 @@ public class GeneralsUtil {
         for(CountryArms countryArms : countryArms2){
             armsNames += countryArms.getCount()+countryArms.getName();
         }
+        StringBuilder sb = new StringBuilder();
+        for(SymbolsTop symbolsTop : symbolsTopList){
+            sb.append(symbolsTop.getName()).append(":").append(symbolsTop.getTotal()).append("\r\n");
+        }
 
         result.setTotal(allTotalSword);
         result.setTotal2(allTotalSword2);
@@ -3685,7 +3505,8 @@ public class GeneralsUtil {
         result.setGongCount(gongCount);
         result.setCountryNames(countryNames);
         result.setArmsNames(armsNames);
-
+        result.setSymbolsTopList(symbolsTopList);
+        result.setSymbolsTop(sb.toString());
         return result;
     }
 

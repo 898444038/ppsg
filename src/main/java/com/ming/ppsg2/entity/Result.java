@@ -22,6 +22,9 @@ public class Result {
 
     private List<Symbols> symbolsList;//兵符
 
+    private List<SymbolsTop> symbolsTopList;//兵符排名
+    private String symbolsTop;
+
     private List<Generals> generalsList;
 //
 //    private Symbols symbols1;
@@ -38,6 +41,22 @@ public class Result {
 //    private Generals generals5;
 
     public Result() {
+    }
+
+    public String getSymbolsTop() {
+        return symbolsTop;
+    }
+
+    public void setSymbolsTop(String symbolsTop) {
+        this.symbolsTop = symbolsTop;
+    }
+
+    public List<SymbolsTop> getSymbolsTopList() {
+        return symbolsTopList;
+    }
+
+    public void setSymbolsTopList(List<SymbolsTop> symbolsTopList) {
+        this.symbolsTopList = symbolsTopList;
     }
 
     public Integer getTotal2() {

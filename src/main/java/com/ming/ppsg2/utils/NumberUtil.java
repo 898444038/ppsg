@@ -3,6 +3,7 @@ package com.ming.ppsg2.utils;
 
 import com.ming.ppsg2.entity.AppointGenerals;
 import com.ming.ppsg2.entity.AppointSymbols;
+import com.ming.ppsg2.entity.Compose;
 import com.ming.ppsg2.entity.Generals;
 import com.ming.ppsg2.entity.Result;
 import com.ming.ppsg2.entity.Symbols;
@@ -26,16 +27,18 @@ import java.util.regex.Pattern;
 public class NumberUtil {
 
     //copy对象
-    public static List<List<Generals>> getNoRepeatList(Map<String,String> generalsMapSort,List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
+    public static List<Compose> getNoRepeatList(Map<String,String> generalsMapSort,List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
+        clear();
         long t1 = System.currentTimeMillis();
         List<List<Generals>> glongList = getList(data,size,appointGeneralsList);
         System.out.println("排列组合时间："+(System.currentTimeMillis()-t1)+"ms");
 
-        final int threadNum = 1;//线程数
+        final int threadNum = 1;//子线程数
         List<List<List<Generals>>> splitList = split(glongList,threadNum);
         CyclicBarrier cb0 = new CyclicBarrier(threadNum + 1);//注意：2个子线程 + 1个主线程
+        List<Compose> composeList = new ArrayList<>();
         for (int i = 0; i < threadNum; i++) {
-            new Thread(new MyRunable0(cb0, i, splitList.get(i), generalsMapSort)).start();
+            new Thread(new MyRunable0(cb0, i, splitList.get(i),composeList, generalsMapSort)).start();
         }
 
         try {
@@ -45,46 +48,7 @@ public class NumberUtil {
             e.printStackTrace();
         }
 
-        /*StringBuilder ids = null;
-        Integer grilCode = GeneralsEnum.Gender.gril.getCode();
-        Iterator<List<Generals>> iterator = splitList.get(splitList.size()-1).iterator();
-        List<Generals> gList = null;
-        int finalCount = glongList.size();
-        int count = 0;
-        while (iterator.hasNext()) {
-            gList = iterator.next();
-
-            ids = new StringBuilder();
-            ids.append(gList.get(0).getId());
-            ids.append(gList.get(1).getId());
-            ids.append(gList.get(2).getId());
-            ids.append(gList.get(3).getId());
-            ids.append(gList.get(4).getId());
-
-            boolean isGril = gList.get(0).getGender().equals(grilCode)
-                    && gList.get(1).getGender().equals(grilCode)
-                    && gList.get(2).getGender().equals(grilCode)
-                    && gList.get(3).getGender().equals(grilCode)
-                    && gList.get(4).getGender().equals(grilCode);
-            if(generalsMapSort.get(ids.toString())!=null && !isGril){
-                iterator.remove();
-            }
-            ids = null;
-            count++;
-            System.out.println(count);
-        }
-        ids = null;*/
-
-        /*for(List<Generals> generalsList : glongList){
-            List<Generals> copyList = new ArrayList<>();
-            for(Generals generals : generalsList){
-                Generals copy = new Generals();
-                BeanUtils.copyProperties(generals,copy);
-                copyList.add(copy);
-            }
-            noRepeatList.add(copyList);
-        }*/
-        List<List<List<Generals>>> splitList2 = split(glongList,threadNum);
+        List<List<Compose>> splitList2 = splitCompose(composeList,threadNum);
         CyclicBarrier cb = new CyclicBarrier(threadNum + 1);//注意：10个子线程 + 1个主线程
         for (int i = 0; i < threadNum; i++) {
             new Thread(new MyRunable(cb, 0,splitList2.get(i))).start();
@@ -95,7 +59,8 @@ public class NumberUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return noRepeatList;
+
+        return noRepeatComposeList;
     }
 
     public static List<List<List<Generals>>> split(List<List<Generals>> glongList,Integer num){
@@ -104,22 +69,30 @@ public class NumberUtil {
         return ListUtils.partition(glongList,splitSize);
     }
 
+    public static List<List<Compose>> splitCompose(List<Compose> composeList,Integer num){
+        int finalSize = composeList.size();
+        int splitSize = finalSize/num;
+        return ListUtils.partition(composeList,splitSize);
+    }
+
     static class MyRunable0 implements Runnable {
         CyclicBarrier _cb;
         int _i = 0;
         List<List<Generals>> glongList = null;
+        List<Compose> composeList = null;
         Map<String,String> generalsMapSort = null;
 
-        public MyRunable0(CyclicBarrier cb, int i,List<List<Generals>> glongList,Map<String,String> generalsMapSort) {
+        public MyRunable0(CyclicBarrier cb, int i,List<List<Generals>> glongList,List<Compose> composeList,Map<String,String> generalsMapSort) {
             this._cb = cb;
             this._i = i;
             this.glongList = glongList;
+            this.composeList = composeList;
             this.generalsMapSort = generalsMapSort;
         }
 
         @Override
         public void run() {
-            StringBuilder ids = null;
+            StringBuffer ids = null;
             Integer grilCode = GeneralsEnum.Gender.gril.getCode();
             try {
                 Iterator<List<Generals>> iterator = glongList.iterator();
@@ -129,7 +102,7 @@ public class NumberUtil {
                 while (iterator.hasNext()) {
                     gList = iterator.next();
 
-                    ids = new StringBuilder();
+                    ids = new StringBuffer();
                     ids.append(gList.get(0).getId());
                     ids.append(gList.get(1).getId());
                     ids.append(gList.get(2).getId());
@@ -142,10 +115,13 @@ public class NumberUtil {
                             && gList.get(3).getGender().equals(grilCode)
                             && gList.get(4).getGender().equals(grilCode);
                     if(generalsMapSort.get(ids.toString())!=null && !isGril){
-                        iterator.remove();
+                        //iterator.remove();
+                    }else{
+                        composeList.add(new Compose(ids.toString(),isGril,gList));
                     }
                     ids = null;
                     count++;
+                    glongList = null;
                     System.out.println(_i+":"+count);
                 }
                 ids = null;
@@ -160,28 +136,41 @@ public class NumberUtil {
     static class MyRunable implements Runnable {
         CyclicBarrier _cb;
         int _i = 0;
-        List<List<Generals>> glongList = null;
+        List<Compose> composeList = null;
 
-        public MyRunable(CyclicBarrier cb, int i,List<List<Generals>> glongList) {
+        public MyRunable(CyclicBarrier cb, int i,List<Compose> composeList) {
             this._cb = cb;
             this._i = i;
-            this.glongList = glongList;
+            this.composeList = composeList;
         }
 
         @Override
         public void run() {
             try {
                 int count = 0;
-                for(List<Generals> generalsList : glongList){
+                List<Generals> generalsList = null;
+                for(Compose compose : composeList){
+                    generalsList = compose.getList();
                     List<Generals> copyList = new ArrayList<>();
-                    for(Generals generals : generalsList){
+                    boolean no = true;
+                    a:for(Generals generals : generalsList){
+                        b:for(Generals generals2 : generalsList){
+                            if(generals.getCode().equals(generals2.getCode()) && !generals.getId().equals(generals2.getId())){
+                                no = false;
+                                break a;
+                            }
+                        }
                         Generals copy = new Generals();
                         BeanUtils.copyProperties(generals,copy);
                         copyList.add(copy);
                     }
+                    if(!no){
+                        continue;
+                    }
                     count++;
                     System.out.println(_i+":"+count);
-                    noRepeatList.add(copyList);
+                    //noRepeatList.add(copyList);
+                    noRepeatComposeList.add(new Compose(compose.getId(),compose.isGril(),copyList));
                 }
                 System.out.println("thread " + _i + " done，正在等候其它线程完成...");
                 _cb.await();
@@ -194,6 +183,7 @@ public class NumberUtil {
     public static void clear(){
         longList = new ArrayList<>();
         noRepeatList = new ArrayList<>();
+        noRepeatComposeList = new ArrayList<>();
     }
 
     public static List<List<Generals>> getList(List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
@@ -210,6 +200,7 @@ public class NumberUtil {
      */
     private static List<List<Generals>> longList = new ArrayList<>();
     private static List<List<Generals>> noRepeatList = new ArrayList<>();
+    private static List<Compose> noRepeatComposeList = new ArrayList<>();
     public static void combinations(List<Generals> selector,List<Generals> data,int n,List<AppointGenerals> appointGeneralsList) {
         if(n == 0) {
             int size = appointGeneralsList.size();

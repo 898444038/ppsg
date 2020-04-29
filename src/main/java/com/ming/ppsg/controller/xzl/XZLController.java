@@ -328,7 +328,7 @@ public class XZLController {
 
         long t1 = System.currentTimeMillis();
         NumberUtil.clear();
-        List<List<Generals>> all = NumberUtil.getNoRepeatList(generalsMapSort,nimingList,5,new ArrayList<>());
+        List<List<Generals>> all = null;//NumberUtil.getNoRepeatList(generalsMapSort,nimingList,5,new ArrayList<>());
         System.out.println("上阵武将组合个数："+all.size());
         List<Result> resultList = new ArrayList<>();
         List<Result> resultList2 = new ArrayList<>();
@@ -399,7 +399,7 @@ public class XZLController {
                             generalsList.get(3).getGender().toString().equals(grilCode.toString()) &&
                             generalsList.get(4).getGender().toString().equals(grilCode.toString())
             ){
-                Result result = GeneralsUtil.getResult(generalsList,symbolsList,allTotalSword,allTotalSword2);
+                Result result = GeneralsUtil.getResult(generalsList,symbolsList,null,allTotalSword,allTotalSword2);
                 grilResultList.add(result);
             }
 
@@ -415,7 +415,7 @@ public class XZLController {
                 }
             }*/
 
-            Result result = GeneralsUtil.getResult(generalsList,symbolsList,allTotalSword,allTotalSword2);
+            Result result = GeneralsUtil.getResult(generalsList,symbolsList,null,allTotalSword,allTotalSword2);
             if(flag==1){
                 resultList2.add(result);
             }else{
