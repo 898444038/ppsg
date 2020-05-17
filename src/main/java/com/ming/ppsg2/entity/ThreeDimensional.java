@@ -4,9 +4,10 @@ public class ThreeDimensional {
 
     private Integer force;
     private Integer intellect;
-    private Integer Troops;
+    private Integer troops;
 
     private Integer total;
+    private Integer totalZl;//总战力
 
     private String remark;
 
@@ -15,7 +16,15 @@ public class ThreeDimensional {
     public ThreeDimensional(Integer force, Integer intellect, Integer troops) {
         this.force = force;
         this.intellect = intellect;
-        Troops = troops;
+        this.troops = troops;
+    }
+
+    public Integer getTotalZl() {
+        return (this.force+this.intellect+this.troops)*2;
+    }
+
+    public void setTotalZl(Integer totalZl) {
+        this.totalZl = totalZl;
     }
 
     public Integer getForce() {
@@ -35,15 +44,15 @@ public class ThreeDimensional {
     }
 
     public Integer getTroops() {
-        return Troops;
+        return troops;
     }
 
     public void setTroops(Integer troops) {
-        Troops = troops;
+        this.troops = troops;
     }
 
     public Integer getTotal() {
-        return total;
+        return this.force+this.intellect+this.troops;
     }
 
     public void setTotal(Integer total) {
@@ -63,7 +72,7 @@ public class ThreeDimensional {
         final StringBuffer sb = new StringBuffer("{");
         sb.append("force=").append(force);
         sb.append(", intellect=").append(intellect);
-        sb.append(", Troops=").append(Troops);
+        sb.append(", Troops=").append(troops);
         sb.append(", total=").append(total);
         sb.append('}');
         return sb.toString();
