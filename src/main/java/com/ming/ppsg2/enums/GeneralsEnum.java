@@ -892,6 +892,7 @@ public enum GeneralsEnum {
         shu_mayunlu(2017,"马云禄"),
         shu_huangyueying(2018,"黄月英"),
         shu_fazheng(2019,"法正"),
+        shu_zhangxingcai(2020,"张星彩"),
 
         wu_lvmeng(3001,"吕蒙"),
         wu_zhouyu(3002,"周瑜"),
@@ -1086,30 +1087,36 @@ public enum GeneralsEnum {
     }
 
     public enum Skin implements GeneralsEnumInterface {
-        skin_1(1,"沉弈忘雪",30,30,80),
-        skin_2(2,"繁花一梦",30,30,80),
-        skin_3(3,"月落千殇",30,30,80),
-        skin_4(4,"剑影流风",30,30,80),
-        skin_5(5,"赤魇苍雷",30,30,80),
-        skin_6(6,"锦绣丹心",30,30,80),
-        skin_7(7,"醉梦千秋",30,30,80),
-        skin_8(8,"魔影祸战",30,30,80),
-        skin_9(9,"弦音碎梦",30,30,80),
-        skin_10(10,"巧局奇谋",30,30,80),
-        skin_11(11,"绝地冲锋",30,30,80),
-        skin_12(12,"腾凌万军",30,30,80),
+        skin_1(1,"沉弈忘雪","",30,30,80),
+        skin_2(2,"繁花一梦","",30,30,80),
+        skin_3(3,"月落千殇","",30,30,80),
+        skin_4(4,"剑影流风","",30,30,80),
+        skin_5(5,"赤魇苍雷","",30,30,80),
+        skin_6(6,"锦绣丹心","",30,30,80),
+        skin_7(7,"醉梦千秋","",30,30,80),
+        skin_8(8,"魔影祸战","",30,30,80),
+        skin_9(9,"弦音碎梦","",30,30,80),
+        skin_10(10,"巧局奇谋","",30,30,80),
+        skin_11(11,"绝地冲锋","",30,30,80),
+        skin_12(12,"腾凌万军","",30,30,80),
+        skin_13(13,"桃之夭夭","挽歌大乔",30,30,80),
+        skin_14(14,"困龙欲出","天子汉献帝",30,30,80),
+        skin_15(15,"锦上添花","落英黄舞蝶",30,30,80),
+        skin_16(16,"冰息虎啸","狂澜吕蒙",30,30,80),
         ;
         private Integer code;
         private String name;
+        private String generalsName;
         private Integer force;
         private Integer intellect;
         private Integer troops;
 
         Skin(){}
 
-        Skin(Integer code, String name, Integer force, Integer intellect, Integer troops) {
+        Skin(Integer code, String name,String generalsName, Integer force, Integer intellect, Integer troops) {
             this.code = code;
             this.name = name;
+            this.generalsName = generalsName;
             this.force = force;
             this.intellect = intellect;
             this.troops = troops;
