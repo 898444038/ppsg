@@ -42,11 +42,12 @@ public class Main {
     public static void main(String[] args) throws Exception {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增皮肤【绝地冲锋】【腾凌万军】\n" +
-                "2.新增逆命【驭胜曹丕】(预估)\n";
+                "更新内容：1.新增皮肤【桃之夭夭】【困龙欲出】【锦上添花】【冰息虎啸】\n" +
+                "2.新增突破卡【天照卑弥呼】【风舞张星彩】\n" +
+                "3.新增逆命卡【蜀魂姜维】(预估三维值)\n";
         top+= "";
         String advert = "";//广告
-        String fileRemark = "";
+        String fileRemark = "(蜀魂姜维)";
         //计算：992/658/1895
         //实际：988/654/1947
 
@@ -124,7 +125,7 @@ public class Main {
         System.out.println("获取排除数据："+generalsMapSort.size()+"条");
 
         for (Map<String,String> map : lists) {
-            if(null == map.get("armsBook1") || "".equals(map.get("armsBook1"))){
+            if(null == map.get("armsBook1") || "".equals(map.get("armsBook1").toString()) || "FALSE".equalsIgnoreCase(map.get("usable").toString())){
                 continue;
             }
 
@@ -438,6 +439,8 @@ public class Main {
                     Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,0,allTotalSword2);
                     if(allTotalSword2 > 360000){
                         grilResultList.add(result);
+                    }else{
+                        result = null;
                     }
                 }
                 System.out.println(count+" / "+finalCount + "  " + (d.intValue())+"%");
@@ -450,6 +453,7 @@ public class Main {
                         flag = 1;
                     }else{
                         prop.setProperty(composes.getId(), allTotalSword2 + "");
+                        composes = null;
                         continue;
                     }
                 }
@@ -461,7 +465,10 @@ public class Main {
                     resultList.add(result);
                     resultList2.add(result);
                 }
-
+                composes = null;
+                if((count % 10000) == 0){
+                    System.gc();
+                }
             }
         //}
 
@@ -540,12 +547,12 @@ public class Main {
 
         //model.put("list2",GeneralsUtil.getExcludeList(resultList2,390000));//虚战力表（特殊战器）
         if(resultList2.size()>200){
-            model.put("list2",resultList2.subList(0,100));//虚战力表（特殊战器）
+            model.put("list2",resultList2.subList(0,200));//虚战力表（特殊战器）
         }else{
             model.put("list2",resultList2);//虚战力表（特殊战器）
         }
         if(grilResultList.size()>200) {
-            model.put("grilList", grilResultList.subList(0, 100));//虚战力表（女队）
+            model.put("grilList", grilResultList.subList(0, 200));//虚战力表（女队）
         }else{
             model.put("grilList", grilResultList);
         }
