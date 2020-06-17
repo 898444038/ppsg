@@ -42,8 +42,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增兵符类型【狰】【蛊雕】\n" +
-                "2.新增异化【豹魂祝融夫人】【奇谋法正】\n";
+                "更新内容：1.新增皮肤【绝地冲锋】【腾凌万军】\n" +
+                "2.新增逆命【驭胜曹丕】(预估)\n";
         top+= "";
         String advert = "";//广告
         String fileRemark = "";
