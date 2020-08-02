@@ -42,17 +42,23 @@ public class Main {
     public static void main(String[] args) throws Exception {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增皮肤【桃之夭夭】【困龙欲出】【锦上添花】【冰息虎啸】\n" +
-                "2.新增突破卡【天照卑弥呼】【风舞张星彩】\n" +
-                "3.新增逆命卡【蜀魂姜维】(预估三维值)\n";
+                "更新内容：1.新增逆命【秉义太史慈】\n" +
+                "2.新增幻化皮肤【山河无恙】【金纹昊天】\n" +
+                "\n";
         top+= "";
         String advert = "";//广告
-        String fileRemark = "(蜀魂姜维)";
+        String fileRemark = "(秉义太史慈)";
         //计算：992/658/1895
         //实际：988/654/1947
 
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
-//        appointGeneralsList.add(new AppointGenerals("虎涧典韦"));
+        appointGeneralsList.add(new AppointGenerals("御甲张辽"));
+        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
+        appointGeneralsList.add(new AppointGenerals("虎涧典韦"));
+        appointGeneralsList.add(new AppointGenerals("霸业曹操"));
+//        appointGeneralsList.add(new AppointGenerals("蜀魂姜维"));
+//        appointGeneralsList.add(new AppointGenerals("奋威袁绍"));
+        appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
 //        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
 //        appointGeneralsList.add(new AppointGenerals("御甲张辽"));
 //        appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
@@ -62,13 +68,15 @@ public class Main {
         //appointGeneralsList.add(new AppointGenerals("龙驹马云禄"));
 
         List<AppointExcludeGenerals> excludeGeneralsList = new ArrayList<>();
-        //excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
-        //excludeGeneralsList.add(new AppointExcludeGenerals("御甲张辽",0));
+//        excludeGeneralsList.add(new AppointExcludeGenerals("御甲张辽",1));
+//        excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
+//        excludeGeneralsList.add(new AppointExcludeGenerals("桀骜孙策",0));
+//        excludeGeneralsList.add(new AppointExcludeGenerals("飞将吕布",0));
 
         List<AppointSymbols> appointSymbolsList = new ArrayList<>();
-        //appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.huoFeng.getCode(),GeneralsEnum.SymbolsType.huoFeng.getName()));
-        //appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.qiongQi.getCode(),GeneralsEnum.SymbolsType.qiongQi.getName()));
-        //appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.yaCi.getCode(),GeneralsEnum.SymbolsType.yaCi.getName()));
+//        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.yaCi.getCode(),GeneralsEnum.SymbolsType.yaCi.getName()));
+//        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.cangLong.getCode(),GeneralsEnum.SymbolsType.cangLong.getName()));
+//        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.qiongQi.getCode(),GeneralsEnum.SymbolsType.qiongQi.getName()));
 
         boolean isHuanHua = true;//随从是否有幻化
         long t1 = System.currentTimeMillis();

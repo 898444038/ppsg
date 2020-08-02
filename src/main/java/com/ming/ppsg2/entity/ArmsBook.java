@@ -6,9 +6,13 @@ package com.ming.ppsg2.entity;
  * 弓术：军略	三疑
  * 战略：军略	三疑
  * 精准：军略	文伐
+ *
  * 防御：文伐	兵道
+ * 枪术：文伐	兵道
  * 阵列：金鼓	文伐
+ *
  * 短兵：金鼓	军略
+ *
  */
 public class ArmsBook {
 

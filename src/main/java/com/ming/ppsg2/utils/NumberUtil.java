@@ -29,6 +29,9 @@ public class NumberUtil {
     //copy对象
     public static List<Compose> getNoRepeatList(Map<String,String> generalsMapSort,List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
         clear();
+        if(!appointGeneralsList.isEmpty()){
+            generalsMapSort = new HashMap<>();
+        }
         long t1 = System.currentTimeMillis();
         List<List<Generals>> glongList = getList(data,size,appointGeneralsList);
         System.out.println("排列组合时间："+(System.currentTimeMillis()-t1)+"ms");
@@ -187,7 +190,7 @@ public class NumberUtil {
     }
 
     public static List<List<Generals>> getList(List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
-        longList = new ArrayList<>();
+        //longList = new ArrayList<>();
         combinations(new ArrayList<>(),data, size,appointGeneralsList);
         System.out.println(longList.size());
         return longList;
@@ -209,6 +212,7 @@ public class NumberUtil {
                 for (AppointGenerals appointGenerals : appointGeneralsList) {
                     if(generals.getName().equalsIgnoreCase(appointGenerals.getName())){
                         total++;
+                        break;
                     }
                 }
             }
