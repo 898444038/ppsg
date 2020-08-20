@@ -1,5 +1,9 @@
 package com.ming.ppsg2.entity;
 
+import com.ming.ppsg2.enums.GeneralsEnum;
+
+import java.math.BigDecimal;
+
 public class Device {
     //战器类型名称
     private String name;
@@ -19,6 +23,35 @@ public class Device {
     private ThreeDimensional deviceExclusiveThreeDimensional;
 
     public Device() {
+    }
+
+    public Device(Integer force, Integer intellect, Integer troops,GeneralsEnum.WarDevice warDevice,double rate) {
+        deviceBaseThreeDimensional = new ThreeDimensional();
+        deviceBaseThreeDimensional.setForce(force);
+        deviceBaseThreeDimensional.setIntellect(intellect);
+        deviceBaseThreeDimensional.setTroops(troops);
+        deviceBaseThreeDimensional.setTotalZl((force+intellect+troops)*2);
+
+        deviceStrengthenThreeDimensional = new ThreeDimensional();
+        deviceStrengthenThreeDimensional.setForce(warDevice.getStrengthenForce());
+        deviceStrengthenThreeDimensional.setIntellect(warDevice.getStrengthenIntellect());
+        deviceStrengthenThreeDimensional.setTroops(warDevice.getStrengthenTroops());
+        deviceStrengthenThreeDimensional.setTotalZl((warDevice.getStrengthenForce()+warDevice.getStrengthenIntellect()+warDevice.getStrengthenTroops())*2);
+
+        deviceQuenchingThreeDimensional = new ThreeDimensional();
+        BigDecimal rates = new BigDecimal(rate);
+        BigDecimal doubles = new BigDecimal("2");
+
+        BigDecimal b1 = new BigDecimal(force+warDevice.getStrengthenForce());
+        BigDecimal qf = b1.multiply(rates).multiply(doubles);
+        deviceQuenchingThreeDimensional.setForce(0);
+        BigDecimal b2 = new BigDecimal(intellect+warDevice.getStrengthenIntellect());
+        BigDecimal qi = b2.multiply(rates).multiply(doubles);
+        deviceQuenchingThreeDimensional.setIntellect(0);
+        BigDecimal b3 = new BigDecimal(troops+warDevice.getStrengthenTroops());
+        BigDecimal qt = b3.multiply(rates).multiply(doubles);
+        deviceQuenchingThreeDimensional.setTroops(qt.intValue());
+        deviceQuenchingThreeDimensional.setTotalZl((qf.intValue()+qi.intValue()+qt.intValue())*2);
     }
 
     public String getName() {
