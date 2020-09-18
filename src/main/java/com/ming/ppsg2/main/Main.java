@@ -1,22 +1,9 @@
 package com.ming.ppsg2.main;
 
 
-import com.ming.ppsg2.entity.AppointExcludeGenerals;
-import com.ming.ppsg2.entity.AppointGenerals;
-import com.ming.ppsg2.entity.AppointSymbols;
-import com.ming.ppsg2.entity.ArmsBook;
-import com.ming.ppsg2.entity.Compose;
-import com.ming.ppsg2.entity.Destiny;
-import com.ming.ppsg2.entity.Generals;
-import com.ming.ppsg2.entity.Result;
-import com.ming.ppsg2.entity.Symbols;
-import com.ming.ppsg2.entity.SymbolsTop;
+import com.ming.ppsg2.entity.*;
 import com.ming.ppsg2.enums.GeneralsEnum;
-import com.ming.ppsg2.utils.DestinyData;
-import com.ming.ppsg2.utils.ExcelReaderUtil;
-import com.ming.ppsg2.utils.GeneralsUtil;
-import com.ming.ppsg2.utils.NumberUtil;
-import com.ming.ppsg2.utils.ReadWriteExcel;
+import com.ming.ppsg2.utils.*;
 import com.ming.ppsg2.utils.jxls.JxlsUtil;
 import org.springframework.beans.BeanUtils;
 
@@ -26,57 +13,48 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增逆命【猿戏华佗】\n" +
-                "2.新增幻化皮肤【战影瑶芳】【誓血雄心】\n" +
-                "\n";
+                "更新内容：1.新增阵法\n" +
+                "2.新增异化武将【凤仪步练师】【混沌许褚】\n" +
+                "3.新增幻化皮肤 绝情张春华【心若冰霜】 锦狮马超【西凉雄狮】\n";
         top+= "";
         String advert = "";//广告
-        String fileRemark = "(猿戏华佗)";
+        String fileRemark = "1";
         //计算：992/658/1895
         //实际：988/654/1947
 
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
 //        appointGeneralsList.add(new AppointGenerals("御甲张辽"));
-//        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
 //        appointGeneralsList.add(new AppointGenerals("虎涧典韦"));
 //        appointGeneralsList.add(new AppointGenerals("霸业曹操"));
 //        appointGeneralsList.add(new AppointGenerals("蜀魂姜维"));
 //        appointGeneralsList.add(new AppointGenerals("奋威袁绍"));
 //        appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
 //        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
-//        appointGeneralsList.add(new AppointGenerals("御甲张辽"));
-//        appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
+//        appointGeneralsList.add(new AppointGenerals("诡骑张飞"));
+//        appointGeneralsList.add(new AppointGenerals("神武刘备"));
+//        appointGeneralsList.add(new AppointGenerals("武圣关羽_限"));
+//        appointGeneralsList.add(new AppointGenerals("刀魂关平"));
 //        appointGeneralsList.add(new AppointGenerals("飞将吕布"));
         //appointGeneralsList.add(new AppointGenerals("陨星庞统"));
-        //appointGeneralsList.add(new AppointGenerals("砺战赵云"));
         //appointGeneralsList.add(new AppointGenerals("龙驹马云禄"));
 
         List<AppointExcludeGenerals> excludeGeneralsList = new ArrayList<>();
-//        excludeGeneralsList.add(new AppointExcludeGenerals("御甲张辽",1));
 //        excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
-//        excludeGeneralsList.add(new AppointExcludeGenerals("桀骜孙策",0));
-//        excludeGeneralsList.add(new AppointExcludeGenerals("飞将吕布",0));
+//        excludeGeneralsList.add(new AppointExcludeGenerals("御甲张辽",1));
+//        excludeGeneralsList.add(new AppointExcludeGenerals("桀骜孙策",1));
+//        excludeGeneralsList.add(new AppointExcludeGenerals("飞将吕布",1));
 
         List<AppointSymbols> appointSymbolsList = new ArrayList<>();
-//        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.yaCi.getCode(),GeneralsEnum.SymbolsType.yaCi.getName()));
-//        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.cangLong.getCode(),GeneralsEnum.SymbolsType.cangLong.getName()));
-//        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.qiongQi.getCode(),GeneralsEnum.SymbolsType.qiongQi.getName()));
+        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.yaCi.getCode(),GeneralsEnum.SymbolsType.yaCi.getName()));
+        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.cangLong.getCode(),GeneralsEnum.SymbolsType.cangLong.getName()));
+        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.qiongQi.getCode(),GeneralsEnum.SymbolsType.qiongQi.getName()));
 
         boolean isHuanHua = true;//随从是否有幻化
         long t1 = System.currentTimeMillis();
@@ -84,6 +62,8 @@ public class Main {
         long t2 = System.currentTimeMillis();
         DecimalFormat df=new DecimalFormat("0.000");
         System.out.println("共耗时："+df.format((float)(t2-t1)/1000)+"s");
+
+        //removeProp();
     }
 
     public static void xzl(String top,String advert,String fileRemark,
@@ -276,7 +256,7 @@ public class Main {
             GeneralsUtil.getBattleArray(generals);//战阵三维
             GeneralsUtil.getDestiny(generals);//命格三维
             GeneralsUtil.getSkin(generals);//幻化三维
-            GeneralsUtil.getBattleArrayWay(generals);//幻化三维
+            GeneralsUtil.getBattleArrayWay(generals);//阵法三维
             //generals.setWarpath(new Warpath());
 
             if(name.endsWith("_限")){
@@ -400,7 +380,7 @@ public class Main {
         List<Generals> nmList = new ArrayList<>();
         for(Generals generals : nimingList){
             //if(generals.getDestiny().getDisobey()==1 || generals.getDestiny().getDisobey()==3){
-                nmList.add(generals);
+            nmList.add(generals);
             //}
         }
         List<Compose> all = NumberUtil.getNoRepeatList(generalsMapSort,nmList,5,appointGeneralsList);
@@ -417,68 +397,68 @@ public class Main {
         //List<List<Compose>> splitList = NumberUtil.splitCompose(all,10);
         //ComposeUtil.each(splitList);
         //for(List<Compose> list : all){
-            for(Compose composes : all){
-                generalsList = composes.getList();
-                count++;
+        for(Compose composes : all){
+            generalsList = composes.getList();
+            count++;
 
-                //极限兵符
-                Map<String,Object> symbolsMap = GeneralsUtil.getSymbols(generalsList,appointSymbolsList);
-                List<Symbols> symbolsList = (List<Symbols>)symbolsMap.get("symbolsList");
-                List<SymbolsTop> symbolsTop = (List<SymbolsTop>)symbolsMap.get("symbolsTop");
-                GeneralsUtil.countSymbols(generalsList,symbolsList);
-                //战意三维
-                GeneralsUtil.getWarpath(generalsList);
-                // 总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
-                // 武将战力 =（总武力+总智力+总兵力）*2+ 命格被动战力 + 战器被动战力
-                //int allTotalSword = 0;
-                int allTotalSword2 = 0;
-                if(excludeGeneralsList.size() > 0){
-                    //allTotalSword = GeneralsUtil.getAllTotalSword3(generalsList,excludeGeneralsList);
-                    allTotalSword2 = GeneralsUtil.getAllTotalSword4(generalsList,excludeGeneralsList);
-                }else{
-                    //allTotalSword = GeneralsUtil.getAllTotalSword(generalsList);
-                    allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
-                }
-                b1 = new BigDecimal(Double.toString(count));
-                b2 = new BigDecimal(Double.toString(finalCount));
-                d = b1.divide(b2, 2, BigDecimal.ROUND_HALF_UP).doubleValue()*100;
+            //极限兵符
+            Map<String,Object> symbolsMap = GeneralsUtil.getSymbols(generalsList,appointSymbolsList);
+            List<Symbols> symbolsList = (List<Symbols>)symbolsMap.get("symbolsList");
+            List<SymbolsTop> symbolsTop = (List<SymbolsTop>)symbolsMap.get("symbolsTop");
+            GeneralsUtil.countSymbols(generalsList,symbolsList);
+            //战意三维
+            GeneralsUtil.getWarpath(generalsList);
+            // 总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
+            // 武将战力 =（总武力+总智力+总兵力）*2+ 命格被动战力 + 战器被动战力
+            //int allTotalSword = 0;
+            int allTotalSword2 = 0;
+            if(excludeGeneralsList.size() > 0){
+                //allTotalSword = GeneralsUtil.getAllTotalSword3(generalsList,excludeGeneralsList);
+                allTotalSword2 = GeneralsUtil.getAllTotalSword4(generalsList,excludeGeneralsList);
+            }else{
+                //allTotalSword = GeneralsUtil.getAllTotalSword(generalsList);
+                allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
+            }
+            b1 = new BigDecimal(Double.toString(count));
+            b2 = new BigDecimal(Double.toString(finalCount));
+            d = b1.divide(b2, 2, BigDecimal.ROUND_HALF_UP).doubleValue()*100;
 
-                //女队
-                if(composes.isGril()){
-                    Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,0,allTotalSword2);
-                    if(allTotalSword2 > 360000){
-                        grilResultList.add(result);
-                    }else{
-                        result = null;
-                    }
-                }
-                System.out.println(count+" / "+finalCount + "  " + (d.intValue())+"%");
-
-                int zhanli = 394000;
-                int flag = 0;
-                //跳过战力低于zhanli的
-                if(allTotalSword2<zhanli && appointGeneralsList.isEmpty()){
-                    if(allTotalSword2>zhanli){
-                        flag = 1;
-                    }else{
-                        prop.setProperty(composes.getId(), allTotalSword2 + "");
-                        composes = null;
-                        continue;
-                    }
-                }
-
+            //女队
+            if(composes.isGril()){
                 Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,0,allTotalSword2);
-                if(flag==1){
-                    resultList2.add(result);
+                if(allTotalSword2 > 390000){
+                    grilResultList.add(result);
                 }else{
-                    resultList.add(result);
-                    resultList2.add(result);
-                }
-                composes = null;
-                if((count % 10000) == 0){
-                    System.gc();
+                    result = null;
                 }
             }
+            System.out.println(count+" / "+finalCount + "  " + (d.intValue())+"%");
+
+            int zhanli = 420000;
+            int flag = 0;
+            //跳过战力低于zhanli的
+            if(allTotalSword2<zhanli && appointGeneralsList.isEmpty()){
+                if(allTotalSword2>zhanli){
+                    flag = 1;
+                }else{
+                    prop.setProperty(composes.getId(), allTotalSword2 + "");
+                    composes = null;
+                    continue;
+                }
+            }
+
+            Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,0,allTotalSword2);
+            if(flag==1){
+                resultList2.add(result);
+            }else{
+                resultList.add(result);
+                resultList2.add(result);
+            }
+            composes = null;
+            if((count % 10000) == 0){
+                System.gc();
+            }
+        }
         //}
 
         //结果排序
@@ -609,5 +589,44 @@ public class Main {
             map.put(obj, objv);
         }
         return map;
+    }
+
+    //2272205
+    public static void removeProp(){
+        Map<String,String> generalsMapSort = new LinkedHashMap<>();
+        Properties prop = new Properties();
+        try {
+            InputStream inStream = Main.class.getResourceAsStream("/data/data.properties");
+            prop.load(inStream);//加载属性列表
+            Enumeration enu = prop.keys();
+            while (enu.hasMoreElements()) {
+                Object obj = enu.nextElement();
+                Object objv = prop.get(obj);
+                if(obj.toString().contains("2048")){
+                    continue;
+                }
+                if(obj.toString().contains("2049")){
+                    continue;
+                }
+                generalsMapSort.put(obj.toString(), objv.toString());
+            }
+            inStream.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        try{
+            //保存属性到data.properties文件
+            FileOutputStream oFile = new FileOutputStream("src/main/resources/data/data.properties", false);//true表示追加打开
+            for(Map.Entry<String,String> maps : generalsMapSort.entrySet()){
+                prop.setProperty(maps.getKey(), maps.getValue());
+            }
+            System.out.println(prop.size());
+            prop.store(oFile, "Number:"+prop.size());
+            oFile.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -28,6 +28,27 @@ public class NumberUtil {
 
     //copy对象
     public static List<Compose> getNoRepeatList(Map<String,String> generalsMapSort,List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
+        if(appointGeneralsList.size()==5){
+            List<Compose> composeList = new ArrayList<>();
+            List<Generals> generalsList = new ArrayList<>();
+            for (Generals generals : data){
+
+            }
+
+            StringBuffer ids = new StringBuffer();
+            ids.append(appointGeneralsList.get(0).getId());
+            ids.append(appointGeneralsList.get(1).getId());
+            ids.append(appointGeneralsList.get(2).getId());
+            ids.append(appointGeneralsList.get(3).getId());
+            ids.append(appointGeneralsList.get(4).getId());
+
+            /*boolean isGril = gList.get(0).getGender().equals(grilCode)
+                    && gList.get(1).getGender().equals(grilCode)
+                    && gList.get(2).getGender().equals(grilCode)
+                    && gList.get(3).getGender().equals(grilCode)
+                    && gList.get(4).getGender().equals(grilCode);
+            composeList.add(new Compose(ids.toString(),false,gList));*/
+        }
         clear();
         if(!appointGeneralsList.isEmpty()){
             generalsMapSort = new HashMap<>();

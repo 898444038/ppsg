@@ -16,9 +16,8 @@ public class ArmsUtils {
         GeneralsEnum.WarDevice warDevice = GeneralsEnum.WarDevice.gun;
         double rate = 1d;
         List<Device> list = new ArrayList<>();
-        list.add(new Device(133,131,133,warDevice,rate));
+        list.add(new Device(160,106,132,warDevice,rate));
         list.add(new Device(131,133,133,warDevice,rate));
-        list.add(new Device(133,133,132,warDevice,rate));
         compareArmsList(warDevice,list);
     }
 

@@ -2620,7 +2620,7 @@ public class GeneralsUtil {
         troops += battleArrayWayThreeDimensional.getTroops();
 
         //阵法五被动战力
-        Integer battleArrayWaySword = 1920+1920+1920+1920+1920;
+        Integer battleArrayWaySword = 1920;
 
         //命格被动战力
         Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
@@ -2639,14 +2639,14 @@ public class GeneralsUtil {
     }
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
-    /*public static Integer getAllTotalSword(List<Generals> generalsList) {
+    public static Integer getAllTotalSword(List<Generals> generalsList) {
         // 76710  75072   75060  72510  71394
         Integer total = 10152;
         for (Generals generals : generalsList){
             total += getTotalSword(generals);
         }
         return total;
-    }*/
+    }
 
     // 特殊战器
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
@@ -2660,7 +2660,7 @@ public class GeneralsUtil {
     }
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
-    /*public static Integer getAllTotalSword3(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {
+    public static Integer getAllTotalSword3(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {
         Integer total = 10152;
         //判断上阵武将有没有danList
         for (Generals generals : generalsList){
@@ -2675,7 +2675,7 @@ public class GeneralsUtil {
             total += getTotalSword3(generals,excludeGeneralsList);
         }
         return total;
-    }*/
+    }
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
     public static Integer getAllTotalSword4(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {

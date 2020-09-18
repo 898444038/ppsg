@@ -895,6 +895,7 @@ public enum GeneralsEnum {
         shu_huangyueying(2018,"黄月英"),
         shu_fazheng(2019,"法正"),
         shu_zhangxingcai(2020,"张星彩"),
+        shu_guanping(2021,"关平"),
 
         wu_lvmeng(3001,"吕蒙"),
         wu_zhouyu(3002,"周瑜"),
@@ -941,6 +942,7 @@ public enum GeneralsEnum {
         qun_tianzihanxiandi(4021,"天子汉献帝"),
         qun_zhurongfuren(4022,"祝融夫人"),
         qun_gongsunzan(4023,"公孙瓒"),
+        qun_huaxiong(4024,"华雄"),
         ;
         private Integer code;
         private String name;
@@ -1109,6 +1111,10 @@ public enum GeneralsEnum {
         skin_18(18,"金纹昊天","奋威袁绍",30,30,80),
         skin_19(19,"战影瑶芳","灵刃吕玲绮",30,30,80),
         skin_20(20,"誓血雄心","虎步夏侯渊",30,30,80),
+        skin_21(21,"沧海云帆","游侠甘宁",30,30,80),
+        skin_22(22,"忘川鬼鹤","妖仙于吉",30,30,80),
+        skin_23(23,"心若冰霜","绝情张春华",30,30,80),
+        skin_24(24,"西凉雄狮","锦狮马超",30,30,80),
         ;
         private Integer code;
         private String name;
