@@ -276,6 +276,7 @@ public class Main {
             GeneralsUtil.getBattleArray(generals);//战阵三维
             GeneralsUtil.getDestiny(generals);//命格三维
             GeneralsUtil.getSkin(generals);//幻化三维
+            GeneralsUtil.getBattleArrayWay(generals);//幻化三维
             //generals.setWarpath(new Warpath());
 
             if(name.endsWith("_限")){

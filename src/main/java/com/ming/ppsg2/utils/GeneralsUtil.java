@@ -2407,6 +2407,21 @@ public class GeneralsUtil {
         return three;
     }
 
+    /**
+     * 阵法
+     * @param generals
+     * @return
+     */
+    public static ThreeDimensional getBattleArrayWay(Generals generals) {
+        ThreeDimensional three = new ThreeDimensional();
+        GeneralsEnum.BattleArrayWay battleArrayWay = GeneralsEnum.BattleArrayWay.long_fei;
+        three.setForce(battleArrayWay.getMaxForce());
+        three.setIntellect(battleArrayWay.getMaxIntellect());
+        three.setTroops(battleArrayWay.getMaxTroops());
+        generals.setBattleArrayWayThreeDimensional(three);
+        return three;
+    }
+
     // 获取武将总战力
     // 武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
     public static Integer getTotalSword(Generals generals) {
@@ -2598,6 +2613,15 @@ public class GeneralsUtil {
         intellect += skinThreeDimensional.getIntellect();
         troops += skinThreeDimensional.getTroops();
 
+        //阵法三维
+        ThreeDimensional battleArrayWayThreeDimensional = generals.getBattleArrayWayThreeDimensional();
+        force += battleArrayWayThreeDimensional.getForce();
+        intellect += battleArrayWayThreeDimensional.getIntellect();
+        troops += battleArrayWayThreeDimensional.getTroops();
+
+        //阵法五被动战力
+        Integer battleArrayWaySword = 1920+1920+1920+1920+1920;
+
         //命格被动战力
         Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
 
@@ -2606,7 +2630,7 @@ public class GeneralsUtil {
 
         //武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
         Integer total = force + intellect + troops;
-        Integer totalSword = (total) * 2 + destinySword + warDeviceSword;
+        Integer totalSword = (total) * 2 + destinySword + warDeviceSword + battleArrayWaySword;
         generals.setTotalSword2(totalSword);
         generals.setTotalForce2(force);
         generals.setTotalIntellect2(intellect);
@@ -2615,14 +2639,14 @@ public class GeneralsUtil {
     }
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
-    public static Integer getAllTotalSword(List<Generals> generalsList) {
+    /*public static Integer getAllTotalSword(List<Generals> generalsList) {
         // 76710  75072   75060  72510  71394
         Integer total = 10152;
         for (Generals generals : generalsList){
             total += getTotalSword(generals);
         }
         return total;
-    }
+    }*/
 
     // 特殊战器
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
@@ -2636,7 +2660,7 @@ public class GeneralsUtil {
     }
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
-    public static Integer getAllTotalSword3(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {
+    /*public static Integer getAllTotalSword3(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {
         Integer total = 10152;
         //判断上阵武将有没有danList
         for (Generals generals : generalsList){
@@ -2651,7 +2675,7 @@ public class GeneralsUtil {
             total += getTotalSword3(generals,excludeGeneralsList);
         }
         return total;
-    }
+    }*/
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
     public static Integer getAllTotalSword4(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {
@@ -3831,6 +3855,15 @@ public class GeneralsUtil {
         intellect += skinThreeDimensional.getIntellect();
         troops += skinThreeDimensional.getTroops();
 
+        //阵法三维
+        ThreeDimensional battleArrayWayThreeDimensional = generals.getBattleArrayWayThreeDimensional();
+        force += battleArrayWayThreeDimensional.getForce();
+        intellect += battleArrayWayThreeDimensional.getIntellect();
+        troops += battleArrayWayThreeDimensional.getTroops();
+
+        //阵法五被动战力
+        Integer battleArrayWaySword = 1920+1920+1920+1920+1920;
+
         //命格被动战力
         Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
 
@@ -3839,7 +3872,7 @@ public class GeneralsUtil {
 
         //武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
         Integer total = force + intellect + troops;
-        Integer totalSword = (total) * 2 + destinySword + warDeviceSword;
+        Integer totalSword = (total) * 2 + destinySword + warDeviceSword + battleArrayWaySword;
         generals.setTotalSword2(totalSword);
         generals.setTotalForce2(force);
         generals.setTotalIntellect2(intellect);

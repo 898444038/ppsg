@@ -114,6 +114,8 @@ public class Generals {
     private ThreeDimensional destinyThreeDimensional;
     //幻化
     private ThreeDimensional skinThreeDimensional;
+    //阵法
+    private ThreeDimensional battleArrayWayThreeDimensional;
     //总战力
     private Integer totalSword;
     //武将总武力
@@ -162,6 +164,14 @@ public class Generals {
     private String remark;
 
     public Generals(){}
+
+    public ThreeDimensional getBattleArrayWayThreeDimensional() {
+        return battleArrayWayThreeDimensional;
+    }
+
+    public void setBattleArrayWayThreeDimensional(ThreeDimensional battleArrayWayThreeDimensional) {
+        this.battleArrayWayThreeDimensional = battleArrayWayThreeDimensional;
+    }
 
     public void setIsDestiny(Boolean isDestiny) {
         this.isDestiny = isDestiny;

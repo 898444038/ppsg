@@ -6,6 +6,7 @@ public enum GeneralsEnum {
     generalsType("武将类型"),
     generalsCode("武将编码"),
     type("类型"),//类型
+    combat("战力"),//战力
     level("星级"),//等级
     country("国家"),//国家
     arms("基础兵种"),//兵种
@@ -19,8 +20,9 @@ public enum GeneralsEnum {
     material("逆命突破材料"),
     countrys("国家队"),//国家队
     skin("幻化"),//幻化
-    gender("性别");//性别
-
+    gender("性别"),//性别
+    battleArrayWay("阵法"),//阵法
+    ;
     private String groupName;
 
     private GeneralsEnum(String groupName) {
@@ -1142,6 +1144,164 @@ public enum GeneralsEnum {
 
         public Integer getTroops() {
             return troops;
+        }
+    }
+
+    public enum BattleArrayWay implements GeneralsEnumInterface {
+        //hu_yi(1,"",3,1,6),
+        //huo_niu(2,""),
+        long_fei(3,"龙飞",2,1,9,390,195,1755),
+        //niao_xiang(4,""),
+        //she_pan(5,""),
+        //he_yi(6,""),
+        ;
+        private Integer code;
+        private String name;
+        private Integer growForce;
+        private Integer growIntellect;
+        private Integer growTroops;
+        private Integer maxForce;
+        private Integer maxIntellect;
+        private Integer maxTroops;
+        BattleArrayWay(){}
+
+        BattleArrayWay(Integer code, String name, Integer growForce, Integer growIntellect, Integer growTroops, Integer maxForce, Integer maxIntellect, Integer maxTroops) {
+            this.code = code;
+            this.name = name;
+            this.growForce = growForce;
+            this.growIntellect = growIntellect;
+            this.growTroops = growTroops;
+            this.maxForce = maxForce;
+            this.maxIntellect = maxIntellect;
+            this.maxTroops = maxTroops;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+        public Integer getCode() {
+            return this.code;
+        }
+
+        public Integer getGrowForce() {
+            return growForce;
+        }
+
+        public Integer getGrowIntellect() {
+            return growIntellect;
+        }
+
+        public Integer getGrowTroops() {
+            return growTroops;
+        }
+
+        public Integer getMaxForce() {
+            return maxForce;
+        }
+
+        public Integer getMaxIntellect() {
+            return maxIntellect;
+        }
+
+        public Integer getMaxTroops() {
+            return maxTroops;
+        }
+    }
+
+    public enum Combat implements GeneralsEnumInterface {
+        zs_1(1, "壮士1级",600),
+        zs_2(2, "壮士2级",900),
+        zs_3(3, "壮士3级",1350),
+        zs_4(4, "壮士4级",1700),
+        zs_5(5, "壮士5级",2400),
+        zs_6(6, "壮士6级",3600),
+        zs_7(7, "壮士7级",4900),
+        zs_8(8, "壮士8级",6200),
+        zs_9(9, "壮士9级",7500),
+        hj_1(11, "豪杰1级",8800),
+        hj_2(12, "豪杰2级",10200),
+        hj_3(13, "豪杰3级",11500),
+        hj_4(14, "豪杰4级",12800),
+        hj_5(15, "豪杰5级",14100),
+        hj_6(16, "豪杰6级",15400),
+        hj_7(17, "豪杰7级",16800),
+        hj_8(18, "豪杰8级",18100),
+        hj_9(19, "豪杰9级",19400),
+        zh_1(21, "诸侯1级",20700),
+        zh_2(22, "诸侯2级",22000),
+        zh_3(23, "诸侯3级",23400),
+        zh_4(24, "诸侯4级",24700),
+        zh_5(25, "诸侯5级",26000),
+        zh_6(26, "诸侯6级",27300),
+        zh_7(27, "诸侯7级",28600),
+        zh_8(28, "诸侯8级",30000),
+        zh_9(29, "诸侯9级",31900),
+        wh_1(31, "王侯1级",33800),
+        wh_2(32, "王侯2级",35700),
+        wh_3(33, "王侯3级",37600),
+        wh_4(34, "王侯4级",39500),
+        wh_5(35, "王侯5级",41400),
+        wh_6(36, "王侯6级",43300),
+        wh_7(37, "王侯7级",45200),
+        wh_8(38, "王侯8级",47100),
+        wh_9(39, "王侯9级",50000),
+        bz_1(41, "霸主1级",53780),
+        bz_2(42, "霸主2级",57940),
+        bz_3(43, "霸主3级",62480),
+        bz_4(44, "霸主4级",67400),
+        bz_5(45, "霸主5级",72700),
+        bz_6(46, "霸主6级",78380),
+        bz_7(47, "霸主7级",84440),
+        bz_8(48, "霸主8级",90880),
+        bz_9(49, "霸主9级",97700),
+        jw_1(51, "君王1级",105000),
+        jw_2(52, "君王2级",113200),
+        jw_3(53, "君王3级",122000),
+        jw_4(54, "君王4级",132000),
+        jw_5(55, "君王5级",142000),
+        jw_6(56, "君王6级",153000),
+        jw_7(57, "君王7级",165000),
+        jw_8(58, "君王8级",182000),
+        jw_9(59, "君王9级",202000),
+        dw_1(61, "帝王1级",223000),
+        dw_2(62, "帝王2级",244000),
+        dw_3(63, "帝王3级",265000),
+        dw_4(64, "帝王4级",286000),
+        dw_5(65, "帝王5级",308000),
+        dw_6(66, "帝王6级",330000),
+        dw_7(67, "帝王7级",352000),
+        dw_8(68, "帝王8级",375000),
+        dw_9(69, "帝王9级",398000),
+        dh_1(71, "帝皇1级",null),//419000-422000
+        dh_2(72, "帝皇2级",null),
+        dh_3(73, "帝皇3级",null),
+        dh_4(74, "帝皇4级",null),
+        dh_5(75, "帝皇5级",null),
+        dh_6(76, "帝皇6级",null),
+        dh_7(77, "帝皇7级",null),
+        dh_8(78, "帝皇8级",null),
+        dh_9(79, "帝皇9级",null),
+        ;
+        private Integer code;
+        private String name;
+        private Integer combat;
+
+        Combat(Integer code, String name, Integer combat) {
+            this.code = code;
+            this.name = name;
+            this.combat = combat;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Integer getCombat() {
+            return combat;
         }
     }
 

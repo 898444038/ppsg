@@ -1,5 +1,7 @@
 package com.ming.ppsg2.entity;
 
+import com.ming.ppsg2.enums.GeneralsEnum;
+
 import java.util.List;
 
 public class Result {
@@ -24,6 +26,7 @@ public class Result {
 
     private List<SymbolsTop> symbolsTopList;//兵符排名
     private String symbolsTop;
+    private String battleArrayWayName = GeneralsEnum.BattleArrayWay.long_fei.getName();//阵法名称
 
     private List<Generals> generalsList;
 //
@@ -41,6 +44,14 @@ public class Result {
 //    private Generals generals5;
 
     public Result() {
+    }
+
+    public String getBattleArrayWayName() {
+        return battleArrayWayName;
+    }
+
+    public void setBattleArrayWayName(String battleArrayWayName) {
+        this.battleArrayWayName = battleArrayWayName;
     }
 
     public String getSymbolsTop() {
