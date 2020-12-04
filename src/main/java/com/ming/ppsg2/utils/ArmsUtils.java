@@ -13,11 +13,11 @@ import java.util.List;
 public class ArmsUtils {
 
     public static void main(String[] args) {
-        GeneralsEnum.WarDevice warDevice = GeneralsEnum.WarDevice.gun;
+        GeneralsEnum.WarDevice warDevice = GeneralsEnum.WarDevice.arch;
         double rate = 1d;
         List<Device> list = new ArrayList<>();
-        list.add(new Device(160,106,132,warDevice,rate));
-        list.add(new Device(131,133,133,warDevice,rate));
+        list.add(new Device(133,129,133,warDevice,rate));
+        list.add(new Device(131,132,133,warDevice,rate));
         compareArmsList(warDevice,list);
     }
 
