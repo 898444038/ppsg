@@ -28,6 +28,13 @@ import java.util.stream.Collectors;
 
 public class GeneralsUtil {
 
+    public static void setTotal(Generals generals,ThreeDimensional three){
+        generals.setTotalSword(generals.getTotalSword()+three.getTotalZl());
+        generals.setTotalForce(generals.getTotalForce()+three.getForce());
+        generals.setTotalIntellect(generals.getTotalIntellect()+three.getIntellect());
+        generals.setTotalTroops(generals.getTotalTroops()+three.getTroops());
+    }
+
     // 获取基础满级三维
     public static ThreeDimensional getMaxLevel(Generals generals) {
         ThreeDimensional three = new ThreeDimensional();
@@ -39,15 +46,17 @@ public class GeneralsUtil {
             }
         }
         if(generalsType!=null){
-            Integer level = 120 - generals.getLevel();
-            Integer force = generals.getForce() + generalsType.getForce() * level;
-            Integer intellect = generals.getIntellect() + generalsType.getIntellect() * level;
-            Integer troops = generals.getTroops() + generalsType.getTroops() * level;
+            int level = 120 - generals.getLevel();
+            int force = generals.getForce() + generalsType.getForce() * level;
+            int intellect = generals.getIntellect() + generalsType.getIntellect() * level;
+            int troops = generals.getTroops() + generalsType.getTroops() * level;
             three.setForce(force);
             three.setIntellect(intellect);
             three.setTroops(troops);
+            three.setTotalZl((force+intellect+troops)*2);
         }
         generals.setMaxThreeDimensional(three);
+        setTotal(generals,three);
         return three;
     }
 
@@ -69,8 +78,10 @@ public class GeneralsUtil {
             three.setForce(force.intValue());
             three.setIntellect(intellect.intValue());
             three.setTroops(troops.intValue());
+            three.setTotalZl((force.intValue()+intellect.intValue()+troops.intValue())*2);
         }
         generals.setScienceThreeDimensional(three);
+        setTotal(generals,three);
         return three;
     }
 
@@ -512,14 +523,11 @@ public class GeneralsUtil {
         return top;
     }
 
-    // todo:获取随从三维
+    // 获取随从三维
     // 随从三维 = 基础(满级) + 科技 + 四圣石 + 兵种 + 将魂 + 命格突破 + 幻化
     // 加成 = (随从三维/2+100)*(1+(0~0.25))
     public static Map<Integer,List<Generals>> getEntourage(Generals generals,List<Generals> all,boolean isHuanHua) {
         List<Integer> entourages = generals.getEntourages();
-
-        //String code = generals.getCode();
-        //List<Generals> lianxie = new ArrayList<>();
 
         //排除自身的随从武将
         List<Generals> list = new ArrayList<>();
@@ -708,8 +716,9 @@ public class GeneralsUtil {
         three.setForce(generals.getForceEntourage().getTotalAddForce());
         three.setIntellect(generals.getIntellectEntourage().getTotalAddIntellect());
         three.setTroops(generals.getTroopsEntourage().getTotalAddTroops());
+        three.setTotalZl((three.getForce()+three.getIntellect()+three.getTroops())*2);
         generals.setEntourageThreeDimensional(three);
-
+        setTotal(generals,three);
 
         //武力排序（高->低）
         forceList.sort(new Comparator<Generals>() {
@@ -897,10 +906,15 @@ public class GeneralsUtil {
     // 获取四圣石三维
     public static ThreeDimensional getHolyStone(Generals generals) {
         ThreeDimensional three = new ThreeDimensional();
-        three.setForce(1077);
-        three.setIntellect(1077);
-        three.setTroops(2291);
+        int force = 1077;
+        int intellect = 1077;
+        int troops = 2291;
+        three.setForce(force);
+        three.setIntellect(intellect);
+        three.setTroops(troops);
+        three.setTotalZl((force+intellect+troops)*2);
         generals.setHolyStoneThreeDimensional(three);
+        setTotal(generals,three);
         return three;
     }
 
@@ -917,9 +931,9 @@ public class GeneralsUtil {
                 }
             }
         }
-        Integer force = 0;
-        Integer intellect = 0;
-        Integer troops = 0;
+        int force = 0;
+        int intellect = 0;
+        int troops = 0;
 
         ThreeDimensional deviceBase = null;
         ThreeDimensional deviceStrengthen = null;
@@ -958,7 +972,9 @@ public class GeneralsUtil {
         three.setForce(force);
         three.setIntellect(intellect);
         three.setTroops(troops);
+        three.setTotalZl((force+intellect+troops)*2);
         generals.setWarDeviceThreeDimensional(three);
+        setTotal(generals,three);
 
         Device device = new Device();
         device.setName(list.get(0).getName());
@@ -987,9 +1003,9 @@ public class GeneralsUtil {
                 }
             }
         }
-        Integer force = 0;
-        Integer intellect = 0;
-        Integer troops = 0;
+        int force = 0;
+        int intellect = 0;
+        int troops = 0;
 
         ThreeDimensional deviceBase = null;
         ThreeDimensional deviceStrengthen = null;
@@ -1028,7 +1044,9 @@ public class GeneralsUtil {
         three.setForce(force);
         three.setIntellect(intellect);
         three.setTroops(troops);
+        three.setTotalZl((force+intellect+troops)*2);
         generals.setWarDevice2ThreeDimensional(three);
+        setTotal(generals,three);
 
         Device device = new Device();
         device.setName(list.get(0).getName());
@@ -1074,9 +1092,9 @@ public class GeneralsUtil {
         Double total1 = force1 + intellect1 + troops1;
         Double total2 = force2 + intellect2 + troops2;
 
-        Integer force = 0;
-        Integer intellect = 0;
-        Integer troops = 0;
+        int force = 0;
+        int intellect = 0;
+        int troops = 0;
         if(total1 > total2){
             force = force1.intValue();
             intellect = intellect1.intValue();
@@ -1132,7 +1150,9 @@ public class GeneralsUtil {
         three.setForce(force);
         three.setIntellect(intellect);
         three.setTroops(troops);
+        three.setTotalZl((force+intellect+troops)*2);
         generals.setArmsBookThreeDimensional(three);
+        setTotal(generals,three);
         return three;
     }
 
@@ -1363,9 +1383,9 @@ public class GeneralsUtil {
             }
         }
 
-        Integer force = 0;
-        Integer intellect = 0;
-        Integer troops = 0;
+        int force = 0;
+        int intellect = 0;
+        int troops = 0;
 
         force = generalsType.getForce() * 4 * 30;
         intellect = generalsType.getIntellect() * 4 * 30;
@@ -1380,7 +1400,9 @@ public class GeneralsUtil {
         three.setForce(force);
         three.setIntellect(intellect);
         three.setTroops(troops);
+        three.setTotalZl((force+intellect+troops)*2);
         generals.setWillSoulThreeDimensional(three);
+        setTotal(generals,three);
         return three;
     }
 
@@ -2353,7 +2375,9 @@ public class GeneralsUtil {
         three.setForce(force.intValue());
         three.setIntellect(intellect.intValue());
         three.setTroops(troops.intValue());
+        three.setTotalZl((force.intValue()+intellect.intValue()+troops.intValue())*2);
         generals.setBattleArrayThreeDimensional(three);
+        setTotal(generals,three);
         return three;
     }
 
@@ -2361,12 +2385,13 @@ public class GeneralsUtil {
     public static ThreeDimensional getDestiny(Generals generals) {
         ThreeDimensional three = new ThreeDimensional();
         Destiny destiny = generals.getDestiny();
-        Integer force = destiny.getForce();
-        Integer intellect = destiny.getIntellect();
-        Integer troops = destiny.getTroops();
+        int force = destiny.getForce();
+        int intellect = destiny.getIntellect();
+        int troops = destiny.getTroops();
         three.setForce(force);
         three.setIntellect(intellect);
         three.setTroops(troops);
+        three.setTotalZl((force+intellect+troops)*2);
         for (GeneralsEnum.Destiny type : GeneralsEnum.Destiny.values()){
             //
             if(type.getCode().equals(destiny.getDisobey())){
@@ -2379,6 +2404,7 @@ public class GeneralsUtil {
             }
         }
         generals.setDestinyThreeDimensional(three);
+        setTotal(generals,three);
         return three;
     }
 
@@ -2389,21 +2415,26 @@ public class GeneralsUtil {
      */
     public static ThreeDimensional getSkin(Generals generals) {
         ThreeDimensional three = new ThreeDimensional();
-        three.setForce(0);
-        three.setIntellect(0);
-        three.setTroops(0);
+        int force = 0;
+        int intellect = 0;
+        int troops = 0;
         if(generals.getSkinCode()!=null){
             for(GeneralsEnum.Skin skin : GeneralsEnum.Skin.values()){
                 if(skin.getCode().equals(generals.getSkinCode())){
-                    three.setForce(skin.getForce());
-                    three.setIntellect(skin.getIntellect());
-                    three.setTroops(skin.getTroops());
+                    force = skin.getForce();
+                    intellect = skin.getIntellect();
+                    troops = skin.getTroops();
                     three.setRemark(skin.getName());
                     break;
                 }
             }
         }
+        three.setForce(force);
+        three.setIntellect(intellect);
+        three.setTroops(troops);
+        three.setTotalZl((force+intellect+troops)*2);
         generals.setSkinThreeDimensional(three);
+        setTotal(generals,three);
         return three;
     }
 
@@ -2415,16 +2446,38 @@ public class GeneralsUtil {
     public static ThreeDimensional getBattleArrayWay(Generals generals) {
         ThreeDimensional three = new ThreeDimensional();
         GeneralsEnum.BattleArrayWay battleArrayWay = GeneralsEnum.BattleArrayWay.long_fei;
-        three.setForce(battleArrayWay.getMaxForce());
-        three.setIntellect(battleArrayWay.getMaxIntellect());
-        three.setTroops(battleArrayWay.getMaxTroops());
+        int force = battleArrayWay.getMaxForce();
+        int intellect = battleArrayWay.getMaxIntellect();
+        int troops = battleArrayWay.getMaxTroops();
+        three.setForce(force);
+        three.setIntellect(intellect);
+        three.setTroops(troops);
+        three.setTotalZl((force+intellect+troops)*2);
         generals.setBattleArrayWayThreeDimensional(three);
+        setTotal(generals,three);
         return three;
+    }
+
+    /**
+     * 其他战力加成
+     * @param generals
+     * @return
+     */
+    public static void getOther(Generals generals) {
+        //命格
+        Destiny destiny = generals.getDestiny();
+        //阵法五被动战力
+        int battleArrayWaySword = 1920;
+        //命格被动战力
+        int destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
+        //战器三被动战力
+        int warDeviceSword = 458 + 458 + 1220;
+        generals.setTotalSword(generals.getTotalSword()+battleArrayWaySword+destinySword+warDeviceSword);
     }
 
     // 获取武将总战力
     // 武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
-    public static Integer getTotalSword(Generals generals) {
+    /*public static Integer getTotalSword(Generals generals) {
         Integer force = 0;
         Integer intellect = 0;
         Integer troops = 0;
@@ -2526,57 +2579,15 @@ public class GeneralsUtil {
         generals.setTotalIntellect(intellect);
         generals.setTotalTroops(troops);
         return totalSword;
-    }
+    }*/
 
 
     // 获取武将总战力(特殊战器)
     // 武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
     public static Integer getTotalSword2(Generals generals) {
-        Integer force = 0;
-        Integer intellect = 0;
-        Integer troops = 0;
-
-        //120满级三维
-        ThreeDimensional maxThreeDimensional = generals.getMaxThreeDimensional();
-        force += maxThreeDimensional.getForce();
-        intellect += maxThreeDimensional.getIntellect();
-        troops += maxThreeDimensional.getTroops();
-
-        //科技三维
-        ThreeDimensional scienceThreeDimensional = generals.getScienceThreeDimensional();
-        force += scienceThreeDimensional.getForce();
-        intellect += scienceThreeDimensional.getIntellect();
-        troops += scienceThreeDimensional.getTroops();
-
-        //随从三维
-        ThreeDimensional entourageThreeDimensional = generals.getEntourageThreeDimensional();
-        force += entourageThreeDimensional.getForce();
-        intellect += entourageThreeDimensional.getIntellect();
-        troops += entourageThreeDimensional.getTroops();
-
-        //圣石三维
-        ThreeDimensional holyStoneThreeDimensional = generals.getHolyStoneThreeDimensional();
-        force += holyStoneThreeDimensional.getForce();
-        intellect += holyStoneThreeDimensional.getIntellect();
-        troops += holyStoneThreeDimensional.getTroops();
-
-        //特殊战器三维
-        ThreeDimensional warDeviceThreeDimensional = generals.getWarDevice2ThreeDimensional();
-        force += warDeviceThreeDimensional.getForce();
-        intellect += warDeviceThreeDimensional.getIntellect();
-        troops += warDeviceThreeDimensional.getTroops();
-
-        //兵种兵书三维
-        ThreeDimensional armsBookThreeDimensional = generals.getArmsBookThreeDimensional();
-        force += armsBookThreeDimensional.getForce();
-        intellect += armsBookThreeDimensional.getIntellect();
-        troops += armsBookThreeDimensional.getTroops();
-
-        //将魂三维
-        ThreeDimensional willSoulThreeDimensional = generals.getWillSoulThreeDimensional();
-        force += willSoulThreeDimensional.getForce();
-        intellect += willSoulThreeDimensional.getIntellect();
-        troops += willSoulThreeDimensional.getTroops();
+        int force = generals.getTotalForce();
+        int intellect = generals.getTotalIntellect();
+        int troops = generals.getTotalTroops();
 
         //兵符三维
         ThreeDimensionals symbolsThreeDimensional = generals.getSymbolsThreeDimensionals();
@@ -2584,53 +2595,24 @@ public class GeneralsUtil {
         intellect += symbolsThreeDimensional.getIntellect().intValue();
         troops += symbolsThreeDimensional.getTroops().intValue();
 
-        //战阵三维
-        ThreeDimensional battleArrayThreeDimensional = generals.getBattleArrayThreeDimensional();
-        force += battleArrayThreeDimensional.getForce();
-        intellect += battleArrayThreeDimensional.getIntellect();
-        troops += battleArrayThreeDimensional.getTroops();
-
         //战意三维
         ThreeDimensional warpathThreeDimensional = generals.getWarpathThreeDimensional();
         force += warpathThreeDimensional.getForce();
         intellect += warpathThreeDimensional.getIntellect();
         troops += warpathThreeDimensional.getTroops();
-//        Warpath warpath = generals.getWarpath();
-//        force += warpath.getForce();
-//        intellect += warpath.getIntellect();
-//        troops += warpath.getTroops();
-//        System.out.println(generals.getName()+" 战意："+warpathThreeDimensional);
 
-        //命格三维
+        //命格
         Destiny destiny = generals.getDestiny();
-        force += destiny.getForce();
-        intellect += destiny.getIntellect();
-        troops += destiny.getTroops();
-
-        //幻化三维
-        ThreeDimensional skinThreeDimensional = generals.getSkinThreeDimensional();
-        force += skinThreeDimensional.getForce();
-        intellect += skinThreeDimensional.getIntellect();
-        troops += skinThreeDimensional.getTroops();
-
-        //阵法三维
-        ThreeDimensional battleArrayWayThreeDimensional = generals.getBattleArrayWayThreeDimensional();
-        force += battleArrayWayThreeDimensional.getForce();
-        intellect += battleArrayWayThreeDimensional.getIntellect();
-        troops += battleArrayWayThreeDimensional.getTroops();
-
         //阵法五被动战力
-        Integer battleArrayWaySword = 1920;
-
+        int battleArrayWaySword = 1920;
         //命格被动战力
-        Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
-
+        int destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
         //战器三被动战力
-        Integer warDeviceSword = 458 + 458 + 1220;
+        int warDeviceSword = 458 + 458 + 1220;
 
         //武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
-        Integer total = force + intellect + troops;
-        Integer totalSword = (total) * 2 + destinySword + warDeviceSword + battleArrayWaySword;
+        int total = force + intellect + troops;
+        int totalSword = (total) * 2 + battleArrayWaySword + destinySword + warDeviceSword;
         generals.setTotalSword2(totalSword);
         generals.setTotalForce2(force);
         generals.setTotalIntellect2(intellect);
@@ -2639,14 +2621,14 @@ public class GeneralsUtil {
     }
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
-    public static Integer getAllTotalSword(List<Generals> generalsList) {
+    /*public static Integer getAllTotalSword(List<Generals> generalsList) {
         // 76710  75072   75060  72510  71394
         Integer total = 10152;
         for (Generals generals : generalsList){
             total += getTotalSword(generals);
         }
         return total;
-    }
+    }*/
 
     // 特殊战器
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
@@ -2660,7 +2642,7 @@ public class GeneralsUtil {
     }
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
-    public static Integer getAllTotalSword3(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {
+    /*public static Integer getAllTotalSword3(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {
         Integer total = 10152;
         //判断上阵武将有没有danList
         for (Generals generals : generalsList){
@@ -2675,7 +2657,7 @@ public class GeneralsUtil {
             total += getTotalSword3(generals,excludeGeneralsList);
         }
         return total;
-    }
+    }*/
 
     //总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
     public static Integer getAllTotalSword4(List<Generals> generalsList,List<AppointExcludeGenerals> excludeGeneralsList) {
@@ -3535,7 +3517,7 @@ public class GeneralsUtil {
     }
 
 
-    public static Integer getTotalSword3(Generals generals,List<AppointExcludeGenerals> excludeGeneralsList) {
+    /*public static Integer getTotalSword3(Generals generals,List<AppointExcludeGenerals> excludeGeneralsList) {
         Integer force = 0;
         Integer intellect = 0;
         Integer troops = 0;
@@ -3705,27 +3687,15 @@ public class GeneralsUtil {
         generals.setTotalIntellect(intellect);
         generals.setTotalTroops(troops);
         return totalSword;
-    }
+    }*/
 
     public static Integer getTotalSword4(Generals generals,List<AppointExcludeGenerals> excludeGeneralsList) {
-        Integer force = 0;
-        Integer intellect = 0;
-        Integer troops = 0;
-
-        //120满级三维
-        ThreeDimensional maxThreeDimensional = generals.getMaxThreeDimensional();
-        force += maxThreeDimensional.getForce();
-        intellect += maxThreeDimensional.getIntellect();
-        troops += maxThreeDimensional.getTroops();
-
-        //科技三维
-        ThreeDimensional scienceThreeDimensional = generals.getScienceThreeDimensional();
-        force += scienceThreeDimensional.getForce();
-        intellect += scienceThreeDimensional.getIntellect();
-        troops += scienceThreeDimensional.getTroops();
+        int force = 0;
+        int intellect = 0;
+        int troops = 0;
 
         //随从三维
-        for(AppointExcludeGenerals excludeGenerals : excludeGeneralsList){
+        /*for(AppointExcludeGenerals excludeGenerals : excludeGeneralsList){
             if(generals.getForceEntourage().getName().equalsIgnoreCase(excludeGenerals.getName())){
                 if(excludeGenerals.getCurrentSize() >= excludeGenerals.getMaxSize()) {
                     List<Generals> forceEntourageList = generals.getForceEntourageList();
@@ -3794,31 +3764,7 @@ public class GeneralsUtil {
         ThreeDimensional entourageThreeDimensional = generals.getEntourageThreeDimensional();
         force += entourageThreeDimensional.getForce();
         intellect += entourageThreeDimensional.getIntellect();
-        troops += entourageThreeDimensional.getTroops();
-
-        //圣石三维
-        ThreeDimensional holyStoneThreeDimensional = generals.getHolyStoneThreeDimensional();
-        force += holyStoneThreeDimensional.getForce();
-        intellect += holyStoneThreeDimensional.getIntellect();
-        troops += holyStoneThreeDimensional.getTroops();
-
-        //特殊战器三维
-        ThreeDimensional warDeviceThreeDimensional = generals.getWarDevice2ThreeDimensional();
-        force += warDeviceThreeDimensional.getForce();
-        intellect += warDeviceThreeDimensional.getIntellect();
-        troops += warDeviceThreeDimensional.getTroops();
-
-        //兵种兵书三维
-        ThreeDimensional armsBookThreeDimensional = generals.getArmsBookThreeDimensional();
-        force += armsBookThreeDimensional.getForce();
-        intellect += armsBookThreeDimensional.getIntellect();
-        troops += armsBookThreeDimensional.getTroops();
-
-        //将魂三维
-        ThreeDimensional willSoulThreeDimensional = generals.getWillSoulThreeDimensional();
-        force += willSoulThreeDimensional.getForce();
-        intellect += willSoulThreeDimensional.getIntellect();
-        troops += willSoulThreeDimensional.getTroops();
+        troops += entourageThreeDimensional.getTroops();*/
 
         //兵符三维
         ThreeDimensionals symbolsThreeDimensional = generals.getSymbolsThreeDimensionals();
@@ -3826,57 +3772,19 @@ public class GeneralsUtil {
         intellect += symbolsThreeDimensional.getIntellect().intValue();
         troops += symbolsThreeDimensional.getTroops().intValue();
 
-        //战阵三维
-        ThreeDimensional battleArrayThreeDimensional = generals.getBattleArrayThreeDimensional();
-        force += battleArrayThreeDimensional.getForce();
-        intellect += battleArrayThreeDimensional.getIntellect();
-        troops += battleArrayThreeDimensional.getTroops();
-
         //战意三维
         ThreeDimensional warpathThreeDimensional = generals.getWarpathThreeDimensional();
         force += warpathThreeDimensional.getForce();
         intellect += warpathThreeDimensional.getIntellect();
         troops += warpathThreeDimensional.getTroops();
-//        Warpath warpath = generals.getWarpath();
-//        force += warpath.getForce();
-//        intellect += warpath.getIntellect();
-//        troops += warpath.getTroops();
-//        System.out.println(generals.getName()+" 战意："+warpathThreeDimensional);
-
-        //命格三维
-        Destiny destiny = generals.getDestiny();
-        force += destiny.getForce();
-        intellect += destiny.getIntellect();
-        troops += destiny.getTroops();
-
-        //幻化三维
-        ThreeDimensional skinThreeDimensional = generals.getSkinThreeDimensional();
-        force += skinThreeDimensional.getForce();
-        intellect += skinThreeDimensional.getIntellect();
-        troops += skinThreeDimensional.getTroops();
-
-        //阵法三维
-        ThreeDimensional battleArrayWayThreeDimensional = generals.getBattleArrayWayThreeDimensional();
-        force += battleArrayWayThreeDimensional.getForce();
-        intellect += battleArrayWayThreeDimensional.getIntellect();
-        troops += battleArrayWayThreeDimensional.getTroops();
-
-        //阵法五被动战力
-        Integer battleArrayWaySword = 1920+1920+1920+1920+1920;
-
-        //命格被动战力
-        Integer destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
-
-        //战器三被动战力
-        Integer warDeviceSword = 458 + 458 + 1220;
 
         //武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
-        Integer total = force + intellect + troops;
-        Integer totalSword = (total) * 2 + destinySword + warDeviceSword + battleArrayWaySword;
+        int total = force + intellect + troops;
+        int totalSword = (total) * 2 + generals.getTotalSword();
         generals.setTotalSword2(totalSword);
-        generals.setTotalForce2(force);
-        generals.setTotalIntellect2(intellect);
-        generals.setTotalTroops2(troops);
+        generals.setTotalForce2(force+generals.getTotalForce());
+        generals.setTotalIntellect2(intellect+generals.getTotalIntellect());
+        generals.setTotalTroops2(troops+generals.getTotalTroops());
         return totalSword;
     }
 }

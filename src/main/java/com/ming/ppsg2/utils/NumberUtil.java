@@ -29,18 +29,18 @@ public class NumberUtil {
     //copy对象
     public static List<Compose> getNoRepeatList(Map<String,String> generalsMapSort,List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
         if(appointGeneralsList.size()==5){
-            List<Compose> composeList = new ArrayList<>();
-            List<Generals> generalsList = new ArrayList<>();
-            for (Generals generals : data){
+            //List<Compose> composeList = new ArrayList<>();
+            //List<Generals> generalsList = new ArrayList<>();
+            /*for (Generals generals : data){
 
-            }
+            }*/
 
-            StringBuffer ids = new StringBuffer();
+            /*StringBuffer ids = new StringBuffer();
             ids.append(appointGeneralsList.get(0).getId());
             ids.append(appointGeneralsList.get(1).getId());
             ids.append(appointGeneralsList.get(2).getId());
             ids.append(appointGeneralsList.get(3).getId());
-            ids.append(appointGeneralsList.get(4).getId());
+            ids.append(appointGeneralsList.get(4).getId());*/
 
             /*boolean isGril = gList.get(0).getGender().equals(grilCode)
                     && gList.get(1).getGender().equals(grilCode)
@@ -74,8 +74,12 @@ public class NumberUtil {
 
         List<List<Compose>> splitList2 = splitCompose(composeList,threadNum);
         CyclicBarrier cb = new CyclicBarrier(threadNum + 1);//注意：10个子线程 + 1个主线程
+        MyRunable runable = null;
+        Thread thread = null;
         for (int i = 0; i < threadNum; i++) {
-            new Thread(new MyRunable(cb, 0,splitList2.get(i))).start();
+            runable = new MyRunable(cb, 0,splitList2.get(i));
+            thread = new Thread(runable);
+            thread.start();
         }
         try {
             cb.await();
@@ -84,6 +88,11 @@ public class NumberUtil {
             e.printStackTrace();
         }
 
+
+        glongList = null;
+        splitList = null;
+        composeList = null;
+        splitList2 = null;
         return noRepeatComposeList;
     }
 
@@ -194,7 +203,9 @@ public class NumberUtil {
                     count++;
                     System.out.println(_i+":"+count);
                     //noRepeatList.add(copyList);
+                    generalsList.clear();
                     noRepeatComposeList.add(new Compose(compose.getId(),compose.isGril(),copyList));
+                    compose = null;
                 }
                 System.out.println("thread " + _i + " done，正在等候其它线程完成...");
                 _cb.await();

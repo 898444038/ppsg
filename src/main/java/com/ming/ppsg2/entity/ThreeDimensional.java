@@ -20,7 +20,7 @@ public class ThreeDimensional {
     }
 
     public Integer getTotalZl() {
-        return (this.force+this.intellect+this.troops)*2;
+        return totalZl;
     }
 
     public void setTotalZl(Integer totalZl) {

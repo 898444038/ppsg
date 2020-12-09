@@ -249,6 +249,11 @@ public class DestinyData {
         }
         generals.setDestiny(destiny);
         generals.setSkinCode(skinCode);
+
+        generals.setTotalSword(0);
+        generals.setTotalForce(0);
+        generals.setTotalIntellect(0);
+        generals.setTotalTroops(0);
         return generals;
     }
 

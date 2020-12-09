@@ -1,9 +1,22 @@
 package com.ming.ppsg2.main;
 
 
-import com.ming.ppsg2.entity.*;
+import com.ming.ppsg2.entity.AppointExcludeGenerals;
+import com.ming.ppsg2.entity.AppointGenerals;
+import com.ming.ppsg2.entity.AppointSymbols;
+import com.ming.ppsg2.entity.ArmsBook;
+import com.ming.ppsg2.entity.Compose;
+import com.ming.ppsg2.entity.Destiny;
+import com.ming.ppsg2.entity.Generals;
+import com.ming.ppsg2.entity.Result;
+import com.ming.ppsg2.entity.Symbols;
+import com.ming.ppsg2.entity.SymbolsTop;
 import com.ming.ppsg2.enums.GeneralsEnum;
-import com.ming.ppsg2.utils.*;
+import com.ming.ppsg2.utils.DestinyData;
+import com.ming.ppsg2.utils.ExcelReaderUtil;
+import com.ming.ppsg2.utils.GeneralsUtil;
+import com.ming.ppsg2.utils.NumberUtil;
+import com.ming.ppsg2.utils.ReadWriteExcel;
 import com.ming.ppsg2.utils.jxls.JxlsUtil;
 import org.springframework.beans.BeanUtils;
 
@@ -13,37 +26,37 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
-public class Main {
+public class Main2 {
 
     public static void main(String[] args) throws Exception {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增逆命 【淑懿甄姬】【回禄魏延】\n" +
+                "更新内容：1.新增逆命 【淑懿甄姬】\n" +
                 "2.新增突破 【安乐公刘禅】【灵思何太后】 \n"+
                 "3.新增幻化 【掣牛倒行】【闭月羞花】【狂影奇袭】 \n";
         top+= "";
         String advert = "";//广告
-        String fileRemark = "";
+        String fileRemark = "(淑懿甄姬)";
         //计算：992/658/1895
         //实际：988/654/1947
 
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
-//        appointGeneralsList.add(new AppointGenerals("御甲张辽"));
-//        appointGeneralsList.add(new AppointGenerals("虎涧典韦"));
-//        appointGeneralsList.add(new AppointGenerals("霸业曹操"));
-//        appointGeneralsList.add(new AppointGenerals("蜀魂姜维"));
-//        appointGeneralsList.add(new AppointGenerals("奋威袁绍"));
-//        appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
 //        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
-//        appointGeneralsList.add(new AppointGenerals("诡骑张飞"));
-//        appointGeneralsList.add(new AppointGenerals("神武刘备"));
-//        appointGeneralsList.add(new AppointGenerals("武圣关羽_限"));
-//        appointGeneralsList.add(new AppointGenerals("刀魂关平"));
+//        appointGeneralsList.add(new AppointGenerals("御甲张辽"));
+//        appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
 //        appointGeneralsList.add(new AppointGenerals("飞将吕布"));
-        //appointGeneralsList.add(new AppointGenerals("陨星庞统"));
-        //appointGeneralsList.add(new AppointGenerals("龙驹马云禄"));
+//        appointGeneralsList.add(new AppointGenerals("灵雎吕姬"));
 
         List<AppointExcludeGenerals> excludeGeneralsList = new ArrayList<>();
 //        excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
@@ -97,8 +110,8 @@ public class Main {
 
         Map<String,String> generalsMapSort = new LinkedHashMap<>();
         Properties prop = new Properties();
-        try {
-            InputStream inStream = Main.class.getResourceAsStream("/data/data.properties");
+        /*try {
+            InputStream inStream = Main2.class.getResourceAsStream("/data/data.properties");
             prop.load(inStream);//加载属性列表
             Enumeration enu = prop.keys();
             while (enu.hasMoreElements()) {
@@ -109,7 +122,7 @@ public class Main {
             inStream.close();
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
         System.out.println("获取排除数据："+generalsMapSort.size()+"条");
 
         for (Map<String,String> map : lists) {
@@ -249,7 +262,7 @@ public class Main {
             GeneralsUtil.getMaxLevel(generals);//基础满级三维
             GeneralsUtil.getScience(generals);//科技三维
             GeneralsUtil.getHolyStone(generals);//四圣石三维
-            GeneralsUtil.getWarDevice(generals);//战器三维
+            //GeneralsUtil.getWarDevice(generals);//战器三维
             GeneralsUtil.getWarDevice2(generals);//特殊战器三维
             GeneralsUtil.getArmsBook(generals);//兵种兵书三维
             GeneralsUtil.getWillSoul(generals);//将魂三维
@@ -257,6 +270,7 @@ public class Main {
             GeneralsUtil.getDestiny(generals);//命格三维
             GeneralsUtil.getSkin(generals);//幻化三维
             GeneralsUtil.getBattleArrayWay(generals);//阵法三维
+            //GeneralsUtil.getOther(generals);//设置其他战力加成
             //generals.setWarpath(new Warpath());
 
             if(name.endsWith("_限")){
@@ -378,11 +392,29 @@ public class Main {
 
         long t1 = System.currentTimeMillis();
         List<Generals> nmList = new ArrayList<>();
+
+
+        int totalSize = 28;
+        List<Generals> nList = new ArrayList<>();//逆命
+        List<Generals> tList = new ArrayList<>();//突破
         for(Generals generals : nimingList){
-            //if(generals.getDestiny().getDisobey()==1 || generals.getDestiny().getDisobey()==3){
-            nmList.add(generals);
-            //}
+            if(generals.getDestiny().getDisobey()==1 || generals.getDestiny().getDisobey()==3){
+                nList.add(generals);
+            }else if(generals.getDestiny().getDisobey()==2){//突破
+                tList.add(generals);
+            }
         }
+        tList.sort(new Comparator<Generals>() {
+            @Override
+            public int compare(Generals o1, Generals o2) {
+                return o2.getTotalSword() - o1.getTotalSword(); //降序
+            }
+        });
+        nmList.addAll(nList);
+        if(nList.size() < totalSize){
+            nmList.addAll(tList.subList(0,totalSize-nList.size()));
+        }
+
         List<Compose> all = NumberUtil.getNoRepeatList(generalsMapSort,nmList,5,appointGeneralsList);
         System.out.println("上阵武将组合个数："+all.size());
         List<Result> resultList = new ArrayList<>();
@@ -413,10 +445,8 @@ public class Main {
             //int allTotalSword = 0;
             int allTotalSword2 = 0;
             if(excludeGeneralsList.size() > 0){
-                //allTotalSword = GeneralsUtil.getAllTotalSword3(generalsList,excludeGeneralsList);
-                allTotalSword2 = GeneralsUtil.getAllTotalSword4(generalsList,excludeGeneralsList);
+                //allTotalSword2 = GeneralsUtil.getAllTotalSword4(generalsList,excludeGeneralsList);
             }else{
-                //allTotalSword = GeneralsUtil.getAllTotalSword(generalsList);
                 allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
             }
             b1 = new BigDecimal(Double.toString(count));
@@ -456,19 +486,6 @@ public class Main {
             }
             composes = null;
             if((count % 10000) == 0){
-                /*if(excludeGeneralsList.isEmpty()){
-                    try{
-                        //保存属性到data.properties文件
-                        FileOutputStream oFile = new FileOutputStream("src/main/resources/data/data.properties", false);//true表示追加打开
-                        for(Map.Entry<String,String> maps : generalsMapSort.entrySet()){
-                            prop.setProperty(maps.getKey(), maps.getValue());
-                        }
-                        prop.store(oFile, "Number:"+prop.size());
-                        oFile.close();
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-                }*/
                 System.gc();
             }
         }
@@ -565,7 +582,7 @@ public class Main {
         model.put("destinyMap",destinyMap);
 
         if(excludeGeneralsList.isEmpty()){
-            try{
+            /*try{
                 //保存属性到data.properties文件
                 FileOutputStream oFile = new FileOutputStream("src/main/resources/data/data.properties", false);//true表示追加打开
                 for(Map.Entry<String,String> maps : generalsMapSort.entrySet()){
@@ -575,7 +592,7 @@ public class Main {
                 oFile.close();
             }catch(Exception e){
                 e.printStackTrace();
-            }
+            }*/
         }
         System.gc();
 
@@ -609,7 +626,7 @@ public class Main {
         Map<String,String> generalsMapSort = new LinkedHashMap<>();
         Properties prop = new Properties();
         try {
-            InputStream inStream = Main.class.getResourceAsStream("/data/data.properties");
+            InputStream inStream = Main2.class.getResourceAsStream("/data/data.properties");
             prop.load(inStream);//加载属性列表
             Enumeration enu = prop.keys();
             while (enu.hasMoreElements()) {
