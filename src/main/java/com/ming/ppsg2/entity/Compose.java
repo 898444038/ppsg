@@ -9,17 +9,28 @@ public class Compose {
 
     private String id;
 
+    private Integer sort;
+
     private boolean isGril;
 
     private List<Generals> list;
 
-    public Compose(String id, boolean isGril, List<Generals> list) {
+    public Compose(Integer sort,String id, boolean isGril, List<Generals> list) {
+        this.sort = sort;
         this.id = id;
         this.isGril = isGril;
         this.list = list;
     }
 
     public Compose() {
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 
     public String getId() {

@@ -111,6 +111,7 @@ public class NumberUtil {
     static class MyRunable0 implements Runnable {
         CyclicBarrier _cb;
         int _i = 0;
+        private int sort = 0;
         List<List<Generals>> glongList = null;
         List<Compose> composeList = null;
         Map<String,String> generalsMapSort = null;
@@ -150,7 +151,8 @@ public class NumberUtil {
                     if(generalsMapSort.get(ids.toString())!=null && !isGril){
                         //iterator.remove();
                     }else{
-                        composeList.add(new Compose(ids.toString(),isGril,gList));
+                        composeList.add(new Compose(sort,ids.toString(),isGril,gList));
+                        sort++;
                     }
                     ids = null;
                     count++;
@@ -204,7 +206,7 @@ public class NumberUtil {
                     System.out.println(_i+":"+count);
                     //noRepeatList.add(copyList);
                     generalsList.clear();
-                    noRepeatComposeList.add(new Compose(compose.getId(),compose.isGril(),copyList));
+                    noRepeatComposeList.add(new Compose(count,compose.getId(),compose.isGril(),copyList));
                     compose = null;
                 }
                 System.out.println("thread " + _i + " done，正在等候其它线程完成...");
@@ -357,19 +359,20 @@ public class NumberUtil {
 
 
     public static List<List<Integer>> getResult(List<Integer> data, int size, List<AppointSymbols> appointSymbolsList) {
-        intList = new ArrayList<>();
-        combinations2(new ArrayList<>(),data, size,appointSymbolsList);
+        List<List<Integer>> intList = new ArrayList<>();
+        combinations2(intList,new ArrayList<>(),data, size,appointSymbolsList);
         return intList;
     }
 
 
     /**
      * @param selector	选完的集合 初始化为空
-     * @param list		待选集合
+     * @param intList		集合
+     * @param selector		待选集合
      * @param n			选出的数量
      */
-    private static List<List<Integer>> intList = new ArrayList<>();
-    public static void combinations2(List<Integer> selector,List<Integer> data,int n,List<AppointSymbols> appointSymbolsList) {
+    //private static List<List<Integer>> intList = new ArrayList<>();
+    public static void combinations2(List<List<Integer>> intList,List<Integer> selector,List<Integer> data,int n,List<AppointSymbols> appointSymbolsList) {
         if(n == 0) {
             int size = appointSymbolsList.size();
             int total = 0;
@@ -394,10 +397,10 @@ public class NumberUtil {
         }
         //选择第一个元素,将元素放入集合
         selector.add(data.get(0));
-        combinations2(selector,data.subList(1, data.size()),n - 1,appointSymbolsList); //从第二个元素开始选择，再选择两个
+        combinations2(intList,selector,data.subList(1, data.size()),n - 1,appointSymbolsList); //从第二个元素开始选择，再选择两个
         //不选择第一个元素
         selector.remove(selector.size() -1 );
-        combinations2(selector,data.subList(1, data.size()), n,appointSymbolsList); //从第二个元素开始选择，选择两个
+        combinations2(intList,selector,data.subList(1, data.size()), n,appointSymbolsList); //从第二个元素开始选择，选择两个
     }
 
 
