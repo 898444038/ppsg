@@ -56,8 +56,6 @@ public class CountDownUtils {
                     executorService.execute(()->{
                         try {
                             consumer.accept(item);
-                        }catch (Exception e){
-                            e.printStackTrace();
                         }finally {
                             countDownLatch.countDown();
                         }

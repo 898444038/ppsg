@@ -746,6 +746,15 @@ public enum GeneralsEnum {
         public Double getRate() {
             return rate;
         }
+
+        public static SymbolsMainAttr get(int code){
+            for(GeneralsEnum.SymbolsMainAttr mainAttr : GeneralsEnum.SymbolsMainAttr.values()) {
+                if(mainAttr.getCode() == code){
+                    return mainAttr;
+                }
+            }
+            return null;
+        }
     }
 
     // 兵符副属性
@@ -800,6 +809,15 @@ public enum GeneralsEnum {
 
         public Double getRate() {
             return rate;
+        }
+
+        public static SymbolsSecondAttr get(int code){
+            for(GeneralsEnum.SymbolsSecondAttr secondAttr : GeneralsEnum.SymbolsSecondAttr.values()) {
+                if(secondAttr.getCode() == code){
+                    return secondAttr;
+                }
+            }
+            return null;
         }
     }
 

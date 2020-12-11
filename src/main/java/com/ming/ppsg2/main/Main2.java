@@ -81,10 +81,9 @@ public class Main2 {
         List<Generals> optimumEntourage = MainService.handleOptimumEntourage(generalsAll,nimingAllList,isHuanHua);
         long t1 = System.currentTimeMillis();
         //最终排列组合list
-        List<Generals> nmList = MainService.handleFinalNmList(8,nimingAllList);
+        List<Generals> nmList = MainService.handleFinalNmList(28,nimingAllList);
 
         //计算战力
-        //List<Result> resultList = new ArrayList<>();
         List<Result> resultList2 = new ArrayList<>();
         List<Result> grilResultList = new ArrayList<>();
         MainService.handleSword(resultList2,grilResultList,nmList,appointGeneralsList,appointSymbolsList,excludeGeneralsList);

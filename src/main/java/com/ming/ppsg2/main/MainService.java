@@ -451,13 +451,14 @@ public class MainService {
 //                return o2.getTotal2() - o1.getTotal2(); //降序
 //            }
 //        });
+        for(Result result : resultList2){
+            if(result == null){
+                System.out.println();
+            }
+        }
         resultList2.sort(new Comparator<Result>() {
             @Override
             public int compare(Result o1, Result o2) {
-                System.out.println(o1.getTotal2()+","+o2.getTotal2());
-                if(o1==null || o2==null){
-                    System.out.println();
-                }
                 return o2.getTotal2() - o1.getTotal2(); //降序
             }
         });
@@ -533,50 +534,47 @@ public class MainService {
 
     public static void handleSword(List<Result> resultList2, List<Result> grilResultList, List<Generals> nmList, List<AppointGenerals> appointGeneralsList, List<AppointSymbols> appointSymbolsList, List<AppointExcludeGenerals> excludeGeneralsList) throws InterruptedException {
         long t = System.currentTimeMillis();
-        Map<String,String> generalsMapSort = new LinkedHashMap<>();
-        List<Compose> all = NumberUtil.getNoRepeatList(generalsMapSort,nmList,5,appointGeneralsList);
+        List<Compose> all = NumberUtil.getNoRepeatList2(nmList,5,appointGeneralsList);
         final int size = all.size();
-        System.out.println("上阵武将组合个数："+size);
+        System.out.println("上阵武将组合个数："+size+",耗时："+(System.currentTimeMillis()-t));
         TimeUnit.MILLISECONDS.sleep(3000);
         CountDownUtils.dispose(all,composes->{
-            try {
-                long t1 = System.currentTimeMillis();
+            long t1 = System.currentTimeMillis();
 
-                List<Generals> generalsList = composes.getList();
-                //极限兵符
-                Map<String,Object> symbolsMap = GeneralsUtil.getSymbols(generalsList,appointSymbolsList);
-                List<Symbols> symbolsList = (List<Symbols>)symbolsMap.get("symbolsList");
-                List<SymbolsTop> symbolsTop = (List<SymbolsTop>)symbolsMap.get("symbolsTop");
-                GeneralsUtil.countSymbols(generalsList,symbolsList);
-                //战意三维
-                GeneralsUtil.getWarpath(generalsList);
-                // 总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
-                // 武将战力 =（总武力+总智力+总兵力）*2+ 命格被动战力 + 战器被动战力
-                int allTotalSword2 = 0;
-                if(excludeGeneralsList.size() > 0){
-                    //allTotalSword2 = GeneralsUtil.getAllTotalSword4(generalsList,excludeGeneralsList);
-                }else{
-                    allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
-                }
+            List<Generals> generalsList = composes.getList();
+            //极限兵符
+            Map<String,Object> symbolsMap = GeneralsUtil.getSymbols(generalsList,appointSymbolsList);
+            List<Symbols> symbolsList = (List<Symbols>)symbolsMap.get("symbolsList");
+            List<SymbolsTop> symbolsTop = (List<SymbolsTop>)symbolsMap.get("symbolsTop");
+            //long t2 = System.currentTimeMillis();
 
-                //女队
-                if(composes.isGril()){
-                    Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,0,allTotalSword2);
-                    if(allTotalSword2 > 390000){
-                        grilResultList.add(result);
-                    }else{
-                        result = null;
-                    }
-                }
-
-                Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,0,allTotalSword2);
-                resultList2.add(result);
-                long t2 = System.currentTimeMillis();
-                System.out.println(composes.getSort()+"/"+size+"，耗时:"+(t2-t1));
-                composes = null;
-            }catch (Exception e){
-                e.printStackTrace();
+            GeneralsUtil.countSymbols(generalsList,symbolsList);
+            //long t3 = System.currentTimeMillis();
+            //战意三维
+            GeneralsUtil.getWarpath(generalsList);
+            //long t4 = System.currentTimeMillis();
+            // 总战力 = 武将1战力 + 武将2战力 + 武将3战力 + 武将4战力 + 武将5战力 + 工坊战力（10152）
+            // 武将战力 =（总武力+总智力+总兵力）*2+ 命格被动战力 + 战器被动战力
+            int allTotalSword2 = 0;
+            if(excludeGeneralsList.size() > 0){
+                //allTotalSword2 = GeneralsUtil.getAllTotalSword4(generalsList,excludeGeneralsList);
+            }else{
+                allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
             }
+
+            Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,0,allTotalSword2);
+            if(result == null){
+
+            }
+
+            resultList2.add(result);
+            //女队
+            if(composes.isGril() && allTotalSword2 > 390000){
+                grilResultList.add(result);
+            }
+
+            long t5 = System.currentTimeMillis();
+            System.out.println(composes.getSort()+"/"+size+"，耗时:"+(t5-t1));
         });
         long t2 = System.currentTimeMillis();
         System. out.println("战力计算完毕!耗时："+(t2-t)+"ms");

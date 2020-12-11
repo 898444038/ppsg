@@ -1406,8 +1406,109 @@ public class GeneralsUtil {
         return three;
     }
 
+    //计算兵符主属性
+    private static GeneralsEnum.SymbolsMainAttr countSymbolsMainMax(ThreeDimensional totalThree,int[] n){
+        int totalForce = totalThree.getForce();
+        int totalIntellect = totalThree.getIntellect();
+        int totalTroops = totalThree.getTroops();
+        Map<GeneralsEnum.SymbolsMainAttr,Integer> map = new HashMap<>();
+        for (int i=0;i<n.length;i++){
+            GeneralsEnum.SymbolsMainAttr mainAttr = GeneralsEnum.SymbolsMainAttr.get(n[i]);
+            int code = mainAttr.getCode();
+            Double d = 0d;
+            if(code == 4 || code ==5 || code==6) {//武力加成
+                d = totalForce * mainAttr.getRate();
+            }else if(code == 7 || code ==8 || code==9) {//智力加成
+                d = totalIntellect * mainAttr.getRate();
+            }else if(code == 10 || code ==11 || code==12) {//兵力加成
+                d = totalTroops * mainAttr.getRate();
+            }else if(code == 13 || code ==14 || code==15) {//全属性加成
+                Double d1 = totalForce * mainAttr.getRate();
+                Double d2 = totalIntellect * mainAttr.getRate();
+                Double d3 = totalTroops * mainAttr.getRate();
+                d = d1+d2+d3;
+            }
+            map.put(mainAttr,d.intValue());
+        }
+        return MapUtils.sortByValue(map).entrySet().stream().findFirst().get().getKey();
+    }
+
+    //计算兵符主属性
+    private static Map<GeneralsEnum.SymbolsSecondAttr,Integer> countSymbolsSecondTop(ThreeDimensional totalThree, int[] seconds, List<Generals> generalsAll, List<Generals> generalsWei, List<Generals> generalsShu, List<Generals> generalsWu, List<Generals> generalsQun){
+        int totalForce = totalThree.getForce();
+        int totalIntellect = totalThree.getIntellect();
+        int totalTroops = totalThree.getTroops();
+        Map<GeneralsEnum.SymbolsSecondAttr,Integer> map = new HashMap<>();
+        for(int i=0;i<seconds.length;i++){
+            GeneralsEnum.SymbolsSecondAttr secondAttr = GeneralsEnum.SymbolsSecondAttr.get(seconds[i]);
+            int code = secondAttr.getCode();
+            Double d = 0d;
+            if(code == 1){//武力增加
+                d = secondAttr.getValue() * 6.0;
+            }else if(code == 2){//武力加成
+                d = totalForce * secondAttr.getRate();
+            }else if(code == 3){//智力增加
+                d = secondAttr.getValue() * 6.0;
+            }else if(code == 4){//智力加成
+                d = totalIntellect * secondAttr.getRate();
+            }else if(code == 5){//兵力增加
+                d = secondAttr.getValue() * 6.0;
+            }else if(code == 6){//兵力加成
+                d = totalTroops * secondAttr.getRate();
+            }else if(code == 7){//吴国全属性
+                d += secondAttr.getValue() * 3 * generalsWu.size();
+            }else if(code == 8){//吴国全属性加成
+                for(Generals generals : generalsWu){
+                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate();
+                }
+            }else if(code == 9){//蜀国全属性
+                d += secondAttr.getValue() * 3 * generalsShu.size();
+            }else if(code == 10){//蜀国全属性加成
+                for(Generals generals : generalsShu){
+                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate();
+                }
+            }else if(code == 11){//魏国全属性
+                d += secondAttr.getValue() * 3 * generalsWei.size();
+            }else if(code == 12){//魏国全属性加成
+                for(Generals generals : generalsWei){
+                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate();
+                }
+            }else if(code == 13){//群国全属性
+                d += secondAttr.getValue() * 3 * generalsQun.size();
+            }else if(code == 14){//群国全属性加成
+                for(Generals generals : generalsQun){
+                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate();
+                }
+            }
+            map.put(secondAttr,d.intValue());
+        }
+        return MapUtils.sortByValue(map);
+    }
+
     // 兵符
     public static Map<String,Object> getSymbols(List<Generals> generalsList,List<AppointSymbols> appointSymbolsList) {
+        ThreeDimensional totalThree = new ThreeDimensional();
+        int totalForce = 0;
+        int totalIntellect = 0;
+        int totalTroops = 0;
+        for (Generals generals : generalsList){
+            ThreeDimensional three = generals.getMaxThreeDimensional();
+            totalForce += three.getForce();
+            totalIntellect += three.getIntellect();
+            totalTroops += three.getTroops();
+        }
+        totalThree.setForce(totalForce);
+        totalThree.setIntellect(totalIntellect);
+        totalThree.setTroops(totalTroops);
+
         Symbols symbols1 = new Symbols();
         Symbols symbols2 = new Symbols();
         Symbols symbols3 = new Symbols();
@@ -1430,24 +1531,26 @@ public class GeneralsUtil {
         symbols5.setMainAttr(GeneralsEnum.SymbolsMainAttr.troops.getCode());
         symbols5.setMainAttrName(GeneralsEnum.SymbolsMainAttr.troops.getName());
 
+        //计算2号位主属性
+        int[] s2 = {4,7,10,13};
+        GeneralsEnum.SymbolsMainAttr mainAttr2 = countSymbolsMainMax(totalThree,s2);
+        symbols2.setNumber(GeneralsEnum.Symbols.number2.getCode());
+        symbols2.setMainAttr(mainAttr2.getCode());
+        symbols2.setMainAttrName(mainAttr2.getName());
 
-        //取4个副属性的所有可能
-        List<Integer> intList = new ArrayList<>();
-        intList.add(1);
-        intList.add(2);
-        intList.add(3);
-        intList.add(4);
-        intList.add(5);
-        intList.add(6);
-        intList.add(7);
-        intList.add(8);
-        intList.add(9);
-        intList.add(10);
-        intList.add(11);
-        intList.add(12);
-        intList.add(13);
-        intList.add(14);
-        List<List<Integer>> integerList = NumberUtil.getResult(intList,4,new ArrayList<>());
+        //计算4号位主属性
+        int[] s4 = {5,8,11,14};
+        GeneralsEnum.SymbolsMainAttr mainAttr4 = countSymbolsMainMax(totalThree,s4);
+        symbols4.setNumber(GeneralsEnum.Symbols.number4.getCode());
+        symbols4.setMainAttr(mainAttr4.getCode());
+        symbols4.setMainAttrName(mainAttr4.getName());
+
+        //计算6号位主属性
+        int[] s6 = {6,9,12,15};
+        GeneralsEnum.SymbolsMainAttr mainAttr6 = countSymbolsMainMax(totalThree,s6);
+        symbols6.setNumber(GeneralsEnum.Symbols.number6.getCode());
+        symbols6.setMainAttr(mainAttr6.getCode());
+        symbols6.setMainAttrName(mainAttr6.getName());
 
         List<Generals> generalsAll = new ArrayList<>();//全部
         List<Generals> generalsWei = new ArrayList<>();//魏
@@ -1481,260 +1584,49 @@ public class GeneralsUtil {
             }
         }
 
-
-        double total = 0;
-        ThreeDimensionals finalSecondThree = null;
-        List<Integer> finalSecondList = null;
-        for(List<Integer> list : integerList){
-            ThreeDimensionals three = countGroupSymbols(generalsList,list,generalsAll,generalsWei,generalsShu,generalsWu,generalsQun);
-            if(three.getTotal() >= total){
-                total = three.getTotal();
-                finalSecondThree = three;
-                finalSecondList = list;
+        //计算副属性排行
+        int[] seconds = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+        Map<GeneralsEnum.SymbolsSecondAttr,Integer> secondTopMap = countSymbolsSecondTop(totalThree,seconds,generalsAll,generalsWei,generalsShu,generalsWu,generalsQun);
+        int limit = 0;
+        for (Map.Entry<GeneralsEnum.SymbolsSecondAttr,Integer> entry : secondTopMap.entrySet()){
+            GeneralsEnum.SymbolsSecondAttr key = entry.getKey();
+            int code = key.getCode();
+            String name = key.getName();
+            // 设置副属性
+            limit++;
+            if(limit == 1){
+                symbols1.setAttr1(code);symbols1.setAttrName1(name);
+                symbols2.setAttr1(code);symbols2.setAttrName1(name);
+                symbols3.setAttr1(code);symbols3.setAttrName1(name);
+                symbols4.setAttr1(code);symbols4.setAttrName1(name);
+                symbols5.setAttr1(code);symbols5.setAttrName1(name);
+                symbols6.setAttr1(code);symbols6.setAttrName1(name);
+            }else if(limit == 2){
+                symbols1.setAttr2(code);symbols1.setAttrName2(name);
+                symbols2.setAttr2(code);symbols2.setAttrName2(name);
+                symbols3.setAttr2(code);symbols3.setAttrName2(name);
+                symbols4.setAttr2(code);symbols4.setAttrName2(name);
+                symbols5.setAttr2(code);symbols5.setAttrName2(name);
+                symbols6.setAttr2(code);symbols6.setAttrName2(name);
+            }else if(limit == 3){
+                symbols1.setAttr3(code);symbols1.setAttrName3(name);
+                symbols2.setAttr3(code);symbols2.setAttrName3(name);
+                symbols3.setAttr3(code);symbols3.setAttrName3(name);
+                symbols4.setAttr3(code);symbols4.setAttrName3(name);
+                symbols5.setAttr3(code);symbols5.setAttrName3(name);
+                symbols6.setAttr3(code);symbols6.setAttrName3(name);
+            }else if(limit == 4){
+                symbols1.setAttr4(code);symbols1.setAttrName4(name);
+                symbols2.setAttr4(code);symbols2.setAttrName4(name);
+                symbols3.setAttr4(code);symbols3.setAttrName4(name);
+                symbols4.setAttr4(code);symbols4.setAttrName4(name);
+                symbols5.setAttr4(code);symbols5.setAttrName4(name);
+                symbols6.setAttr4(code);symbols6.setAttrName4(name);
+            }else{
+                break;
             }
         }
 
-        // 设置副属性
-        symbols1.setAttr1(finalSecondList.get(0));
-        symbols2.setAttr1(finalSecondList.get(0));
-        symbols3.setAttr1(finalSecondList.get(0));
-        symbols4.setAttr1(finalSecondList.get(0));
-        symbols5.setAttr1(finalSecondList.get(0));
-        symbols6.setAttr1(finalSecondList.get(0));
-        for(GeneralsEnum.SymbolsSecondAttr secondAttr : GeneralsEnum.SymbolsSecondAttr.values()){
-            if(secondAttr.getCode().equals(symbols1.getAttr1())){
-                symbols1.setAttrName1(secondAttr.getName());
-                symbols2.setAttrName1(secondAttr.getName());
-                symbols3.setAttrName1(secondAttr.getName());
-                symbols4.setAttrName1(secondAttr.getName());
-                symbols5.setAttrName1(secondAttr.getName());
-                symbols6.setAttrName1(secondAttr.getName());
-            }
-        }
-        symbols1.setAttr2(finalSecondList.get(1));
-        symbols2.setAttr2(finalSecondList.get(1));
-        symbols3.setAttr2(finalSecondList.get(1));
-        symbols4.setAttr2(finalSecondList.get(1));
-        symbols5.setAttr2(finalSecondList.get(1));
-        symbols6.setAttr2(finalSecondList.get(1));
-        for(GeneralsEnum.SymbolsSecondAttr secondAttr : GeneralsEnum.SymbolsSecondAttr.values()){
-            if(secondAttr.getCode().equals(symbols1.getAttr2())){
-                symbols1.setAttrName2(secondAttr.getName());
-                symbols2.setAttrName2(secondAttr.getName());
-                symbols3.setAttrName2(secondAttr.getName());
-                symbols4.setAttrName2(secondAttr.getName());
-                symbols5.setAttrName2(secondAttr.getName());
-                symbols6.setAttrName2(secondAttr.getName());
-            }
-        }
-        symbols1.setAttr3(finalSecondList.get(2));
-        symbols2.setAttr3(finalSecondList.get(2));
-        symbols3.setAttr3(finalSecondList.get(2));
-        symbols4.setAttr3(finalSecondList.get(2));
-        symbols5.setAttr3(finalSecondList.get(2));
-        symbols6.setAttr3(finalSecondList.get(2));
-        for(GeneralsEnum.SymbolsSecondAttr secondAttr : GeneralsEnum.SymbolsSecondAttr.values()){
-            if(secondAttr.getCode().equals(symbols1.getAttr3())){
-                symbols1.setAttrName3(secondAttr.getName());
-                symbols2.setAttrName3(secondAttr.getName());
-                symbols3.setAttrName3(secondAttr.getName());
-                symbols4.setAttrName3(secondAttr.getName());
-                symbols5.setAttrName3(secondAttr.getName());
-                symbols6.setAttrName3(secondAttr.getName());
-            }
-        }
-        symbols1.setAttr4(finalSecondList.get(3));
-        symbols2.setAttr4(finalSecondList.get(3));
-        symbols3.setAttr4(finalSecondList.get(3));
-        symbols4.setAttr4(finalSecondList.get(3));
-        symbols5.setAttr4(finalSecondList.get(3));
-        symbols6.setAttr4(finalSecondList.get(3));
-        for(GeneralsEnum.SymbolsSecondAttr secondAttr : GeneralsEnum.SymbolsSecondAttr.values()){
-            if(secondAttr.getCode().equals(symbols1.getAttr4())){
-                symbols1.setAttrName4(secondAttr.getName());
-                symbols2.setAttrName4(secondAttr.getName());
-                symbols3.setAttrName4(secondAttr.getName());
-                symbols4.setAttrName4(secondAttr.getName());
-                symbols5.setAttrName4(secondAttr.getName());
-                symbols6.setAttrName4(secondAttr.getName());
-            }
-        }
-
-        //计算2号位主属性
-//        Integer[] n2 = {4,7,10,13};
-        Integer[] n2 = {10};
-        double total2 = 0;
-        ThreeDimensionals finalMainThree2 = null;
-        Integer finalN2 = null;
-        String finalNameN2 = null;
-        for(Integer n : n2){
-            ThreeDimensionals three2 = new ThreeDimensionals();
-            three2.setForce(0d);
-            three2.setIntellect(0d);
-            three2.setTroops(0d);
-            String name = "";
-            for(GeneralsEnum.SymbolsMainAttr mainAttr : GeneralsEnum.SymbolsMainAttr.values()){
-                if(n.equals(mainAttr.getCode())){
-                    name = mainAttr.getName();
-                    if(mainAttr.getCode() == 4) {//武力加成
-                        for(Generals generals : generalsList){
-                            Double d = generals.getMaxThreeDimensional().getForce() * mainAttr.getRate();
-                            three2.setForce(three2.getForce() + d);
-                        }
-                    }else if(mainAttr.getCode() == 7) {//智力加成
-                        for(Generals generals : generalsList){
-                            Double d = generals.getMaxThreeDimensional().getIntellect() * mainAttr.getRate();
-                            three2.setIntellect(three2.getIntellect() + d);
-                        }
-                    }else if(mainAttr.getCode() == 10) {//兵力加成
-                        for(Generals generals : generalsList){
-                            Double d = generals.getMaxThreeDimensional().getTroops() * mainAttr.getRate();
-                            three2.setTroops(three2.getTroops() + d);
-                        }
-                    }else if(mainAttr.getCode() == 13) {//全属性加成
-                        for(Generals generals : generalsList){
-                            Double d1 = generals.getMaxThreeDimensional().getForce() * mainAttr.getRate();
-                            three2.setForce(three2.getForce() + d1);
-                            Double d2 = generals.getMaxThreeDimensional().getIntellect() * mainAttr.getRate();
-                            three2.setIntellect(three2.getIntellect() + d2);
-                            Double d3 = generals.getMaxThreeDimensional().getTroops() * mainAttr.getRate();
-                            three2.setTroops(three2.getTroops() + d3);
-                        }
-                    }
-                }
-            }
-            three2.setTotal(three2.getForce()+three2.getIntellect()+three2.getTroops());
-            if(three2.getTotal() >= total2){
-                total2 = three2.getTotal();
-                finalMainThree2 = three2;
-                finalNameN2 = name;
-                finalN2 = n;
-            }
-        }
-        symbols2.setNumber(GeneralsEnum.Symbols.number2.getCode());
-        symbols2.setMainAttr(finalN2);
-        symbols2.setMainAttrName(finalNameN2);
-
-
-        //计算4号位主属性
-//        Integer[] n4 = {5,8,11,14};
-        Integer[] n4 = {11};
-        double total4 = 0;
-        ThreeDimensionals finalMainThree4 = null;
-        Integer finalN4 = null;
-        String finalNameN4 = null;
-        for(Integer n : n4){
-            ThreeDimensionals three4 = new ThreeDimensionals();
-            three4.setForce(0d);
-            three4.setIntellect(0d);
-            three4.setTroops(0d);
-            String name = "";
-            for(GeneralsEnum.SymbolsMainAttr mainAttr : GeneralsEnum.SymbolsMainAttr.values()){
-                if(n.equals(mainAttr.getCode())){
-                    name = mainAttr.getName();
-                    if(mainAttr.getCode() == 5) {//武力加成
-                        for(Generals generals : generalsList){
-                            Double d = generals.getMaxThreeDimensional().getForce() * mainAttr.getRate();
-                            three4.setForce(three4.getForce() + d);
-                        }
-                    }else if(mainAttr.getCode() == 8) {//智力加成
-                        for(Generals generals : generalsList){
-                            Double d = generals.getMaxThreeDimensional().getIntellect() * mainAttr.getRate();
-                            three4.setIntellect(three4.getIntellect() + d);
-                        }
-                    }else if(mainAttr.getCode() == 11) {//兵力加成
-                        for(Generals generals : generalsList){
-                            Double d = generals.getMaxThreeDimensional().getTroops() * mainAttr.getRate();
-                            three4.setTroops(three4.getTroops() + d);
-                        }
-                    }else if(mainAttr.getCode() == 14) {//全属性加成
-                        for(Generals generals : generalsList){
-                            Double d1 = generals.getMaxThreeDimensional().getForce() * mainAttr.getRate();
-                            three4.setForce(three4.getForce() + d1);
-                            Double d2 = generals.getMaxThreeDimensional().getIntellect() * mainAttr.getRate();
-                            three4.setIntellect(three4.getIntellect() + d2);
-                            Double d3 = generals.getMaxThreeDimensional().getTroops() * mainAttr.getRate();
-                            three4.setTroops(three4.getTroops() + d3);
-                        }
-                    }
-                }
-            }
-            three4.setTotal(three4.getForce()+three4.getIntellect()+three4.getTroops());
-            if(three4.getTotal() >= total4){
-                total4 = three4.getTotal();
-                finalMainThree4 = three4;
-                finalNameN4 = name;
-                finalN4 = n;
-            }
-        }
-        symbols4.setNumber(GeneralsEnum.Symbols.number4.getCode());
-        symbols4.setMainAttr(finalN4);
-        symbols4.setMainAttrName(finalNameN4);
-
-        //计算6号位主属性
-//        Integer[] n6 = {6,9,12,15};
-        Integer[] n6 = {12};
-        double total6 = 0;
-        ThreeDimensionals finalMainThree6 = null;
-        Integer finalN6 = null;
-        String finalNameN6 = null;
-        for(Integer n : n6){
-            ThreeDimensionals three6 = new ThreeDimensionals();
-            three6.setForce(0d);
-            three6.setIntellect(0d);
-            three6.setTroops(0d);
-            String name = "";
-            for(GeneralsEnum.SymbolsMainAttr mainAttr : GeneralsEnum.SymbolsMainAttr.values()){
-                if(n.equals(mainAttr.getCode())){
-                    name = mainAttr.getName();
-                    if(mainAttr.getCode() == 6) {//武力加成
-                        for(Generals generals : generalsList){
-                            Double d = generals.getMaxThreeDimensional().getForce() * mainAttr.getRate();
-                            three6.setForce(three6.getForce() + d);
-                        }
-                    }else if(mainAttr.getCode() == 7) {//智力加成
-                        for(Generals generals : generalsList){
-                            Double d = generals.getMaxThreeDimensional().getIntellect() * mainAttr.getRate();
-                            three6.setIntellect(three6.getIntellect() + d);
-                        }
-                    }else if(mainAttr.getCode() == 12) {//兵力加成
-                        for(Generals generals : generalsList){
-                            Double d = generals.getMaxThreeDimensional().getTroops() * mainAttr.getRate();
-                            three6.setTroops(three6.getTroops() + d);
-                        }
-                    }else if(mainAttr.getCode() == 15) {//全属性加成
-                        for(Generals generals : generalsList){
-                            Double d1 = generals.getMaxThreeDimensional().getForce() * mainAttr.getRate();
-                            three6.setForce(three6.getForce() + d1);
-                            Double d2 = generals.getMaxThreeDimensional().getIntellect() * mainAttr.getRate();
-                            three6.setIntellect(three6.getIntellect() + d2);
-                            Double d3 = generals.getMaxThreeDimensional().getTroops() * mainAttr.getRate();
-                            three6.setTroops(three6.getTroops() + d3);
-                        }
-                    }
-                }
-            }
-            three6.setTotal(three6.getForce()+three6.getIntellect()+three6.getTroops());
-            if(three6.getTotal() >= total6){
-                total6 = three6.getTotal();
-                finalMainThree6 = three6;
-                finalNameN6 = name;
-                finalN6 = n;
-            }
-        }
-        symbols6.setNumber(GeneralsEnum.Symbols.number6.getCode());
-        symbols6.setMainAttr(finalN6);
-        symbols6.setMainAttrName(finalNameN6);
-
-
-        /*Integer totalForce = 0;
-        Integer totalIntellect = 0;
-        Integer totalTroops = 0;
-        for(Generals g : generalsList){
-            totalForce += g.getForce();
-            totalIntellect += g.getIntellect();
-            totalTroops += g.getTroops();
-        }*/
         Map<GeneralsEnum.SymbolsType,Integer> typeMap = new HashMap<>();
         for(GeneralsEnum.SymbolsType type : GeneralsEnum.SymbolsType.values()){
             int force = 0;
@@ -1907,195 +1799,10 @@ public class GeneralsUtil {
             symbolsTopList.add(new SymbolsTop(map.getKey().getName(),map.getValue()));
         }
 
-        //取兵符类型的所有可能
-        /*List<Integer> indexList = new ArrayList<>();
-        indexList.add(1);
-        indexList.add(2);
-        indexList.add(3);
-        indexList.add(4);
-        indexList.add(5);
-        indexList.add(6);
-        indexList.add(7);
-        indexList.add(8);
-        indexList.add(9);
-        indexList.add(10);
-        indexList.add(11);
-        indexList.add(12);
-        indexList.add(13);
-        indexList.add(14);
-        indexList.add(15);
-        List<List<Integer>> resultList = NumberUtil.getResult(indexList,3,appointSymbolsList);
-
-        int typeTotal = 0;
-        ThreeDimensional finalTypeThree = null;
-        List<Integer> finalTypeResult = null;
-        for(List<Integer> result : resultList){
-            ThreeDimensional three = new ThreeDimensional();
-            three.setForce(0);
-            three.setIntellect(0);
-            three.setTroops(0);
-            for(Integer i : result){
-                for(GeneralsEnum.SymbolsType type : GeneralsEnum.SymbolsType.values()){
-                    if(i.equals(type.getCode())){
-                        if(i==1){//苍龙,蜀国全属性加10%
-                            for (Generals generals : generalsShu){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==2 ){//猛虎,吴国全属性加10%
-                            for (Generals generals : generalsWu){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==3 ){//火凤,魏国全属性加10%
-                            for (Generals generals : generalsWei){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==4 ){//天狼,群雄全属性加10%
-                            for (Generals generals : generalsQun){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==5 ){//玄龟,枪兵全属性加10%
-                            for (Generals generals : generalsQiang){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==6 ){//翔鹰,弓兵全属性加10%
-                            for (Generals generals : generalsGong){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==7 ){//麒麟,骑兵全属性加10%
-                            for (Generals generals : generalsQi){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==8 ){//青鸾,女性全属性加10%
-                            for (Generals generals : generalsNv){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==9 ){//白泽,全体智力加24%
-                            for (Generals generals : generalsAll){
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                            }
-                        }else if(i==10){//混沌,全体全属性加8%
-                            for (Generals generals : generalsAll){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==11){//穷奇,全体武力加24%
-                            for (Generals generals : generalsAll){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                            }
-                        }else if(i==12){//睚眦,全体兵力加24%
-                            for (Generals generals : generalsAll){
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==13 ){//貔貅,骑兵全属性加12%
-                            for (Generals generals : generalsQi){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==14 ){//狰,枪兵全属性加12%
-                            for (Generals generals : generalsQiang){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }else if(i==15 ){//蛊雕,弓兵全属性加12%
-                            for (Generals generals : generalsGong){
-                                Double d1 = generals.getMaxThreeDimensional().getForce() * type.getRate();
-                                three.setForce(three.getForce() + d1.intValue());
-                                Double d2 = generals.getMaxThreeDimensional().getIntellect() * type.getRate();
-                                three.setIntellect(three.getIntellect() + d2.intValue());
-                                Double d3 = generals.getMaxThreeDimensional().getTroops() * type.getRate();
-                                three.setTroops(three.getTroops() + d3.intValue());
-                            }
-                        }
-                    }
-                }
-            }
-            three.setTotal(three.getForce()+three.getIntellect()+three.getTroops());
-            if(three.getTotal() >= typeTotal){
-                typeTotal = three.getTotal();
-                finalTypeResult = result;
-                finalTypeThree = three;
-            }
+        List<SymbolsTop> symbolsSecondList = new ArrayList<>();
+        for(Map.Entry<GeneralsEnum.SymbolsSecondAttr, Integer> map : secondTopMap.entrySet()){
+            symbolsSecondList.add(new SymbolsTop(map.getKey().getName(),map.getValue()));
         }
-
-
-        Map<String,String> map = new HashMap<>();
-        for(Integer i : finalTypeResult) {
-            for (GeneralsEnum.SymbolsType type : GeneralsEnum.SymbolsType.values()) {
-                if (i.equals(type.getCode())) {
-                    map.put(i+"",type.getName());
-                }
-            }
-        }*/
-
-        /*symbols1.setType(finalTypeResult.get(0));
-        symbols1.setTypeName(map.get(finalTypeResult.get(0).toString()));
-        symbols2.setType(finalTypeResult.get(0));
-        symbols2.setTypeName(map.get(finalTypeResult.get(0).toString()));
-
-        symbols3.setType(finalTypeResult.get(1));
-        symbols3.setTypeName(map.get(finalTypeResult.get(1).toString()));
-        symbols4.setType(finalTypeResult.get(1));
-        symbols4.setTypeName(map.get(finalTypeResult.get(1).toString()));
-
-        symbols5.setType(finalTypeResult.get(2));
-        symbols5.setTypeName(map.get(finalTypeResult.get(2).toString()));
-        symbols6.setType(finalTypeResult.get(2));
-        symbols6.setTypeName(map.get(finalTypeResult.get(2).toString()));*/
 
         Map<String,Object> map = new HashMap<>();
         List<Symbols> symbolsList = new ArrayList<>();
@@ -2107,6 +1814,7 @@ public class GeneralsUtil {
         symbolsList.add(symbols6);
         map.put("symbolsList",symbolsList);
         map.put("symbolsTop",symbolsTopList);
+        map.put("symbolsSecond",symbolsSecondList);
         return map;
     }
 

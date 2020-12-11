@@ -9,17 +9,20 @@ import com.ming.ppsg2.entity.Result;
 import com.ming.ppsg2.entity.Symbols;
 import com.ming.ppsg2.enums.GeneralsEnum;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cglib.beans.BeanCopier;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CyclicBarrier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,28 +30,49 @@ import java.util.regex.Pattern;
 public class NumberUtil {
 
     //copy对象
+    public static List<Compose> getNoRepeatList2(List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) throws InterruptedException {
+        long t1 = System.currentTimeMillis();
+        List<List<Generals>> glongList = getList(data,size,appointGeneralsList);
+        long t2 = System.currentTimeMillis();
+        System.out.println("排列组合时间："+(t2-t1)+"ms");
+
+        List<Compose> composeList = new ArrayList<>();
+        List<Compose> finalComposeList = composeList;
+        int totalCount = glongList.size();
+        final int[] count = {0};
+        Integer grilCode = GeneralsEnum.Gender.gril.getCode();
+        final BeanCopier copier = BeanCopier.create(Generals.class, Generals.class, false);
+        CountDownUtils.dispose(glongList, generalsList -> {
+            Set<String> set = new HashSet<>();
+            for(Generals generals : generalsList){
+                set.add(generals.getCode());
+            }
+            if(set.size() == 5){
+                List<Generals> copyList = new ArrayList<>();
+                for(Generals generals : generalsList) {
+                    Generals copy = new Generals();
+                    //BeanUtils.copyProperties(generals, copy);
+                    copier.copy(generals, copy, null);
+                    copyList.add(copy);
+                }
+
+                count[0]++;
+                boolean isGril = generalsList.get(0).getGender().equals(grilCode)
+                        && generalsList.get(1).getGender().equals(grilCode)
+                        && generalsList.get(2).getGender().equals(grilCode)
+                        && generalsList.get(3).getGender().equals(grilCode)
+                        && generalsList.get(4).getGender().equals(grilCode);
+                finalComposeList.add(new Compose(count[0],null,isGril,copyList));
+                System.out.println(count[0] +"/"+totalCount);
+            }
+        });
+        long t3 = System.currentTimeMillis();
+        System.out.println("过滤组合时间："+(t3-t2)+"ms");
+        return finalComposeList;
+    }
+
+    //copy对象
     public static List<Compose> getNoRepeatList(Map<String,String> generalsMapSort,List<Generals> data, int size, List<AppointGenerals> appointGeneralsList) {
-        if(appointGeneralsList.size()==5){
-            //List<Compose> composeList = new ArrayList<>();
-            //List<Generals> generalsList = new ArrayList<>();
-            /*for (Generals generals : data){
-
-            }*/
-
-            /*StringBuffer ids = new StringBuffer();
-            ids.append(appointGeneralsList.get(0).getId());
-            ids.append(appointGeneralsList.get(1).getId());
-            ids.append(appointGeneralsList.get(2).getId());
-            ids.append(appointGeneralsList.get(3).getId());
-            ids.append(appointGeneralsList.get(4).getId());*/
-
-            /*boolean isGril = gList.get(0).getGender().equals(grilCode)
-                    && gList.get(1).getGender().equals(grilCode)
-                    && gList.get(2).getGender().equals(grilCode)
-                    && gList.get(3).getGender().equals(grilCode)
-                    && gList.get(4).getGender().equals(grilCode);
-            composeList.add(new Compose(ids.toString(),false,gList));*/
-        }
         clear();
         if(!appointGeneralsList.isEmpty()){
             generalsMapSort = new HashMap<>();
