@@ -399,8 +399,8 @@ public class XZLController {
                             generalsList.get(3).getGender().toString().equals(grilCode.toString()) &&
                             generalsList.get(4).getGender().toString().equals(grilCode.toString())
             ){
-                Result result = GeneralsUtil.getResult(generalsList,symbolsList,null,allTotalSword,allTotalSword2);
-                grilResultList.add(result);
+//                Result result = GeneralsUtil.getResult(generalsList,symbolsList,null,allTotalSword,allTotalSword2);
+//                grilResultList.add(result);
             }
 
             int zhanli = 375000;
@@ -415,13 +415,13 @@ public class XZLController {
                 }
             }*/
 
-            Result result = GeneralsUtil.getResult(generalsList,symbolsList,null,allTotalSword,allTotalSword2);
-            if(flag==1){
-                resultList2.add(result);
-            }else{
-                resultList.add(result);
-                resultList2.add(result);
-            }
+//            Result result = GeneralsUtil.getResult(generalsList,symbolsList,null,allTotalSword,allTotalSword2);
+//            if(flag==1){
+//                resultList2.add(result);
+//            }else{
+//                resultList.add(result);
+//                resultList2.add(result);
+//            }
         }
 
         //结果排序

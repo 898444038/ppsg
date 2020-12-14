@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 import java.util.concurrent.CyclicBarrier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,7 +37,7 @@ public class NumberUtil {
         long t2 = System.currentTimeMillis();
         System.out.println("排列组合时间："+(t2-t1)+"ms");
 
-        List<Compose> composeList = new ArrayList<>();
+        List<Compose> composeList = new Vector<>();
         List<Compose> finalComposeList = composeList;
         int totalCount = glongList.size();
         final int[] count = {0};

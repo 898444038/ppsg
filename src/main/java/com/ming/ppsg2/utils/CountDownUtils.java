@@ -18,7 +18,7 @@ public class CountDownUtils {
 
     static {
         //POOL_SIZE = Integer.max(Runtime.getRuntime().availableProcessors(),5);
-        POOL_SIZE = Runtime.getRuntime().availableProcessors()*2;
+        POOL_SIZE = Runtime.getRuntime().availableProcessors()*5;
     }
 
 

@@ -15,18 +15,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Main2 {
 
     public static void main(String[] args) throws Exception {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增逆命 【回禄魏延】\n" +
+                "更新内容：1.新增兵符副属性排名\n" +
                 "2.新增突破 【潋滟步练师】 \n"+
                 "3.新增幻化 【火凤燎原】【云蒸龙变】 \n";
         top+= "";
         String advert = "";//广告
-        String fileRemark = "(回禄魏延)";
+        String fileRemark = "()";
         //计算：992/658/1895
         //实际：988/654/1947
 
@@ -63,10 +65,10 @@ public class Main2 {
                            List<AppointExcludeGenerals> excludeGeneralsList,
                            List<AppointSymbols> appointSymbolsList,
                            boolean isHuanHua) throws Exception {
-        List<Generals> nimingAllList = new ArrayList<>();//全部
-        List<Generals> generalsAll = new ArrayList<>();//非重复
-        List<Generals> generalsAll2 = new ArrayList<>();//多余的，非限定
-        Map<String,Destiny> destinyMap = new HashMap<>();//命格材料
+        List<Generals> nimingAllList = new Vector<>();//全部
+        List<Generals> generalsAll = new Vector<>();//非重复
+        List<Generals> generalsAll2 = new Vector<>();//多余的，非限定
+        Map<String,Destiny> destinyMap = new ConcurrentHashMap<>();//命格材料
         //获取基础数据
         List<Map<String,String>> lists = MainService.getExcelData(excludeGeneralsList);
         //处理基础数据
@@ -81,15 +83,11 @@ public class Main2 {
         List<Generals> optimumEntourage = MainService.handleOptimumEntourage(generalsAll,nimingAllList,isHuanHua);
         long t1 = System.currentTimeMillis();
         //最终排列组合list
-        List<Generals> nmList = MainService.handleFinalNmList(28,nimingAllList);
+        List<Generals> nmList = MainService.handleFinalNmList(30,nimingAllList);
 
         //计算战力
-        List<Result> resultList2 = new ArrayList<>();
-        List<Result> grilResultList = new ArrayList<>();
-        MainService.handleSword(resultList2,grilResultList,nmList,appointGeneralsList,appointSymbolsList,excludeGeneralsList);
-
-        //结果排序、排名
-        MainService.resultSortAndRank(resultList2,grilResultList);
+        List<Result> grilResultList = new Vector<>();
+        List<Result> resultList2 = MainService.handleSword(grilResultList,nmList,appointGeneralsList,appointSymbolsList,excludeGeneralsList);
 
         long t2 = System.currentTimeMillis();
         System.out.println("用时："+(t2-t1)+"ms , 阵容数量："+resultList2.size());

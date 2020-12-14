@@ -26,6 +26,7 @@ public class Result {
 
     private List<SymbolsTop> symbolsTopList;//兵符排名
     private String symbolsTop;
+    private String symbolsTopSecond;
     private String battleArrayWayName = GeneralsEnum.BattleArrayWay.long_fei.getName();//阵法名称
 
     private List<Generals> generalsList;
@@ -44,6 +45,14 @@ public class Result {
 //    private Generals generals5;
 
     public Result() {
+    }
+
+    public String getSymbolsTopSecond() {
+        return symbolsTopSecond;
+    }
+
+    public void setSymbolsTopSecond(String symbolsTopSecond) {
+        this.symbolsTopSecond = symbolsTopSecond;
     }
 
     public String getBattleArrayWayName() {

@@ -425,7 +425,7 @@ public class Main {
 
             //女队
             if(composes.isGril()){
-                Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,0,allTotalSword2);
+                Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,new ArrayList<>(),0,allTotalSword2);
                 if(allTotalSword2 > 390000){
                     grilResultList.add(result);
                 }else{
@@ -447,7 +447,7 @@ public class Main {
                 }
             }
 
-            Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,0,allTotalSword2);
+            Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,new ArrayList<>(),0,allTotalSword2);
             if(flag==1){
                 resultList2.add(result);
             }else{

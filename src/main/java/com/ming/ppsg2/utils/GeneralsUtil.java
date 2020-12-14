@@ -1444,48 +1444,48 @@ public class GeneralsUtil {
             int code = secondAttr.getCode();
             Double d = 0d;
             if(code == 1){//武力增加
-                d = secondAttr.getValue() * 6.0;
+                d = secondAttr.getValue().doubleValue() * 6 * 5;
             }else if(code == 2){//武力加成
-                d = totalForce * secondAttr.getRate();
+                d = totalForce * secondAttr.getRate() * 6;
             }else if(code == 3){//智力增加
-                d = secondAttr.getValue() * 6.0;
+                d = secondAttr.getValue().doubleValue() * 6 * 5;
             }else if(code == 4){//智力加成
-                d = totalIntellect * secondAttr.getRate();
+                d = totalIntellect * secondAttr.getRate() * 6;
             }else if(code == 5){//兵力增加
-                d = secondAttr.getValue() * 6.0;
+                d = secondAttr.getValue().doubleValue() * 6 * 5;
             }else if(code == 6){//兵力加成
-                d = totalTroops * secondAttr.getRate();
+                d = totalTroops * secondAttr.getRate() * 6;
             }else if(code == 7){//吴国全属性
-                d += secondAttr.getValue() * 3 * generalsWu.size();
+                d += secondAttr.getValue() * 3 * 6 * generalsWu.size();
             }else if(code == 8){//吴国全属性加成
                 for(Generals generals : generalsWu){
-                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate();
-                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate();
-                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate() * 6;
+                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate() * 6;
+                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate() * 6;
                 }
             }else if(code == 9){//蜀国全属性
-                d += secondAttr.getValue() * 3 * generalsShu.size();
+                d += secondAttr.getValue() * 3 * 6 * generalsShu.size();
             }else if(code == 10){//蜀国全属性加成
                 for(Generals generals : generalsShu){
-                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate();
-                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate();
-                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate() * 6;
+                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate() * 6;
+                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate() * 6;
                 }
             }else if(code == 11){//魏国全属性
-                d += secondAttr.getValue() * 3 * generalsWei.size();
+                d += secondAttr.getValue() * 3 * 6 * generalsWei.size();
             }else if(code == 12){//魏国全属性加成
                 for(Generals generals : generalsWei){
-                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate();
-                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate();
-                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate() * 6;
+                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate() * 6;
+                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate() * 6;
                 }
             }else if(code == 13){//群国全属性
-                d += secondAttr.getValue() * 3 * generalsQun.size();
+                d += secondAttr.getValue() * 3 * 6 * generalsQun.size();
             }else if(code == 14){//群国全属性加成
                 for(Generals generals : generalsQun){
-                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate();
-                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate();
-                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate();
+                    d += generals.getMaxThreeDimensional().getForce() * secondAttr.getRate() * 6;
+                    d += generals.getMaxThreeDimensional().getIntellect() * secondAttr.getRate() * 6;
+                    d += generals.getMaxThreeDimensional().getTroops() * secondAttr.getRate() * 6;
                 }
             }
             map.put(secondAttr,d.intValue());
@@ -1814,7 +1814,7 @@ public class GeneralsUtil {
         symbolsList.add(symbols6);
         map.put("symbolsList",symbolsList);
         map.put("symbolsTop",symbolsTopList);
-        map.put("symbolsSecond",symbolsSecondList);
+        map.put("symbolsTopSecond",symbolsSecondList);
         return map;
     }
 
@@ -3151,7 +3151,7 @@ public class GeneralsUtil {
         return map;
     }
 
-    public static Result getResult(List<Generals> generalsList, List<Symbols> symbolsList, List<SymbolsTop> symbolsTopList, int allTotalSword, int allTotalSword2){
+    public static Result getResult(List<Generals> generalsList, List<Symbols> symbolsList, List<SymbolsTop> symbolsTopList,List<SymbolsTop> symbolsTopSecond, int allTotalSword, int allTotalSword2){
         Result result = new Result();
         Integer weiCount = 0;//魏国数量
         Integer shuCount = 0;//蜀国数量
@@ -3205,6 +3205,10 @@ public class GeneralsUtil {
         for(SymbolsTop symbolsTop : symbolsTopList){
             sb.append(symbolsTop.getName()).append(":").append(symbolsTop.getTotal()).append("\r\n");
         }
+        StringBuilder second = new StringBuilder();
+        for(SymbolsTop symbolsTop : symbolsTopSecond){
+            second.append(symbolsTop.getName()).append(":").append(symbolsTop.getTotal()).append("\r\n");
+        }
 
         result.setTotal(allTotalSword);
         result.setTotal2(allTotalSword2);
@@ -3221,6 +3225,7 @@ public class GeneralsUtil {
         result.setArmsNames(armsNames);
         result.setSymbolsTopList(symbolsTopList);
         result.setSymbolsTop(sb.toString());
+        result.setSymbolsTopSecond(second.toString());
         return result;
     }
 

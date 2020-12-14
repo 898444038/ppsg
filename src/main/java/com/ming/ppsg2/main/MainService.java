@@ -15,7 +15,6 @@ import com.ming.ppsg2.utils.CountDownUtils;
 import com.ming.ppsg2.utils.DestinyData;
 import com.ming.ppsg2.utils.ExcelReaderUtil;
 import com.ming.ppsg2.utils.GeneralsUtil;
-import com.ming.ppsg2.utils.ListUtils;
 import com.ming.ppsg2.utils.NumberUtil;
 import com.ming.ppsg2.utils.ReadWriteExcel;
 import com.ming.ppsg2.utils.jxls.JxlsUtil;
@@ -25,15 +24,14 @@ import org.springframework.beans.BeanUtils;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 public class MainService {
@@ -80,16 +78,16 @@ public class MainService {
             List<Generals> generalsAll,
             Map<String,Destiny> destinyMap//命格材料
     ) throws Exception {
-        List<Generals> nimingAppointList = new ArrayList<>();//指定武将
-        List<Generals> nimingNoAppointList = new ArrayList<>();//非指定武将
+        List<Generals> nimingAppointList = new Vector<>();//指定武将
+        List<Generals> nimingNoAppointList = new Vector<>();//非指定武将
         System.out.println("初始数据处理开始！");
-        int split = lists.size()/CountDownUtils.POOL_SIZE+1;
-        List<List<Map<String,String>>> splitList = ListUtils.partition(lists,split);
+        //int split = lists.size()/CountDownUtils.POOL_SIZE+1;
+        //List<List<Map<String,String>>> splitList = ListUtils.partition(lists,split);
         long t = System.currentTimeMillis();
-        CountDownUtils.dispose(splitList, items -> {
+        CountDownUtils.dispose(lists, map -> {
             try {
                 long t1 = System.currentTimeMillis();
-                for (Map<String,String> map : items) {
+                //for (Map<String,String> map : items) {
                     if (StringUtils.isNotBlank(map.get("armsBook1")) && "TRUE".equalsIgnoreCase(map.get("usable"))) {
                         String name = map.get("name");
                         Integer code = null;
@@ -311,7 +309,7 @@ public class MainService {
                         generals.setDestiny(copyDestiny);
                         generalsAll.add(generals);
                     }
-                }
+                //}
 
                 long t2 = System.currentTimeMillis();
                 System.out.println(System.currentTimeMillis()+",任务执行完毕，耗时:"+(t2-t1));
@@ -515,7 +513,7 @@ public class MainService {
         long t1 = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         try {
-            InputStream is = ExcelReaderUtil.class.getResourceAsStream("/excel/result_temp2.xlsx");
+            InputStream is = ExcelReaderUtil.class.getResourceAsStream("/excel/result_temp3.xlsx");
             OutputStream os = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\虚战力表"+sdf.format(new Date())+fileRemark+".xlsx");
             JxlsUtil.export2Excel(is,os,model);
         }catch (Exception e){
@@ -532,7 +530,8 @@ public class MainService {
         System. out.println("兵符统计完毕!耗时："+(t2-t1)+"ms");
     }
 
-    public static void handleSword(List<Result> resultList2, List<Result> grilResultList, List<Generals> nmList, List<AppointGenerals> appointGeneralsList, List<AppointSymbols> appointSymbolsList, List<AppointExcludeGenerals> excludeGeneralsList) throws InterruptedException {
+    public static List<Result> handleSword(List<Result> grilResultList, List<Generals> nmList, List<AppointGenerals> appointGeneralsList, List<AppointSymbols> appointSymbolsList, List<AppointExcludeGenerals> excludeGeneralsList) throws InterruptedException {
+        List<Result> resultList2 = new Vector<>();
         long t = System.currentTimeMillis();
         List<Compose> all = NumberUtil.getNoRepeatList2(nmList,5,appointGeneralsList);
         final int size = all.size();
@@ -546,6 +545,7 @@ public class MainService {
             Map<String,Object> symbolsMap = GeneralsUtil.getSymbols(generalsList,appointSymbolsList);
             List<Symbols> symbolsList = (List<Symbols>)symbolsMap.get("symbolsList");
             List<SymbolsTop> symbolsTop = (List<SymbolsTop>)symbolsMap.get("symbolsTop");
+            List<SymbolsTop> symbolsTopSecond = (List<SymbolsTop>)symbolsMap.get("symbolsTopSecond");
             //long t2 = System.currentTimeMillis();
 
             GeneralsUtil.countSymbols(generalsList,symbolsList);
@@ -562,11 +562,7 @@ public class MainService {
                 allTotalSword2 = GeneralsUtil.getAllTotalSword2(generalsList);
             }
 
-            Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,0,allTotalSword2);
-            if(result == null){
-
-            }
-
+            Result result = GeneralsUtil.getResult(generalsList,symbolsList,symbolsTop,symbolsTopSecond,0,allTotalSword2);
             resultList2.add(result);
             //女队
             if(composes.isGril() && allTotalSword2 > 390000){
@@ -577,11 +573,16 @@ public class MainService {
             System.out.println(composes.getSort()+"/"+size+"，耗时:"+(t5-t1));
         });
         long t2 = System.currentTimeMillis();
-        System. out.println("战力计算完毕!耗时："+(t2-t)+"ms");
+        System.out.println("最终武将组合个数："+resultList2.size()+"/"+size);
+        System.out.println("战力计算完毕!耗时："+(t2-t)+"ms");
+        TimeUnit.MILLISECONDS.sleep(3000);
+        //结果排序、排名
+        MainService.resultSortAndRank(resultList2,grilResultList);
+        return resultList2;
     }
 
 
-    public static void handleSword2(List<Result> resultList, List<Result> resultList2, List<Result> grilResultList, List<Generals> nmList, List<AppointGenerals> appointGeneralsList, List<AppointSymbols> appointSymbolsList, List<AppointExcludeGenerals> excludeGeneralsList) {
+    /*public static void handleSword2(List<Result> resultList, List<Result> resultList2, List<Result> grilResultList, List<Generals> nmList, List<AppointGenerals> appointGeneralsList, List<AppointSymbols> appointSymbolsList, List<AppointExcludeGenerals> excludeGeneralsList) {
         Map<String,String> generalsMapSort = new LinkedHashMap<>();
         List<Compose> all = NumberUtil.getNoRepeatList(generalsMapSort,nmList,5,appointGeneralsList);
         System.out.println("上阵武将组合个数："+all.size());
@@ -655,5 +656,5 @@ public class MainService {
             }
         }
         //}
-    }
+    }*/
 }
