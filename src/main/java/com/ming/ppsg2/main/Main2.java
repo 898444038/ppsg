@@ -83,7 +83,7 @@ public class Main2 {
         List<Generals> optimumEntourage = MainService.handleOptimumEntourage(generalsAll,nimingAllList,isHuanHua);
         long t1 = System.currentTimeMillis();
         //最终排列组合list
-        List<Generals> nmList = MainService.handleFinalNmList(30,nimingAllList);
+        List<Generals> nmList = MainService.handleFinalNmList(31,nimingAllList);
 
         //计算战力
         List<Result> grilResultList = new Vector<>();
