@@ -1139,6 +1139,7 @@ public enum GeneralsEnum {
         skin_28(28,"狂影奇袭","回禄魏延",30,30,80),
         skin_29(29,"火凤燎原","陨星庞统",30,30,80),
         skin_30(30,"云蒸龙变","砺战赵云",30,30,80),
+        skin_31(31,"雷奔云谲","砺战赵云",30,30,80),
         ;
         private Integer code;
         private String name;
