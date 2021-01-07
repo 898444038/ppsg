@@ -25,7 +25,7 @@ public class Main2 {
                 "啪啪三国技术交流群：913083053\n" +
                 "更新内容：1.新增逆命【芳华大乔】【回禄魏延】\n" +
                 "2.新增突破 【瞳心孙小虎】【道玄诸葛果】 \n"+
-                "3.新增幻化 【雷奔云谲】 \n";
+                "3.新增幻化 【雷奔云谲】 4.部分武将命格三维修正\n";
         top+= "";
         String advert = "";//广告
         String fileRemark = "(芳华大乔)";
@@ -83,7 +83,7 @@ public class Main2 {
         List<Generals> optimumEntourage = MainService.handleOptimumEntourage(generalsAll,nimingAllList,isHuanHua);
         long t1 = System.currentTimeMillis();
         //最终排列组合list
-        List<Generals> nmList = MainService.handleFinalNmList(31,nimingAllList);
+        List<Generals> nmList = MainService.handleFinalNmList(30,nimingAllList);
 
         //计算战力
         List<Result> grilResultList = new Vector<>();
@@ -104,13 +104,13 @@ public class Main2 {
         model.put("top",top);
         model.put("advert",advert);
         model.put("simplifyList2",GeneralsUtil.getSimplifyList(resultList2));//简表（特殊战器）
-        if(resultList2.size()>200){
-            model.put("list2",resultList2.subList(0,200));//虚战力表（特殊战器）
+        if(resultList2.size()>=100){
+            model.put("list2",resultList2.subList(0,100));//虚战力表（特殊战器）
         }else{
             model.put("list2",resultList2);//虚战力表（特殊战器）
         }
-        if(grilResultList.size()>200) {
-            model.put("grilList", grilResultList.subList(0, 200));//虚战力表（女队）
+        if(grilResultList.size()>=100) {
+            model.put("grilList", grilResultList.subList(0, 100));//虚战力表（女队）
         }else{
             model.put("grilList", grilResultList);
         }
