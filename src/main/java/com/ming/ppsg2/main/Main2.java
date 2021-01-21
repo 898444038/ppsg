@@ -21,14 +21,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Main2 {
 
     public static void main(String[] args) throws Exception {
-        String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、七星诸葛亮、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
+        String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增逆命【芳华大乔】【回禄魏延】\n" +
-                "2.新增突破 【瞳心孙小虎】【道玄诸葛果】 \n"+
-                "3.新增幻化 【雷奔云谲】 4.部分武将命格三维修正\n";
+                "更新内容：1.新增逆命【剑引张郃】\n" +
+                "2.新增突破 【先勇张郃】 \n"+
+                "\n";
         top+= "";
         String advert = "";//广告
-        String fileRemark = "(芳华大乔)";
+        String fileRemark = "(剑引张郃)(临时文件)";
         //计算：992/658/1895
         //实际：988/654/1947
 
