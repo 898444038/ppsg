@@ -195,13 +195,13 @@ public class DestinyData {
         return getGenerals(name,code,level,force,intellect,troops,gender,generalsType,arms,country,isEntourage,entourages,warDevices,armsBooks,destinys);
     }*/
 
-    public static Generals getGenerals(String name,Integer code,Integer level,Integer force,Integer intellect,Integer troops,Integer gender,
+    public static Generals getGenerals(String name,List<Integer> codes,Integer level,Integer force,Integer intellect,Integer troops,Integer gender,
         Integer generalsType,Integer arms,Integer country,Boolean isEntourage,Integer[] entourages,Integer[] warDevices,
         Integer[][] armsBooks,Object[] destinys,Integer skinCode
     ){
         Generals generals = new Generals();
         generals.setName(name);
-        generals.setCode(code+"");
+        generals.setCodes(codes);
         generals.setLevel(level);
         generals.setForce(force);
         generals.setIntellect(intellect);

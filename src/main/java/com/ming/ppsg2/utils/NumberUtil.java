@@ -44,11 +44,18 @@ public class NumberUtil {
         Integer grilCode = GeneralsEnum.Gender.gril.getCode();
         final BeanCopier copier = BeanCopier.create(Generals.class, Generals.class, false);
         CountDownUtils.dispose(glongList, generalsList -> {
-            Set<String> set = new HashSet<>();
+            Set<Integer> set = new HashSet<>();
+            int number = 0;
             for(Generals generals : generalsList){
-                set.add(generals.getCode());
+                List<Integer> codes = generals.getCodes();
+                if(codes.size() > 1){
+                    number += codes.size() - 1;
+                }
+                for (Integer code : codes) {
+                    set.add(code);
+                }
             }
-            if(set.size() == 5){
+            if(set.size() - number == 5){
                 List<Generals> copyList = new ArrayList<>();
                 for(Generals generals : generalsList) {
                     Generals copy = new Generals();
@@ -215,7 +222,7 @@ public class NumberUtil {
                     boolean no = true;
                     a:for(Generals generals : generalsList){
                         b:for(Generals generals2 : generalsList){
-                            if(generals.getCode().equals(generals2.getCode()) && !generals.getId().equals(generals2.getId())){
+                            if(GeneralsUtil.checkCode(generals.getCodes(),generals2.getCodes()) && !generals.getId().equals(generals2.getId())){
                                 no = false;
                                 break a;
                             }

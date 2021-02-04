@@ -90,12 +90,17 @@ public class MainService {
                 //for (Map<String,String> map : items) {
                     if (StringUtils.isNotBlank(map.get("armsBook1")) && "TRUE".equalsIgnoreCase(map.get("usable"))) {
                         String name = map.get("name");
-                        Integer code = null;
-                        for (GeneralsEnum.GeneralsCode generalsCode : GeneralsEnum.GeneralsCode.values()) {
-                            if (generalsCode.getName().equals(map.get("generalsCode"))) {
-                                code = generalsCode.getCode();
+                        String[] parents = map.get("generalsCode").split(",");
+                        List<Integer> codes = new ArrayList<>();
+                        for(String parent : parents){
+                            for (GeneralsEnum.GeneralsCode generalsCode : GeneralsEnum.GeneralsCode.values()) {
+                                if (generalsCode.getName().equals(parent)) {
+                                    codes.add(generalsCode.getCode());
+                                    break;
+                                }
                             }
                         }
+
                         Integer level = 1;
                         Integer force = Integer.valueOf(Double.valueOf(map.get("force")).intValue());
                         Integer intellect = Integer.valueOf(Double.valueOf(map.get("intellect")).intValue());
@@ -245,7 +250,7 @@ public class MainService {
                         Integer destinyTroops = map.get("destinyTroops") == null ? null : Double.valueOf(map.get("destinyTroops")).intValue();
                         Object[] destinys = {destinyForce, destinyIntellect, destinyTroops, Boolean.valueOf(map.get("isDestiny")), disobeyCode, null, null, null};
 
-                        Generals generals = DestinyData.getGenerals(name, code, level, force, intellect, troops, gender, generalsType, arms, country, isEntourage, entourages, warDevices, armsBooks, destinys, skinCode);
+                        Generals generals = DestinyData.getGenerals(name, codes, level, force, intellect, troops, gender, generalsType, arms, country, isEntourage, entourages, warDevices, armsBooks, destinys, skinCode);
 
                         GeneralsUtil.getMaxLevel(generals);//基础满级三维
                         GeneralsUtil.getScience(generals);//科技三维
@@ -268,7 +273,7 @@ public class MainService {
                         }
                         generals.setId(Double.valueOf(map.get("id")).intValue() + "");
 
-                        if (1 == disobeyCode || 2 == disobeyCode || 3 == disobeyCode) {
+                        if (1 == disobeyCode || 2 == disobeyCode || 3 == disobeyCode || 4 == disobeyCode) {
                             Generals copy = new Generals();
 
                             ArmsBook copyBook = new ArmsBook();
@@ -419,7 +424,7 @@ public class MainService {
         List<Generals> nList = new ArrayList<>();//逆命
         List<Generals> tList = new ArrayList<>();//突破
         for(Generals generals : nimingAllList){
-            if(generals.getDestiny().getDisobey()==1 || generals.getDestiny().getDisobey()==3){
+            if(generals.getDestiny().getDisobey()==1 || generals.getDestiny().getDisobey()==3 || generals.getDestiny().getDisobey()==4){
                 nList.add(generals);
             }else if(generals.getDestiny().getDisobey()==2){//突破
                 tList.add(generals);
@@ -443,12 +448,6 @@ public class MainService {
     public static void resultSortAndRank(List<Result> resultList2, List<Result> grilResultList) {
         long t1 = System.currentTimeMillis();
         //结果排序
-//        resultList.sort(new Comparator<Result>() {
-//            @Override
-//            public int compare(Result o1, Result o2) {
-//                return o2.getTotal2() - o1.getTotal2(); //降序
-//            }
-//        });
         for(Result result : resultList2){
             if(result == null){
                 System.out.println();
@@ -579,6 +578,12 @@ public class MainService {
         //结果排序、排名
         MainService.resultSortAndRank(resultList2,grilResultList);
         return resultList2;
+    }
+
+    public static void countCombatName(List<Result> list) {
+        for (Result result : list){
+            result.setCombatName(GeneralsEnum.Combat.getNameByCombat(result.getTotal2()));
+        }
     }
 
 

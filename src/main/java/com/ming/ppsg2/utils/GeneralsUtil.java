@@ -98,10 +98,23 @@ public class GeneralsUtil {
 
             List<Integer> entourages = generals.getEntourages();
             List<Generals> list = new ArrayList<>();
+            List<Integer> codes0 = generals.getCodes();
+            List<Integer> codes1 = null;
             for(Generals generals1 : all){
-                if(generals1.getCode().equals(generals.getCode())){
+                codes1 = generals1.getCodes();
+                boolean flag = false;
+                aa: for (Integer code0 : codes0){
+                    for (Integer code1 : codes1){
+                        if(code0.equals(code1)){
+                            flag = true;
+                            break aa;
+                        }
+                    }
+                }
+                if(flag){
                     continue;
                 }
+
                 generals1.setIsEntourage(true);
 
                 generals1.getArmsBook().setEnableType(null);
@@ -193,7 +206,14 @@ public class GeneralsUtil {
                 copy1.setTotalForce(totalForce + armsBookThree1.getForce());
                 copy1.setTotalIntellect(totalIntellect + armsBookThree1.getIntellect());
                 copy1.setTotalTroops(totalTroops + armsBookThree1.getTroops());
-                boolean b1 = entourages.contains(Integer.valueOf(copy1.getCode()));//是否联协
+                List<Integer> codeList1 = copy1.getCodes();
+                boolean b1 = false;//entourages.contains(Integer.valueOf());//是否联协
+                for(Integer code : codeList1){
+                    b1 = entourages.contains(code);//是否联协
+                    if(b1){
+                        break;
+                    }
+                }
                 //武力联协
                 if(b1){
                     Double d1 = (copy1.getTotalForce()/2+add) * rate;
@@ -215,7 +235,14 @@ public class GeneralsUtil {
                 copy2.setTotalForce(totalForce + armsBookThree2.getForce());
                 copy2.setTotalIntellect(totalIntellect + armsBookThree2.getIntellect());
                 copy2.setTotalTroops(totalTroops + armsBookThree2.getTroops());
-                boolean b2 = entourages.contains(Integer.valueOf(copy2.getCode()));//是否联协
+                List<Integer> codeList2 = copy2.getCodes();
+                boolean b2 = false;//entourages.contains(Integer.valueOf());//是否联协
+                for(Integer code : codeList2){
+                    b2 = entourages.contains(code);//是否联协
+                    if(b2){
+                        break;
+                    }
+                }
                 //智力联协
                 if(b2){
                     Double d1 = (copy2.getTotalForce()/2+add) * rate;
@@ -237,7 +264,15 @@ public class GeneralsUtil {
                 copy3.setTotalForce(totalForce + armsBookThree3.getForce());
                 copy3.setTotalIntellect(totalIntellect + armsBookThree3.getIntellect());
                 copy3.setTotalTroops(totalTroops + armsBookThree3.getTroops());
-                boolean b3 = entourages.contains(Integer.valueOf(copy3.getCode()));//是否联协
+                //boolean b3 = entourages.contains(Integer.valueOf(copy3.getCode()));//是否联协
+                List<Integer> codeList3 = copy3.getCodes();
+                boolean b3 = false;//entourages.contains(Integer.valueOf());//是否联协
+                for(Integer code : codeList3){
+                    b3 = entourages.contains(code);//是否联协
+                    if(b3){
+                        break;
+                    }
+                }
                 //兵力联协
                 if(b3){
                     Double d1 = (copy3.getTotalForce()/2+add) * rate;
@@ -531,8 +566,21 @@ public class GeneralsUtil {
 
         //排除自身的随从武将
         List<Generals> list = new ArrayList<>();
+        List<Integer> codes0 = generals.getCodes();
+        List<Integer> codes1 = null;
         for(Generals generals1 : all){
-            if(!generals1.getCode().equals(generals.getCode())){
+            codes1 = generals1.getCodes();
+            boolean flag = false;
+            aa: for (Integer code0 : codes0){
+                for (Integer code1 : codes1){
+                    if(code0.equals(code1)){
+                        flag = true;
+                        break aa;
+                    }
+                }
+            }
+
+            if(!flag){
                 generals1.setIsEntourage(true);
 
                 generals1.getArmsBook().setEnableType(null);
@@ -627,7 +675,15 @@ public class GeneralsUtil {
             copy1.setTotalForce(totalForce + armsBookThree1.getForce());
             copy1.setTotalIntellect(totalIntellect + armsBookThree1.getIntellect());
             copy1.setTotalTroops(totalTroops + armsBookThree1.getTroops());
-            boolean b1 = entourages.contains(Integer.valueOf(copy1.getCode()));//是否联协
+            //boolean b1 = entourages.contains(Integer.valueOf(copy1.getCode()));//是否联协
+            List<Integer> codeList1 = copy1.getCodes();
+            boolean b1 = false;//entourages.contains(Integer.valueOf());//是否联协
+            for(Integer code : codeList1){
+                b1 = entourages.contains(code);//是否联协
+                if(b1){
+                    break;
+                }
+            }
             //武力联协
             if(b1){
                 Double d1 = (copy1.getTotalForce()/2+add) * rate;
@@ -645,7 +701,15 @@ public class GeneralsUtil {
             copy2.setTotalForce(totalForce + armsBookThree2.getForce());
             copy2.setTotalIntellect(totalIntellect + armsBookThree2.getIntellect());
             copy2.setTotalTroops(totalTroops + armsBookThree2.getTroops());
-            boolean b2 = entourages.contains(Integer.valueOf(copy2.getCode()));//是否联协
+            //boolean b2 = entourages.contains(Integer.valueOf(copy2.getCode()));//是否联协
+            List<Integer> codeList2 = copy2.getCodes();
+            boolean b2 = false;//entourages.contains(Integer.valueOf());//是否联协
+            for(Integer code : codeList2){
+                b2 = entourages.contains(code);//是否联协
+                if(b2){
+                    break;
+                }
+            }
             //智力联协
             if(b2){
                 Double d1 = (copy2.getTotalForce()/2+add) * rate;
@@ -663,7 +727,15 @@ public class GeneralsUtil {
             copy3.setTotalForce(totalForce + armsBookThree3.getForce());
             copy3.setTotalIntellect(totalIntellect + armsBookThree3.getIntellect());
             copy3.setTotalTroops(totalTroops + armsBookThree3.getTroops());
-            boolean b3 = entourages.contains(Integer.valueOf(copy3.getCode()));//是否联协
+            //boolean b3 = entourages.contains(Integer.valueOf(copy3.getCode()));//是否联协
+            List<Integer> codeList3 = copy3.getCodes();
+            boolean b3 = false;//entourages.contains(Integer.valueOf());//是否联协
+            for(Integer code : codeList3){
+                b3 = entourages.contains(code);//是否联协
+                if(b3){
+                    break;
+                }
+            }
             //兵力联协
             if(b3){
                 Double d1 = (copy3.getTotalForce()/2+add) * rate;
@@ -750,7 +822,19 @@ public class GeneralsUtil {
         return top;
     }
 
-
+    //判断上阵和随从是否相同
+    public static boolean checkCode(List<Integer> codes0,List<Integer> codes1){
+        boolean flag = false;
+        aa: for (Integer code0 : codes0){
+            for (Integer code1 : codes1){
+                if(code0.equals(code1)){
+                    flag = true;
+                    break aa;
+                }
+            }
+        }
+        return flag;
+    }
 
     private static Map<Integer,Generals> getGeneralsEntourage(List<Generals> forceList,List<Generals> intellectList,List<Generals> troopsList){
         Map<Integer,Generals> map = new HashMap<>();
@@ -761,13 +845,13 @@ public class GeneralsUtil {
         Generals generals1_2 = null;//智随
         Generals generals1_3 = null;//兵随
         for(Generals generals : intellectList){
-            if(!generals.getCode().equals(generals1_1.getCode())){
+            if(!checkCode(generals.getCodes(),generals1_1.getCodes())){
                 generals1_2 = generals;
                 break;
             }
         }
         for(Generals generals : troopsList){
-            if(!generals.getCode().equals(generals1_1.getCode()) && !generals.getCode().equals(generals1_2.getCode())){
+            if(!checkCode(generals.getCodes(),generals1_1.getCodes()) && !checkCode(generals.getCodes(),generals1_2.getCodes())){
                 generals1_3 = generals;
                 break;
             }
@@ -785,13 +869,13 @@ public class GeneralsUtil {
         Generals generals2_2 = null;//智随
         Generals generals2_3 = null;//兵随
         for(Generals generals : troopsList){
-            if(!generals.getCode().equals(generals2_1.getCode())){
+            if(!checkCode(generals.getCodes(),generals2_1.getCodes())){
                 generals2_3 = generals;
                 break;
             }
         }
         for(Generals generals : intellectList){
-            if(!generals.getCode().equals(generals2_1.getCode()) && !generals.getCode().equals(generals2_3.getCode())){
+            if(!checkCode(generals.getCodes(),generals2_1.getCodes()) && !checkCode(generals.getCodes(),generals2_3.getCodes())){
                 generals2_2 = generals;
                 break;
             }
@@ -809,13 +893,13 @@ public class GeneralsUtil {
         Generals generals3_2 = null;//智随
         Generals generals3_3 = troopsList.get(0);//兵随
         for(Generals generals : forceList){
-            if(!generals.getCode().equals(generals3_3.getCode())){
+            if(!checkCode(generals.getCodes(),generals3_3.getCodes())){
                 generals3_1 = generals;
                 break;
             }
         }
         for(Generals generals : intellectList){
-            if(!generals.getCode().equals(generals3_3.getCode()) && !generals.getCode().equals(generals3_1.getCode())){
+            if(!checkCode(generals.getCodes(),generals3_3.getCodes()) && !checkCode(generals.getCodes(),generals3_1.getCodes())){
                 generals3_2 = generals;
                 break;
             }
@@ -833,13 +917,13 @@ public class GeneralsUtil {
         Generals generals4_2 = null;//智随
         Generals generals4_3 = troopsList.get(0);//兵随
         for(Generals generals : intellectList){
-            if(!generals.getCode().equals(generals4_3.getCode())){
+            if(!checkCode(generals.getCodes(),generals4_3.getCodes())){
                 generals4_2 = generals;
                 break;
             }
         }
         for(Generals generals : forceList){
-            if(!generals.getCode().equals(generals4_3.getCode()) && !generals.getCode().equals(generals4_2.getCode())){
+            if(!checkCode(generals.getCodes(),generals4_3.getCodes()) && !checkCode(generals.getCodes(),generals4_2.getCodes())){
                 generals4_1 = generals;
                 break;
             }
@@ -857,13 +941,13 @@ public class GeneralsUtil {
         Generals generals5_2 = intellectList.get(0);//智随
         Generals generals5_3 = null;//兵随
         for(Generals generals : troopsList){
-            if(!generals.getCode().equals(generals5_2.getCode())){
+            if(!checkCode(generals.getCodes(),generals5_2.getCodes())){
                 generals5_3 = generals;
                 break;
             }
         }
         for(Generals generals : forceList){
-            if(!generals.getCode().equals(generals5_2.getCode()) && !generals.getCode().equals(generals5_3.getCode())){
+            if(!checkCode(generals.getCodes(),generals5_2.getCodes()) && !checkCode(generals.getCodes(),generals5_3.getCodes())){
                 generals5_1 = generals;
                 break;
             }
@@ -881,13 +965,13 @@ public class GeneralsUtil {
         Generals generals6_2 = intellectList.get(0);//智随
         Generals generals6_3 = null;//兵随
         for(Generals generals : forceList){
-            if(!generals.getCode().equals(generals6_2.getCode())){
+            if(!checkCode(generals.getCodes(),generals6_2.getCodes())){
                 generals6_1 = generals;
                 break;
             }
         }
         for(Generals generals : troopsList){
-            if(!generals.getCode().equals(generals6_2.getCode()) && !generals.getCode().equals(generals6_1.getCode())){
+            if(!checkCode(generals.getCodes(),generals6_2.getCodes()) && !checkCode(generals.getCodes(),generals6_1.getCodes())){
                 generals6_3 = generals;
                 break;
             }
@@ -1967,7 +2051,7 @@ public class GeneralsUtil {
                         wp.setForce0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
-                        wp.setGeneralsCode(g.getCode());
+                        wp.setGeneralsCodes(g.getCodes());
                         t += d;
                     }
                     warpathList1.add(wp);
@@ -1978,7 +2062,7 @@ public class GeneralsUtil {
                         wp.setIntellect0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
-                        wp.setGeneralsCode(g.getCode());
+                        wp.setGeneralsCodes(g.getCodes());
                         t += d;
                     }
                     warpathList2.add(wp);
@@ -1989,7 +2073,7 @@ public class GeneralsUtil {
                         wp.setTroops0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
-                        wp.setGeneralsCode(g.getCode());
+                        wp.setGeneralsCodes(g.getCodes());
                         t += d;
                     }
                     warpathList3.add(wp);
@@ -2000,7 +2084,7 @@ public class GeneralsUtil {
                         wp.setForce0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
-                        wp.setGeneralsCode(g.getCode());
+                        wp.setGeneralsCodes(g.getCodes());
                         t += d;
                     }
                     warpathList4.add(wp);
@@ -2011,7 +2095,7 @@ public class GeneralsUtil {
                         wp.setIntellect0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
-                        wp.setGeneralsCode(g.getCode());
+                        wp.setGeneralsCodes(g.getCodes());
                         t += d;
                     }
                     warpathList5.add(wp);
@@ -2022,7 +2106,7 @@ public class GeneralsUtil {
                         wp.setTroops0(d);
                         wp.setGroup(warpath.getCode());
                         wp.setGroupName(warpath.getName());
-                        wp.setGeneralsCode(g.getCode());
+                        wp.setGeneralsCodes(g.getCodes());
                         t += d;
                     }
                     warpathList6.add(wp);
@@ -2057,9 +2141,9 @@ public class GeneralsUtil {
         }
 
         for(Warpath warpath : finalWarpathList){
-            if(warpath.getGeneralsCode() != null){
+            if(warpath.getGeneralsCodes() != null){
                 for(Generals generals : allList){
-                    if(warpath.getGeneralsCode().equals(generals.getCode())){
+                    if(checkCode(warpath.getGeneralsCodes(),generals.getCodes())){
                         generals.getWarpath().setForce0(generals.getWarpath().getForce0() + warpath.getForce0());
                         generals.getWarpath().setIntellect0(generals.getWarpath().getIntellect0() + warpath.getIntellect0());
                         generals.getWarpath().setTroops0(generals.getWarpath().getTroops0() + warpath.getTroops0());
@@ -2068,8 +2152,6 @@ public class GeneralsUtil {
                 }
             }
         }
-
-
     }
 
     //战阵
@@ -3138,14 +3220,24 @@ public class GeneralsUtil {
                 map.putIfAbsent(GeneralsEnum.Countrys.shuCountry.getName(),result);
             }else if("5吴".equals(result.getCountryNames())){
                 map.putIfAbsent(GeneralsEnum.Countrys.wuCountry.getName(),result);
-            }else if(GeneralsEnum.SymbolsSecondAttr.qunAllRate.getName().equals(result.getSymbolsList().get(0).getAttrName4())){
-                map.putIfAbsent(GeneralsEnum.Countrys.qunMashupCountry.getName(),result);
-            }else if(GeneralsEnum.SymbolsSecondAttr.weiAllRate.getName().equals(result.getSymbolsList().get(0).getAttrName4())){
-                map.putIfAbsent(GeneralsEnum.Countrys.weiMashupCountry.getName(),result);
-            }else if(GeneralsEnum.SymbolsSecondAttr.shuAllRate.getName().equals(result.getSymbolsList().get(0).getAttrName4())){
-                map.putIfAbsent(GeneralsEnum.Countrys.shuMashupCountry.getName(),result);
-            }else if(GeneralsEnum.SymbolsSecondAttr.wuAllRate.getName().equals(result.getSymbolsList().get(0).getAttrName4())){
-                map.putIfAbsent(GeneralsEnum.Countrys.wuMashupCountry.getName(),result);
+            }else{
+                String qunAllRate = GeneralsEnum.SymbolsSecondAttr.qunAllRate.getName();
+                String weiAllRate = GeneralsEnum.SymbolsSecondAttr.weiAllRate.getName();
+                String shuAllRate = GeneralsEnum.SymbolsSecondAttr.shuAllRate.getName();
+                String wuAllRate = GeneralsEnum.SymbolsSecondAttr.wuAllRate.getName();
+                String attrName1 = result.getSymbolsList().get(0).getAttrName1();
+                String attrName2 = result.getSymbolsList().get(0).getAttrName2();
+                String attrName3 = result.getSymbolsList().get(0).getAttrName3();
+                String attrName4 = result.getSymbolsList().get(0).getAttrName4();
+                if(qunAllRate.equals(attrName1) || qunAllRate.equals(attrName2) || qunAllRate.equals(attrName3) || qunAllRate.equals(attrName4)){
+                    map.putIfAbsent(GeneralsEnum.Countrys.qunMashupCountry.getName(),result);
+                }else if(weiAllRate.equals(attrName1) || weiAllRate.equals(attrName2) || weiAllRate.equals(attrName3) || weiAllRate.equals(attrName4)){
+                    map.putIfAbsent(GeneralsEnum.Countrys.weiMashupCountry.getName(),result);
+                }else if(shuAllRate.equals(attrName1) || shuAllRate.equals(attrName2) || shuAllRate.equals(attrName3) || shuAllRate.equals(attrName4)){
+                    map.putIfAbsent(GeneralsEnum.Countrys.shuMashupCountry.getName(),result);
+                }else if(wuAllRate.equals(attrName1) || wuAllRate.equals(attrName2) || wuAllRate.equals(attrName3) || wuAllRate.equals(attrName4)){
+                    map.putIfAbsent(GeneralsEnum.Countrys.wuMashupCountry.getName(),result);
+                }
             }
         }
         return map;

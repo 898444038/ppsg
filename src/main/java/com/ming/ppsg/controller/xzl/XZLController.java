@@ -1,8 +1,13 @@
 package com.ming.ppsg.controller.xzl;
 
-import com.ming.ppsg2.entity.*;
+import com.ming.ppsg2.entity.ArmsBook;
+import com.ming.ppsg2.entity.Destiny;
+import com.ming.ppsg2.entity.Generals;
+import com.ming.ppsg2.entity.Result;
+import com.ming.ppsg2.entity.Symbols;
+import com.ming.ppsg2.entity.ThreeDimensional;
+import com.ming.ppsg2.entity.Warpath;
 import com.ming.ppsg2.enums.GeneralsEnum;
-import com.ming.ppsg2.utils.DestinyData;
 import com.ming.ppsg2.utils.ExcelReaderUtil;
 import com.ming.ppsg2.utils.GeneralsUtil;
 import com.ming.ppsg2.utils.NumberUtil;
@@ -20,7 +25,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Log
 @Controller
@@ -217,7 +228,7 @@ public class XZLController {
 
             Object[] destinys = {Integer.valueOf(list.get(25)),Integer.valueOf(list.get(26)),Integer.valueOf(list.get(27)),Boolean.valueOf(list.get(28)),disobeyCode,null,null,null};
 
-            Generals generals = DestinyData.getGenerals(name,code,level,force,intellect,troops,gender,generalsType,arms,country,isEntourage,entourages,warDevices,armsBooks,destinys,skinCode);
+            Generals generals = null;//DestinyData.getGenerals(name,code,level,force,intellect,troops,gender,generalsType,arms,country,isEntourage,entourages,warDevices,armsBooks,destinys,skinCode);
 
 
             GeneralsUtil.getMaxLevel(generals);//基础满级三维
@@ -361,10 +372,10 @@ public class XZLController {
             boolean no = true;
             a:for(Generals generals1 : generalsList){
                 b:for(Generals generals2 : generalsList){
-                    if(generals1.getCode().equals(generals2.getCode()) && !generals1.getId().equals(generals2.getId())){
+                    /*if(generals1.getCode().equals(generals2.getCode()) && !generals1.getId().equals(generals2.getId())){
                         no = false;
                         break a;
-                    }
+                    }*/
                 }
             }
             if(!no){

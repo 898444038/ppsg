@@ -23,12 +23,12 @@ public class Main2 {
     public static void main(String[] args) throws Exception {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.射日黄忠\n" +
-                "2.修复部分武将错误的命格三维\n"+
+                "更新内容：1.河间双雄\n" +
+                "\n"+
                 "\n";
         top+= "";
         String advert = "";//广告
-        String fileRemark = "(射日黄忠)";
+        String fileRemark = "(河间双雄)";
         //计算：992/658/1895
         //实际：988/654/1947
 
@@ -38,6 +38,7 @@ public class Main2 {
 //        appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
 //        appointGeneralsList.add(new AppointGenerals("飞将吕布"));
 //        appointGeneralsList.add(new AppointGenerals("灵雎吕姬"));
+//        appointGeneralsList.add(new AppointGenerals("河间双雄"));
 
         List<AppointExcludeGenerals> excludeGeneralsList = new ArrayList<>();
 //        excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
@@ -101,19 +102,29 @@ public class Main2 {
         MainService.allEntourageBillboard(allEntourage,forceTopList,intellectTopList,troopsTopList);
 
         Map<String,Object> model = new HashMap<>();
+        List<Result> simplifyList = GeneralsUtil.getSimplifyList(resultList2);
+        List<Result> list2 = GeneralsUtil.getSimplifyList(resultList2);
+        List<Result> grilList = GeneralsUtil.getSimplifyList(resultList2);
         model.put("top",top);
         model.put("advert",advert);
-        model.put("simplifyList2",GeneralsUtil.getSimplifyList(resultList2));//简表（特殊战器）
         if(resultList2.size()>=100){
-            model.put("list2",resultList2.subList(0,100));//虚战力表（特殊战器）
+            list2 = resultList2.subList(0,100);//虚战力表（特殊战器）
         }else{
-            model.put("list2",resultList2);//虚战力表（特殊战器）
+            list2 = resultList2;//虚战力表（特殊战器）
         }
         if(grilResultList.size()>=100) {
-            model.put("grilList", grilResultList.subList(0, 100));//虚战力表（女队）
+            grilList = grilResultList.subList(0, 100);//虚战力表（女队）
         }else{
-            model.put("grilList", grilResultList);
+            grilList = grilResultList;
         }
+
+        MainService.countCombatName(simplifyList);
+        MainService.countCombatName(list2);
+        MainService.countCombatName(grilList);
+        model.put("simplifyList2",simplifyList);//简表（特殊战器）
+        model.put("list2",list2);//虚战力表（特殊战器）
+        model.put("grilList", grilList);//虚战力表（女队）
+
         model.put("forceTopList",forceTopList);
         model.put("intellectTopList",intellectTopList);
         model.put("troopsTopList",troopsTopList);

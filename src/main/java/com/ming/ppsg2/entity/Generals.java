@@ -29,7 +29,7 @@ public class Generals {
     //武将名称
     private String name;
     //武将唯一编码  GeneralsEnum.GeneralsCode
-    private String code;
+    private List<Integer> codes;
     //是否‘限’卡
     private Boolean limit;
     //是否逆命
@@ -460,12 +460,12 @@ public class Generals {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public List<Integer> getCodes() {
+        return codes;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodes(List<Integer> codes) {
+        this.codes = codes;
     }
 
     public List<Integer> getEntourages() {

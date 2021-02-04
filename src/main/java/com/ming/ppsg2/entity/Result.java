@@ -10,6 +10,7 @@ public class Result {
 
     private Integer total;//总战力
     private Integer total2;//总战力（特殊战器）
+    private String combatName;//战力名称
 
     private Integer weiCount;//魏国数量
     private Integer shuCount;//蜀国数量
@@ -45,6 +46,14 @@ public class Result {
 //    private Generals generals5;
 
     public Result() {
+    }
+
+    public String getCombatName() {
+        return combatName;
+    }
+
+    public void setCombatName(String combatName) {
+        this.combatName = combatName;
     }
 
     public String getSymbolsTopSecond() {

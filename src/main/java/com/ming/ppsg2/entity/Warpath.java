@@ -1,5 +1,7 @@
 package com.ming.ppsg2.entity;
 
+import java.util.List;
+
 public class Warpath {
 
     private Integer personal;
@@ -7,7 +9,8 @@ public class Warpath {
     private Integer group;
     private String groupName;
 
-    private String generalsCode;
+    //private String generalsCode;
+    private List<Integer> generalsCodes;
 
     private Integer force = 0;
     private Integer intellect = 0;
@@ -28,12 +31,12 @@ public class Warpath {
         this.personalName = personalName;
     }
 
-    public String getGeneralsCode() {
-        return generalsCode;
+    public List<Integer> getGeneralsCodes() {
+        return generalsCodes;
     }
 
-    public void setGeneralsCode(String generalsCode) {
-        this.generalsCode = generalsCode;
+    public void setGeneralsCodes(List<Integer> generalsCodes) {
+        this.generalsCodes = generalsCodes;
     }
 
     public Integer getPersonal() {
@@ -118,7 +121,7 @@ public class Warpath {
         sb.append(", personalName=").append(personalName);
         sb.append(", group=").append(group);
         sb.append(", groupName=").append(groupName);
-        sb.append(", generalsCode=").append(generalsCode);
+        sb.append(", generalsCodes=").append(generalsCodes);
         sb.append(", force=").append(force);
         sb.append(", intellect=").append(intellect);
         sb.append(", troops=").append(troops);

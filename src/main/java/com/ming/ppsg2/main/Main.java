@@ -243,7 +243,7 @@ public class Main {
             Integer destinyTroops = map.get("destinyTroops")==null?null:Double.valueOf(map.get("destinyTroops")).intValue();
             Object[] destinys = {destinyForce,destinyIntellect,destinyTroops,Boolean.valueOf(map.get("isDestiny")),disobeyCode,null,null,null};
 
-            Generals generals = DestinyData.getGenerals(name,code,level,force,intellect,troops,gender,generalsType,arms,country,isEntourage,entourages,warDevices,armsBooks,destinys,skinCode);
+            Generals generals = null;//DestinyData.getGenerals(name,code,level,force,intellect,troops,gender,generalsType,arms,country,isEntourage,entourages,warDevices,armsBooks,destinys,skinCode);
 
 
             GeneralsUtil.getMaxLevel(generals);//基础满级三维

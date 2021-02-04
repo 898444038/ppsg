@@ -497,7 +497,9 @@ public enum GeneralsEnum {
         not(0,"未开命格",0,0,0,0,0,0,0,0,0,0,0),
         disobey(1,"逆命",1220,1220,0,0,300,680,1220,1920,1920,100,10),
         breach(2,"突破",0,0,0,0,300,680,680,680,680,4,5),
-        disobey5(3,"逆命5",1220,1220,1220,1220,300,680,1220,1920,2380,200,40);
+        disobey5(3,"逆命5",1220,1220,1220,1220,300,680,1220,1920,2380,200,40),
+        fit(4,"合体",1220,1220,1220,1220,300,680,1220,1920,2380,200,40)
+        ;
 
         private Integer code;
         private String name;
@@ -1139,7 +1141,7 @@ public enum GeneralsEnum {
         skin_28(28,"狂影奇袭","回禄魏延",30,30,80),
         skin_29(29,"火凤燎原","陨星庞统",30,30,80),
         skin_30(30,"云蒸龙变","砺战赵云",30,30,80),
-        skin_31(31,"雷奔云谲","砺战赵云",30,30,80),
+        skin_31(31,"雷奔云谲","",30,30,80),
         ;
         private Integer code;
         private String name;
@@ -1304,14 +1306,14 @@ public enum GeneralsEnum {
         dw_8(68, "帝王8级",375000),
         dw_9(69, "帝王9级",398000),
         dh_1(71, "帝皇1级",421000),//419000-421000
-        dh_2(72, "帝皇2级",null),
-        dh_3(73, "帝皇3级",null),
-        dh_4(74, "帝皇4级",null),
-        dh_5(75, "帝皇5级",null),
-        dh_6(76, "帝皇6级",null),
-        dh_7(77, "帝皇7级",null),
-        dh_8(78, "帝皇8级",null),
-        dh_9(79, "帝皇9级",null),
+        dh_2(72, "帝皇2级",445000),
+        dh_3(73, "帝皇3级",999999),
+//        dh_4(74, "帝皇4级",null),
+//        dh_5(75, "帝皇5级",null),
+//        dh_6(76, "帝皇6级",null),
+//        dh_7(77, "帝皇7级",null),
+//        dh_8(78, "帝皇8级",null),
+//        dh_9(79, "帝皇9级",null),
         ;
         private Integer code;
         private String name;
@@ -1333,6 +1335,20 @@ public enum GeneralsEnum {
 
         public Integer getCombat() {
             return combat;
+        }
+
+        public static String getNameByCombat(int combat){
+            //Map<Integer,Integer> map = new LinkedHashMap<>();
+            GeneralsEnum.Combat[] combats = GeneralsEnum.Combat.values();
+            for (int i=1;i<combats.length;i++){
+                int combat1 = combats[i-1].getCombat();
+                int combat2 = combats[i].getCombat();
+                if(combat >= combat1 && combat < combat2){
+                    return combats[i-1].getName();
+                }
+                //map.put(combats[i-1].getCombat(),combats[i].getCombat());
+            }
+            return null;
         }
     }
 
