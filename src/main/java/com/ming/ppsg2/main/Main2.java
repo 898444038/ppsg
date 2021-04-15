@@ -23,12 +23,12 @@ public class Main2 {
     public static void main(String[] args) throws Exception {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.河间双雄\n" +
-                "\n"+
+                "更新内容：1.新增逆命【悦灵蔡文姬】\n" +
+                "2.新增幻化 道玄诸葛果【月雅清鸣】 剑引张郃【剑锋祭魂】\n"+
                 "\n";
         top+= "";
         String advert = "";//广告
-        String fileRemark = "(河间双雄)";
+        String fileRemark = "(悦灵蔡文姬)";
         //计算：992/658/1895
         //实际：988/654/1947
 
