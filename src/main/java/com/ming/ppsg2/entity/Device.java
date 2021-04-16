@@ -4,6 +4,14 @@ import com.ming.ppsg2.enums.GeneralsEnum;
 
 import java.math.BigDecimal;
 
+/**
+ * 炼器：
+ * 0 -> 1 : 31/0/0/0%
+ * 1 -> 2 : 31/0/31/0%
+ * 2 -> 3 : 31/31/31/0%
+ * 3 -> 4 : 31/31/62/0% 200/20
+ * 4 -> 5 : 49/49/70/0% 200/20
+ */
 public class Device {
     //战器类型名称
     private String name;
@@ -21,6 +29,10 @@ public class Device {
     private ThreeDimensional deviceQuenchingThreeDimensional;
     //战器专属三维
     private ThreeDimensional deviceExclusiveThreeDimensional;
+    //战器觉醒三维
+    private ThreeDimensional deviceAwakenThreeDimensional;
+    //战器炼器三维
+    private ThreeDimensional deviceRefinerThreeDimensional;
 
     public Device() {
     }
@@ -52,6 +64,22 @@ public class Device {
         BigDecimal qt = b3.multiply(rates).multiply(doubles);
         deviceQuenchingThreeDimensional.setTroops(qt.intValue());
         deviceQuenchingThreeDimensional.setTotalZl((qf.intValue()+qi.intValue()+qt.intValue())*2);
+    }
+
+    public ThreeDimensional getDeviceAwakenThreeDimensional() {
+        return deviceAwakenThreeDimensional;
+    }
+
+    public void setDeviceAwakenThreeDimensional(ThreeDimensional deviceAwakenThreeDimensional) {
+        this.deviceAwakenThreeDimensional = deviceAwakenThreeDimensional;
+    }
+
+    public ThreeDimensional getDeviceRefinerThreeDimensional() {
+        return deviceRefinerThreeDimensional;
+    }
+
+    public void setDeviceRefinerThreeDimensional(ThreeDimensional deviceRefinerThreeDimensional) {
+        this.deviceRefinerThreeDimensional = deviceRefinerThreeDimensional;
     }
 
     public String getName() {

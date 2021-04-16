@@ -45,7 +45,7 @@ public class MainService {
      * 从excel获取基础数据
      */
     public static List<Map<String, String>> getExcelData(List<AppointExcludeGenerals> excludeGeneralsList) {
-        String path = "/excel/data_temp3.xlsx";
+        String path = "/excel/data_temp4.xlsx";
         System.out.println("开始读取EXCEL："+path);
         long t1 = System.currentTimeMillis();
         ReadWriteExcel readWriteExcel = new ReadWriteExcel();
@@ -99,6 +99,13 @@ public class MainService {
                                     break;
                                 }
                             }
+                        }
+
+                        boolean isResonance = false;
+                        if("TRUE".equalsIgnoreCase(map.get("resonance"))){
+                            isResonance = true;
+                        }else{
+                            isResonance = false;
                         }
 
                         Integer level = 1;
@@ -250,17 +257,17 @@ public class MainService {
                         Integer destinyTroops = map.get("destinyTroops") == null ? null : Double.valueOf(map.get("destinyTroops")).intValue();
                         Object[] destinys = {destinyForce, destinyIntellect, destinyTroops, Boolean.valueOf(map.get("isDestiny")), disobeyCode, null, null, null};
 
-                        Generals generals = DestinyData.getGenerals(name, codes, level, force, intellect, troops, gender, generalsType, arms, country, isEntourage, entourages, warDevices, armsBooks, destinys, skinCode);
+                        Generals generals = DestinyData.getGenerals(name, codes, level, force, intellect, troops, gender, generalsType, arms, country, isEntourage, entourages, warDevices, armsBooks, destinys, skinCode, isResonance);
 
                         GeneralsUtil.getMaxLevel(generals);//基础满级三维
                         GeneralsUtil.getScience(generals);//科技三维
                         GeneralsUtil.getHolyStone(generals);//四圣石三维
+                        GeneralsUtil.getDestiny(generals);//命格三维(在战器前计算)
                         //GeneralsUtil.getWarDevice(generals);//战器三维
                         GeneralsUtil.getWarDevice2(generals);//特殊战器三维
                         GeneralsUtil.getArmsBook(generals);//兵种兵书三维
                         GeneralsUtil.getWillSoul(generals);//将魂三维
                         GeneralsUtil.getBattleArray(generals);//战阵三维
-                        GeneralsUtil.getDestiny(generals);//命格三维
                         GeneralsUtil.getSkin(generals);//幻化三维
                         GeneralsUtil.getBattleArrayWay(generals);//阵法三维
                         //GeneralsUtil.getOther(generals);//设置其他战力加成

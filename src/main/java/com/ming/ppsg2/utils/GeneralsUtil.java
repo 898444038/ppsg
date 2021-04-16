@@ -1095,9 +1095,12 @@ public class GeneralsUtil {
         ThreeDimensional deviceStrengthen = null;
         ThreeDimensional deviceQuenching = new ThreeDimensional(0,0,0);
         ThreeDimensional deviceExclusive = null;
+        ThreeDimensional deviceAwaken = null;//觉醒三维
+        ThreeDimensional deviceRefiner = null;//炼器三维
         String quenchingName1 = "";
         String quenchingName2 = "";
 
+        ThreeDimensional destinyThree = generals.getDestinyThreeDimensional();
         for(GeneralsEnum.WarDevice warDevice : list){
             force = warDevice.getForce() + warDevice.getStrengthenForce();
             intellect = warDevice.getIntellect() + warDevice.getStrengthenIntellect();
@@ -1124,6 +1127,28 @@ public class GeneralsUtil {
             intellect += warDevice.getExclusiveIntellect();
             troops += warDevice.getExclusiveTroops();
             deviceExclusive = new ThreeDimensional(warDevice.getExclusiveForce(),warDevice.getExclusiveIntellect(),warDevice.getExclusiveTroops());
+
+            //觉醒
+            force += warDevice.getAwakenForce();
+            intellect += warDevice.getAwakenIntellect();
+            troops += warDevice.getAwakenTroops();
+            deviceAwaken = new ThreeDimensional(warDevice.getAwakenForce(),warDevice.getAwakenIntellect(),warDevice.getAwakenTroops());
+
+            //炼器 Refiner
+            int force0 = 49;
+            int intellect0 = 49;
+            int troops0 = 70;
+            if(generals.getIsResonance()){
+                force0 = 1522 + (int)(destinyThree.getForce()*0.7);
+                intellect0 = 646 + (int)(destinyThree.getIntellect()*0.7);
+                troops0 = 3800 + (int)(destinyThree.getTroops()*0.7);
+            }
+            force += force0;
+            intellect += intellect0;
+            troops += troops0;
+            deviceRefiner = new ThreeDimensional(force0,intellect0,troops0);
+
+            //器灵
         }
         three.setForce(force);
         three.setIntellect(intellect);
@@ -1141,6 +1166,8 @@ public class GeneralsUtil {
         device.setDeviceStrengthenThreeDimensional(deviceStrengthen);
         device.setDeviceQuenchingThreeDimensional(deviceQuenching);
         device.setDeviceExclusiveThreeDimensional(deviceExclusive);
+        device.setDeviceAwakenThreeDimensional(deviceAwaken);
+        device.setDeviceRefinerThreeDimensional(deviceRefiner);
         generals.setDevice2(device);
         return three;
     }

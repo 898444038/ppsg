@@ -48,6 +48,8 @@ public class Generals {
     private Integer generalsType;
     //是否是随从
     private Boolean isEntourage;
+    //是否共鸣
+    private Boolean isResonance;
     //是否是联协
     private Boolean isAssociation;
     //联协
@@ -164,6 +166,14 @@ public class Generals {
     private String remark;
 
     public Generals(){}
+
+    public Boolean getIsResonance() {
+        return isResonance;
+    }
+
+    public void setIsResonance(Boolean isResonance) {
+        this.isResonance = isResonance;
+    }
 
     public ThreeDimensional getBattleArrayWayThreeDimensional() {
         return battleArrayWayThreeDimensional;

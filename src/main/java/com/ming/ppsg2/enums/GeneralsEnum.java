@@ -233,11 +233,11 @@ public enum GeneralsEnum {
 //        gun2(8,"枪2","特殊枪",133,133,133,273,178,445,1.0,1.0,1.0,288,288,288,458,458,1220),
 //        arch2(9,"弓2","特殊弓",160,106,133,224,227,445,1.0,1.0,1.0,288,288,288,458,458,1220),
 //        fan2(10,"扇2","特殊扇",133,133,133,224,273,399,1.0,1.0,1.0,288,288,288,458,458,1220),
-        knife2(6,"刀2","刀",133,106,160,224,178,494,1.0,1.0,1.0,288,288,288,458,458,1220),
-        sword2(7,"剑2","特殊剑",133,106,160,227,224,445,1.0,1.0,1.0,288,288,288,458,458,1220),
-        gun2(8,"枪2","枪",160,106,133,273,178,445,1.0,1.0,1.0,288,288,288,458,458,1220),
-        arch2(9,"弓2","弓",133,133,133,224,227,445,1.0,1.0,1.0,288,288,288,458,458,1220),
-        fan2(10,"扇2","特殊扇",133,133,133,224,273,399,1.0,1.0,1.0,288,288,288,458,458,1220),
+        knife2(6,"刀2","刀",133,106,160,224,178,494,1.0,1.0,1.0,288,288,288,458,458,1220,65,65,380),
+        sword2(7,"剑2","特殊剑",133,106,160,227,224,445,1.0,1.0,1.0,288,288,288,458,458,1220,80,80,320),
+        gun2(8,"枪2","枪",160,106,133,273,178,445,1.0,1.0,1.0,288,288,288,458,458,1220,125,60,270),
+        arch2(9,"弓2","弓",133,133,133,224,227,445,1.0,1.0,1.0,288,288,288,458,458,1220,115,115,180),
+        fan2(10,"扇2","特殊扇",133,133,133,224,273,399,1.0,1.0,1.0,288,288,288,458,458,1220,60,125,270),
         ;
 
         private Integer code;
@@ -258,6 +258,9 @@ public enum GeneralsEnum {
         private Integer passive1;//被动1战力
         private Integer passive2;//被动2战力
         private Integer passive3;//被动3战力
+        private Integer awakenForce;//觉醒武力
+        private Integer awakenIntellect;//觉醒智力
+        private Integer awakenTroops;//觉醒兵力
         WarDevice(){}
 
         WarDevice(Integer code, String name,String desc, Integer force, Integer intellect, Integer troops, Integer strengthenForce, Integer strengthenIntellect, Integer strengthenTroops, Double quenchingForceRate, Double quenchingIntellectRate, Double quenchingTroopsRate, Integer exclusiveForce, Integer exclusiveIntellect, Integer exclusiveTroops, Integer passive1, Integer passive2, Integer passive3) {
@@ -279,6 +282,30 @@ public enum GeneralsEnum {
             this.passive1 = passive1;
             this.passive2 = passive2;
             this.passive3 = passive3;
+        }
+
+        WarDevice(Integer code, String name, String desc, Integer force, Integer intellect, Integer troops, Integer strengthenForce, Integer strengthenIntellect, Integer strengthenTroops, Double quenchingForceRate, Double quenchingIntellectRate, Double quenchingTroopsRate, Integer exclusiveForce, Integer exclusiveIntellect, Integer exclusiveTroops, Integer passive1, Integer passive2, Integer passive3, Integer awakenForce, Integer awakenIntellect, Integer awakenTroops) {
+            this.code = code;
+            this.name = name;
+            this.desc = desc;
+            this.force = force;
+            this.intellect = intellect;
+            this.troops = troops;
+            this.strengthenForce = strengthenForce;
+            this.strengthenIntellect = strengthenIntellect;
+            this.strengthenTroops = strengthenTroops;
+            this.quenchingForceRate = quenchingForceRate;
+            this.quenchingIntellectRate = quenchingIntellectRate;
+            this.quenchingTroopsRate = quenchingTroopsRate;
+            this.exclusiveForce = exclusiveForce;
+            this.exclusiveIntellect = exclusiveIntellect;
+            this.exclusiveTroops = exclusiveTroops;
+            this.passive1 = passive1;
+            this.passive2 = passive2;
+            this.passive3 = passive3;
+            this.awakenForce = awakenForce;
+            this.awakenIntellect = awakenIntellect;
+            this.awakenTroops = awakenTroops;
         }
 
         public String getName() {
@@ -343,6 +370,18 @@ public enum GeneralsEnum {
 
         public Integer getPassive3() {
             return passive3;
+        }
+
+        public Integer getAwakenForce() {
+            return awakenForce;
+        }
+
+        public Integer getAwakenIntellect() {
+            return awakenIntellect;
+        }
+
+        public Integer getAwakenTroops() {
+            return awakenTroops;
         }
     }
 

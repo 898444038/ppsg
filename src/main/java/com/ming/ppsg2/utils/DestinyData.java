@@ -197,7 +197,7 @@ public class DestinyData {
 
     public static Generals getGenerals(String name,List<Integer> codes,Integer level,Integer force,Integer intellect,Integer troops,Integer gender,
         Integer generalsType,Integer arms,Integer country,Boolean isEntourage,Integer[] entourages,Integer[] warDevices,
-        Integer[][] armsBooks,Object[] destinys,Integer skinCode
+        Integer[][] armsBooks,Object[] destinys,Integer skinCode,Boolean isResonance
     ){
         Generals generals = new Generals();
         generals.setName(name);
@@ -210,6 +210,7 @@ public class DestinyData {
         generals.setGeneralsType(generalsType);
         generals.setArms(arms);
         generals.setCountry(country);
+        generals.setIsResonance(isResonance);
         generals.setIsEntourage(isEntourage);
         List<Integer> entourageList = new ArrayList<>(Arrays.asList(entourages));
         generals.setEntourages(entourageList);
