@@ -1457,7 +1457,7 @@ public enum GeneralsEnum {
     }
 */
     public enum Device implements GeneralsEnumInterface {
-        dao_1001(1001, "青龙偃月刀",WarDevice.knife2, new String[]{"关羽","关平"}, new String[]{"武圣关羽","一骑关羽","汉寿亭候云长","刀魂关平"}),
+        dao_1001(1001, "青龙偃月刀",WarDevice.knife2, new String[]{"关羽","关平"}, new String[]{"武圣关羽","一骑关羽","汉寿亭侯云长","刀魂关平"}),
         dao_1002(1002, "古锭刀",WarDevice.knife2, new String[]{"孙坚","华雄"}, new String[]{"武烈孙坚","猛虎孙坚","战魂华雄"}),
         dao_1003(1003, "破军斩",WarDevice.knife2, new String[]{"夏侯惇"}, new String[]{"独目夏侯惇","苍狼夏侯惇"}),
         dao_1004(1004, "金刚断",WarDevice.knife2, new String[]{"黄盖"}, new String[]{"赤忠黄盖"}),

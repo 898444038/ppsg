@@ -705,12 +705,18 @@ public class MainService {
         //List<String> resonanceList = new ArrayList<>();
         ThreeDimensional three = null;
         for(Generals generals : nimingAllList){
+            if(generals.getOriginalName().equals("飞将吕布")){
+                System.out.println();
+            }
             int total = 0;
             Device dev = null;
             ThreeDimensional three0 = null;
             ThreeDimensional threeDestiny = null;
             ThreeDimensional threeQiLing = null;
             for (Device d : deviceList){
+                if(d.getDeviceName().equals("青龙偃月刀") || d.getDeviceName().equals("方天画戟")){
+                    System.out.println();
+                }
                 int f = 0;
                 int i = 0;
                 int t = 0;
@@ -761,7 +767,7 @@ public class MainService {
                 t+=tt*0.8*3;
 
                 int totalCombat = (f+i+t)*2;
-                if(totalCombat > total){
+                if(totalCombat >= total){
                     total = totalCombat;
                     dev = d;
                     three0 = new ThreeDimensional();
@@ -777,7 +783,7 @@ public class MainService {
             }
             Device device = new Device();
             device.setName(dev.getName());
-            device.setDesc(dev.getDesc());
+            device.setDesc(dev.getDesc()+"|"+dev.getDeviceName());
             device.setDeviceName(dev.getDeviceName());
             device.setGenerals2(dev.getGenerals2());
             device.setResonance(dev.getResonance());
