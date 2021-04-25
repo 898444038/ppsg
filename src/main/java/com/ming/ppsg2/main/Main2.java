@@ -5,6 +5,7 @@ import com.ming.ppsg2.entity.AppointExcludeGenerals;
 import com.ming.ppsg2.entity.AppointGenerals;
 import com.ming.ppsg2.entity.AppointSymbols;
 import com.ming.ppsg2.entity.Destiny;
+import com.ming.ppsg2.entity.Device;
 import com.ming.ppsg2.entity.Generals;
 import com.ming.ppsg2.entity.Result;
 import com.ming.ppsg2.enums.GeneralsEnum;
@@ -76,6 +77,8 @@ public class Main2 {
         MainService.handleExcelData(lists,appointGeneralsList,nimingAllList,generalsAll,destinyMap);
         //去除重复卡，保留异化卡
         MainService.handleNimingAllList(nimingAllList,generalsAll,generalsAll2);
+        //战器排行榜
+        List<Device> deviceList = MainService.handleWarDevice(nimingAllList);
         // 计算随从加成
         Map<Integer,List<Generals>> map = MainService.handleEntourage(nimingAllList,generalsAll,isHuanHua);
         //随从榜
@@ -84,7 +87,7 @@ public class Main2 {
         List<Generals> optimumEntourage = MainService.handleOptimumEntourage(generalsAll,nimingAllList,isHuanHua);
         long t1 = System.currentTimeMillis();
         //最终排列组合list
-        List<Generals> nmList = MainService.handleFinalNmList(30,nimingAllList);
+        List<Generals> nmList = MainService.handleFinalNmList(28,nimingAllList);
 
         //计算战力
         List<Result> grilResultList = new Vector<>();

@@ -13,7 +13,7 @@ import java.util.List;
 public class ArmsUtils {
 
     public static void main(String[] args) {
-        GeneralsEnum.WarDevice warDevice = GeneralsEnum.WarDevice.arch;
+        GeneralsEnum.WarDevice warDevice = GeneralsEnum.WarDevice.arch2;
         double rate = 1d;
         List<Device> list = new ArrayList<>();
         list.add(new Device(133,129,133,warDevice,rate));

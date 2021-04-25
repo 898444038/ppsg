@@ -17,6 +17,12 @@ public class Device {
     private String name;
     //战器类型描述
     private String desc;
+    //战器名称
+    private String deviceName;
+    //专属
+    private String[] generals2;
+    //是否共鸣
+    private Boolean resonance;
     //战器淬炼效果1名称
     private String QuenchingName1;
     //战器淬炼效果2名称
@@ -33,6 +39,10 @@ public class Device {
     private ThreeDimensional deviceAwakenThreeDimensional;
     //战器炼器三维
     private ThreeDimensional deviceRefinerThreeDimensional;
+    private ThreeDimensional deviceRefiner5ThreeDimensional;
+    private ThreeDimensional deviceRefinerDestinyThreeDimensional;
+    //战器器灵三维
+    private ThreeDimensional deviceQiLingThreeDimensional;
 
     public Device() {
     }
@@ -64,6 +74,54 @@ public class Device {
         BigDecimal qt = b3.multiply(rates).multiply(doubles);
         deviceQuenchingThreeDimensional.setTroops(qt.intValue());
         deviceQuenchingThreeDimensional.setTotalZl((qf.intValue()+qi.intValue()+qt.intValue())*2);
+    }
+
+    public ThreeDimensional getDeviceRefinerDestinyThreeDimensional() {
+        return deviceRefinerDestinyThreeDimensional;
+    }
+
+    public void setDeviceRefinerDestinyThreeDimensional(ThreeDimensional deviceRefinerDestinyThreeDimensional) {
+        this.deviceRefinerDestinyThreeDimensional = deviceRefinerDestinyThreeDimensional;
+    }
+
+    public ThreeDimensional getDeviceRefiner5ThreeDimensional() {
+        return deviceRefiner5ThreeDimensional;
+    }
+
+    public void setDeviceRefiner5ThreeDimensional(ThreeDimensional deviceRefiner5ThreeDimensional) {
+        this.deviceRefiner5ThreeDimensional = deviceRefiner5ThreeDimensional;
+    }
+
+    public Boolean getResonance() {
+        return resonance;
+    }
+
+    public void setResonance(Boolean resonance) {
+        this.resonance = resonance;
+    }
+
+    public String[] getGenerals2() {
+        return generals2;
+    }
+
+    public void setGenerals2(String[] generals2) {
+        this.generals2 = generals2;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public ThreeDimensional getDeviceQiLingThreeDimensional() {
+        return deviceQiLingThreeDimensional;
+    }
+
+    public void setDeviceQiLingThreeDimensional(ThreeDimensional deviceQiLingThreeDimensional) {
+        this.deviceQiLingThreeDimensional = deviceQiLingThreeDimensional;
     }
 
     public ThreeDimensional getDeviceAwakenThreeDimensional() {

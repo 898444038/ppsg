@@ -1,4 +1,4 @@
-package com.ming.ppsg2.enums;
+package com.ming.ppsg3.enums;
 
 public enum GeneralsEnum {
 
@@ -222,22 +222,22 @@ public enum GeneralsEnum {
 
 
     public enum WarDevice implements GeneralsEnumInterface {
-        knife(1,"刀","刀",133,106,160,224,178,494,1.0,1.0,1.0,288,288,288,458,458,1220,null,null,null,null,null,null,null,null,null),
-        sword(2,"剑","剑",133,133,133,227,224,445,1.0,1.0,1.0,288,288,288,458,458,1220,null,null,null,null,null,null,null,null,null),
-        gun(3,"枪","枪",160,106,133,273,178,445,1.0,1.0,1.0,288,288,288,458,458,1220,null,null,null,null,null,null,null,null,null),
-        arch(4,"弓","弓",133,133,133,224,227,445,1.0,1.0,1.0,288,288,288,458,458,1220,null,null,null,null,null,null,null,null,null),
-        fan(5,"扇","扇",133,160,106,224,273,399,1.0,1.0,1.0,288,288,288,458,458,1220,null,null,null,null,null,null,null,null,null),
+        knife(1,"刀","刀",133,106,160,224,178,494,1.0,1.0,1.0,288,288,288,458,458,1220),
+        sword(2,"剑","剑",133,133,133,227,224,445,1.0,1.0,1.0,288,288,288,458,458,1220),
+        gun(3,"枪","枪",160,106,133,273,178,445,1.0,1.0,1.0,288,288,288,458,458,1220),
+        arch(4,"弓","弓",133,133,133,224,227,445,1.0,1.0,1.0,288,288,288,458,458,1220),
+        fan(5,"扇","扇",133,160,106,224,273,399,1.0,1.0,1.0,288,288,288,458,458,1220),
         //异化战器
 //        knife2(6,"刀2","刀",133,106,160,224,178,494,1.0,1.0,1.0,288,288,288,458,458,1220),
 //        sword2(7,"剑2","特殊剑",133,106,160,227,224,445,1.0,1.0,1.0,288,288,288,458,458,1220),
 //        gun2(8,"枪2","特殊枪",133,133,133,273,178,445,1.0,1.0,1.0,288,288,288,458,458,1220),
 //        arch2(9,"弓2","特殊弓",160,106,133,224,227,445,1.0,1.0,1.0,288,288,288,458,458,1220),
 //        fan2(10,"扇2","特殊扇",133,133,133,224,273,399,1.0,1.0,1.0,288,288,288,458,458,1220),
-        knife2(6,"刀2","刀",133,106,160,224,178,494,1.0,1.0,1.0,288,288,288,458,458,1220,65,65,380,892,796,4764,24,18,176),
-        sword2(7,"剑2","特殊剑",133,106,160,227,224,445,1.0,1.0,1.0,288,288,288,458,458,1220,80,80,320,1084,1084,3800,36,36,120),
-        gun2(8,"枪2","枪",160,106,133,273,178,445,1.0,1.0,1.0,288,288,288,458,458,1220,125,60,270,1522,646,3800,60,12,120),
-        arch2(9,"弓2","弓",133,133,133,224,227,445,1.0,1.0,1.0,288,288,288,458,458,1220,115,115,180,1300,1300,2936,49,49,70),
-        fan2(10,"扇2","特殊扇",133,133,133,224,273,399,1.0,1.0,1.0,288,288,288,458,458,1220,60,125,270,828,1532,3443,20,64,99),
+        knife2(6,"刀2","刀",133,106,160,224,178,494,1.0,1.0,1.0,288,288,288,458,458,1220,65,65,380),
+        sword2(7,"剑2","特殊剑",133,106,160,227,224,445,1.0,1.0,1.0,288,288,288,458,458,1220,80,80,320),
+        gun2(8,"枪2","枪",160,106,133,273,178,445,1.0,1.0,1.0,288,288,288,458,458,1220,125,60,270),
+        arch2(9,"弓2","弓",133,133,133,224,227,445,1.0,1.0,1.0,288,288,288,458,458,1220,115,115,180),
+        fan2(10,"扇2","特殊扇",133,133,133,224,273,399,1.0,1.0,1.0,288,288,288,458,458,1220,60,125,270),
         ;
 
         private Integer code;
@@ -261,25 +261,30 @@ public enum GeneralsEnum {
         private Integer awakenForce;//觉醒武力
         private Integer awakenIntellect;//觉醒智力
         private Integer awakenTroops;//觉醒兵力
-        private Integer refinerForce;//炼器武力
-        private Integer refinerIntellect;//炼器智力
-        private Integer refinerTroops;//炼器兵力
-        private Integer refiner5Force;//炼器5武力
-        private Integer refiner5Intellect;//炼器5智力
-        private Integer refiner5Troops;//炼器5兵力
-
         WarDevice(){}
 
-        WarDevice(Integer code, String name, String desc,
-                  Integer force, Integer intellect, Integer troops,
-                  Integer strengthenForce, Integer strengthenIntellect, Integer strengthenTroops,
-                  Double quenchingForceRate, Double quenchingIntellectRate, Double quenchingTroopsRate,
-                  Integer exclusiveForce, Integer exclusiveIntellect, Integer exclusiveTroops,
-                  Integer passive1, Integer passive2, Integer passive3,
-                  Integer awakenForce, Integer awakenIntellect, Integer awakenTroops,
-                  Integer refinerForce,Integer refinerIntellect,Integer refinerTroops,
-                  Integer refiner5Force,Integer refiner5Intellect,Integer refiner5Troops
-        ) {
+        WarDevice(Integer code, String name,String desc, Integer force, Integer intellect, Integer troops, Integer strengthenForce, Integer strengthenIntellect, Integer strengthenTroops, Double quenchingForceRate, Double quenchingIntellectRate, Double quenchingTroopsRate, Integer exclusiveForce, Integer exclusiveIntellect, Integer exclusiveTroops, Integer passive1, Integer passive2, Integer passive3) {
+            this.code = code;
+            this.name = name;
+            this.desc = desc;
+            this.force = force;
+            this.intellect = intellect;
+            this.troops = troops;
+            this.strengthenForce = strengthenForce;
+            this.strengthenIntellect = strengthenIntellect;
+            this.strengthenTroops = strengthenTroops;
+            this.quenchingForceRate = quenchingForceRate;
+            this.quenchingIntellectRate = quenchingIntellectRate;
+            this.quenchingTroopsRate = quenchingTroopsRate;
+            this.exclusiveForce = exclusiveForce;
+            this.exclusiveIntellect = exclusiveIntellect;
+            this.exclusiveTroops = exclusiveTroops;
+            this.passive1 = passive1;
+            this.passive2 = passive2;
+            this.passive3 = passive3;
+        }
+
+        WarDevice(Integer code, String name, String desc, Integer force, Integer intellect, Integer troops, Integer strengthenForce, Integer strengthenIntellect, Integer strengthenTroops, Double quenchingForceRate, Double quenchingIntellectRate, Double quenchingTroopsRate, Integer exclusiveForce, Integer exclusiveIntellect, Integer exclusiveTroops, Integer passive1, Integer passive2, Integer passive3, Integer awakenForce, Integer awakenIntellect, Integer awakenTroops) {
             this.code = code;
             this.name = name;
             this.desc = desc;
@@ -301,24 +306,6 @@ public enum GeneralsEnum {
             this.awakenForce = awakenForce;
             this.awakenIntellect = awakenIntellect;
             this.awakenTroops = awakenTroops;
-            this.refinerForce = refinerForce;
-            this.refinerIntellect = refinerIntellect;
-            this.refinerTroops = refinerTroops;
-            this.refiner5Force = refiner5Force;
-            this.refiner5Intellect = refiner5Intellect;
-            this.refiner5Troops = refiner5Troops;
-        }
-
-        public Integer getRefiner5Force() {
-            return refiner5Force;
-        }
-
-        public Integer getRefiner5Intellect() {
-            return refiner5Intellect;
-        }
-
-        public Integer getRefiner5Troops() {
-            return refiner5Troops;
         }
 
         public String getName() {
@@ -395,18 +382,6 @@ public enum GeneralsEnum {
 
         public Integer getAwakenTroops() {
             return awakenTroops;
-        }
-
-        public Integer getRefinerForce() {
-            return refinerForce;
-        }
-
-        public Integer getRefinerIntellect() {
-            return refinerIntellect;
-        }
-
-        public Integer getRefinerTroops() {
-            return refinerTroops;
         }
     }
 
@@ -1044,15 +1019,15 @@ public enum GeneralsEnum {
     }
 
     public enum Material implements GeneralsEnumInterface {
-        life(0,"命石",MaterialType.life_pt.getCode(),MaterialType.life_jl.getCode(),MaterialType.life_wx.getCode()),
-        secret(1,"天机之钥",MaterialType.secret_pt.getCode(),MaterialType.secret_jl.getCode(),MaterialType.secret_wx.getCode()),
-        heaven(2,"天相之圭",MaterialType.heaven_pt.getCode(),MaterialType.heaven_jl.getCode(),MaterialType.heaven_wx.getCode()),
-        lunar(3,"太阴之精",MaterialType.lunar_pt.getCode(),MaterialType.lunar_jl.getCode(),MaterialType.lunar_wx.getCode()),
-        sun(4,"太阳之焰",MaterialType.sun_pt.getCode(),MaterialType.sun_jl.getCode(),MaterialType.sun_wx.getCode()),
-        greedy(5,"贪狼之爪",MaterialType.greedy_pt.getCode(),MaterialType.greedy_jl.getCode(),MaterialType.greedy_wx.getCode()),
-        lianZhen(6,"廉贞之锋",MaterialType.lianZhen_pt.getCode(),MaterialType.lianZhen_jl.getCode(),MaterialType.lianZhen_wx.getCode()),
-        sevenKill(7,"七杀之气",MaterialType.sevenKill_pt.getCode(),MaterialType.sevenKill_jl.getCode(),MaterialType.sevenKill_wx.getCode()),
-        breakArmy(8,"破军之血",MaterialType.breakArmy_pt.getCode(),MaterialType.breakArmy_jl.getCode(),MaterialType.breakArmy_wx.getCode())
+        life(0,"命石", MaterialType.life_pt.getCode(), MaterialType.life_jl.getCode(), MaterialType.life_wx.getCode()),
+        secret(1,"天机之钥", MaterialType.secret_pt.getCode(), MaterialType.secret_jl.getCode(), MaterialType.secret_wx.getCode()),
+        heaven(2,"天相之圭", MaterialType.heaven_pt.getCode(), MaterialType.heaven_jl.getCode(), MaterialType.heaven_wx.getCode()),
+        lunar(3,"太阴之精", MaterialType.lunar_pt.getCode(), MaterialType.lunar_jl.getCode(), MaterialType.lunar_wx.getCode()),
+        sun(4,"太阳之焰", MaterialType.sun_pt.getCode(), MaterialType.sun_jl.getCode(), MaterialType.sun_wx.getCode()),
+        greedy(5,"贪狼之爪", MaterialType.greedy_pt.getCode(), MaterialType.greedy_jl.getCode(), MaterialType.greedy_wx.getCode()),
+        lianZhen(6,"廉贞之锋", MaterialType.lianZhen_pt.getCode(), MaterialType.lianZhen_jl.getCode(), MaterialType.lianZhen_wx.getCode()),
+        sevenKill(7,"七杀之气", MaterialType.sevenKill_pt.getCode(), MaterialType.sevenKill_jl.getCode(), MaterialType.sevenKill_wx.getCode()),
+        breakArmy(8,"破军之血", MaterialType.breakArmy_pt.getCode(), MaterialType.breakArmy_jl.getCode(), MaterialType.breakArmy_wx.getCode())
         ;
 
         private Integer code;
@@ -1442,111 +1417,4 @@ public enum GeneralsEnum {
             return this.code;
         }
     }*/
-
-
-    /*public enum DeviceResonance implements GeneralsEnumInterface {
-        r1(1001,""),
-        ;
-        private Integer code;
-        private String name;
-
-        DeviceResonance(Integer code, String name) {
-            this.code = code;
-            this.name = name;
-        }
-    }
-*/
-    public enum Device implements GeneralsEnumInterface {
-        dao_1001(1001, "青龙偃月刀",WarDevice.knife2, new String[]{"关羽","关平"}, new String[]{"武圣关羽","一骑关羽","汉寿亭候云长","刀魂关平"}),
-        dao_1002(1002, "古锭刀",WarDevice.knife2, new String[]{"孙坚","华雄"}, new String[]{"武烈孙坚","猛虎孙坚","战魂华雄"}),
-        dao_1003(1003, "破军斩",WarDevice.knife2, new String[]{"夏侯惇"}, new String[]{"独目夏侯惇","苍狼夏侯惇"}),
-        dao_1004(1004, "金刚断",WarDevice.knife2, new String[]{"黄盖"}, new String[]{"赤忠黄盖"}),
-        dao_1005(1005, "百兽猎刃",WarDevice.knife2, new String[]{"孟获","祝融夫人"}, new String[]{"豹魂祝融夫人"}),
-        dao_1006(1006, "七星刀",WarDevice.knife2, new String[]{"董卓"}, new String[]{"魔君董卓","浊世董卓","劫国董卓"}),
-        dao_1007(1007, "霸海刀",WarDevice.knife2, new String[]{"甘宁"}, new String[]{"游侠甘宁","斗将甘宁"}),
-        dao_1008(1008, "鬼魇刀",WarDevice.knife2, new String[]{"魏延"}, new String[]{"骁勇魏延","狂骨魏延","回禄魏延"}),
-        dao_1009(1009, "虎煞刀",WarDevice.knife2, new String[]{"许褚"}, new String[]{"混沌许褚","战锤许褚"}),
-        dao_1010(1010, "新亭候刀",WarDevice.knife2, new String[]{"张飞"}, new String[]{"暴怒张飞","桓候张飞","诡骑张飞"}),
-
-        jian_2001(2001, "倚天剑",WarDevice.sword2, new String[]{"曹操"}, new String[]{"武帝曹操","奸雄曹操","霸业曹操"}),
-        jian_2002(2002, "青釭剑",WarDevice.sword2, new String[]{"曹操","赵云"}, new String[]{"武帝曹操","奸雄曹操","霸业曹操","龙胆赵云","神威赵云","砺战赵云"}),
-        jian_2003(2003, "雌雄双股剑",WarDevice.sword2, new String[]{"刘备","刘禅"}, new String[]{"昭烈刘备","仁德刘备","神武刘备","安乐公刘禅"}),
-        jian_2004(2004, "弱水剑",WarDevice.sword2, new String[]{"郭嘉","荀彧"}, new String[]{"驱虎荀彧","令香荀彧","墨衍荀彧","鬼谋郭嘉","天妒郭嘉",}),
-        jian_2005(2005, "燕回闪",WarDevice.sword2, new String[]{"凌统"}, new String[]{"浴血凌统","国士凌统","烈胆凌统"}),
-        jian_2006(2006, "龙鳞剑",WarDevice.sword2, new String[]{"曹丕"}, new String[]{"文帝曹丕","灭奏曹丕","驭胜曹丕","淑懿甄姬"}),
-        jian_2007(2007, "玲珑之心",WarDevice.sword2, new String[]{"卞夫人","蔡文姬","吴夫人","何太后"}, new String[]{"伶歌卞夫人","胡韵蔡文姬","舜华吴夫人","灵思何太后","悦灵蔡文姬"}),
-        jian_2008(2008, "思召剑",WarDevice.sword2, new String[]{"袁绍"}, new String[]{"思召袁绍","贵胄袁绍","奋威袁绍"}),
-        jian_2009(2009, "赤霄剑",WarDevice.sword2, new String[]{"天子汉献帝"}, new String[]{"天子汉献帝"}),
-        jian_2010(2010, "青冥剑",WarDevice.sword2, new String[]{"周泰"}, new String[]{"血痕周泰","擎苍周泰"}),
-
-        qiang_3001(3001, "方天画戟",WarDevice.gun2, new String[]{"吕布","吕玲绮"}, new String[]{"鬼神吕布","修罗吕布","飞将吕布","战姬吕玲绮","双子吕玲绮","灵刃吕玲绮"}),
-        qiang_3002(3002, "丈八蛇矛",WarDevice.gun2, new String[]{"张飞","张星彩"}, new String[]{"暴怒张飞","桓候张飞","诡骑张飞","风舞张星彩"}),
-        qiang_3003(3003, "龙骑枪",WarDevice.gun2, new String[]{"马超","马云禄"}, new String[]{"锦狮马超","铁骑马超","龙驹马云禄"}),
-        qiang_3004(3004, "霸王枪",WarDevice.gun2, new String[]{"孙策"}, new String[]{"霸王孙策","驰骋孙策","桀骜孙策","挽歌大乔"}),
-        qiang_3005(3005, "沧月",WarDevice.gun2, new String[]{"张辽"}, new String[]{"振威张辽","召虎张辽","御甲张辽"}),
-        qiang_3006(3006, "若麒麟牙",WarDevice.gun2, new String[]{"姜维"}, new String[]{"麒麟姜维","斗胆姜维"}),
-        qiang_3007(3007, "魑魅",WarDevice.gun2, new String[]{"文丑"}, new String[]{"猎狐文丑","霸音文丑","河间双雄"}),
-        qiang_3008(3008, "白虎银枪",WarDevice.gun2, new String[]{"孙权","孙大虎","孙小虎"}, new String[]{"吴王孙权","若虎孙权","命世孙权","凤仪步练师","潋滟步练师","诛心孙大虎","瞳心孙小虎"}),
-        qiang_3009(3009, "蚩尤重戟",WarDevice.gun2, new String[]{"典韦"}, new String[]{"恶来典韦","英灵典韦","虎涧典韦"}),
-        qiang_3010(3010, "摧城枪",WarDevice.gun2, new String[]{"曹仁"}, new String[]{"疾风曹仁","征南曹仁"}),
-        qiang_3011(3011, "魍魉",WarDevice.gun2, new String[]{"颜良"}, new String[]{"鸦杀颜良","恶目颜良","河间双雄"}),
-        qiang_3012(3012, "五行鬼谷杖",WarDevice.gun2, new String[]{"华佗"}, new String[]{"妙手华佗","猿戏华佗"}),
-        qiang_3013(3013, "北邙紫金枪",WarDevice.gun2, new String[]{"张郃","公孙瓒"}, new String[]{"雅歌张郃","先勇张郃","剑引张郃","白马公孙瓒","奋武公孙瓒"}),
-        qiang_3014(3014, "火龙枪",WarDevice.gun2, new String[]{"高顺"}, new String[]{"斩锋高顺"}),
-        qiang_3015(3015, "天燮绿沉枪",WarDevice.gun2, new String[]{""}, new String[]{"蜀魂姜维"}),
-
-        gong_4001(4001, "诸葛连弩",WarDevice.arch2, new String[]{"诸葛亮","黄月英"}, new String[]{"卧龙诸葛亮","七星诸葛亮","阿丑黄月英","杰女黄月英"}),
-        gong_4002(4002, "龙舌弓",WarDevice.arch2, new String[]{"吕布","吕姬"}, new String[]{"鬼神吕布","修罗吕布","飞将吕布","猩红吕姬","双子吕姬","灵雎吕姬"}),
-        gong_4003(4003, "惊凰弓",WarDevice.arch2, new String[]{"庞统","朱然"}, new String[]{"凤雏庞统","智极庞统","陨星庞统","赤羽朱然"}),
-        gong_4004(4004, "龙吟弓",WarDevice.arch2, new String[]{"周瑜","陆逊"}, new String[]{"业炎周瑜","顾曲周瑜","焚天陆逊","儒将陆逊","玉琼小乔"}),
-        gong_4005(4005, "虎扑弓",WarDevice.arch2, new String[]{"太史慈","吕蒙","韩当"}, new String[]{"矢志太史慈","感古太史慈","秉义太史慈","克己吕蒙","虎威吕蒙","狂澜吕蒙","厉箭韩当"}),
-        gong_4006(4006, "黄天之弓",WarDevice.arch2, new String[]{"张角"}, new String[]{"天公张角","符咒张角"}),
-        gong_4007(4007, "黄杨大弓",WarDevice.arch2, new String[]{"黄忠","黄舞蝶"}, new String[]{"弓神黄忠","讨虏黄忠","射日黄忠","惊鸿黄舞蝶","落英黄舞蝶","飞琼黄舞蝶"}),
-        gong_4008(4008, "鹊画弓",WarDevice.arch2, new String[]{"孙尚香"}, new String[]{"弓腰姬孙尚香","君主孙尚香","灵泽孙尚香"}),
-        gong_4009(4009, "千浪破",WarDevice.arch2, new String[]{"甘宁"}, new String[]{"游侠甘宁","斗将甘宁"}),
-        gong_4010(4010, "克敌机先",WarDevice.arch2, new String[]{"夏侯渊"}, new String[]{"虎步夏侯渊","典军夏侯渊"}),
-
-        shan_5001(5001, "朱雀羽扇",WarDevice.fan2, new String[]{"诸葛亮","诸葛果"}, new String[]{"卧龙诸葛亮","七星诸葛亮","道玄诸葛果"}),
-        shan_5002(5002, "琉璃天香",WarDevice.fan2, new String[]{"大乔","小乔"}, new String[]{"望月大乔","临江小乔","挽歌大乔","玉琼小乔","芳华大乔"}),
-        shan_5003(5003, "冥天符",WarDevice.fan2, new String[]{"卑弥呼","于吉"}, new String[]{"妖仙于吉","天照卑弥呼"}),
-        shan_5004(5004, "玄武折扇",WarDevice.fan2, new String[]{"鲁肃"}, new String[]{"缔盟鲁肃","忠魂鲁肃"}),
-        shan_5005(5005, "穷奇羽扇",WarDevice.fan2, new String[]{"司马懿","贾诩","程昱"}, new String[]{"狼顾司马懿","宣王司马懿","都士贾诩","乱武贾诩","绝情张春华","筹谋程昱"}),
-        shan_5006(5006, "月下美人",WarDevice.fan2, new String[]{"貂蝉","甄姬"}, new String[]{"绝舞貂蝉","倾世貂蝉","顾影貂蝉","洛神甄姬","灵蛇甄姬","淑懿甄姬"}),
-        shan_5007(5007, "毕方之羽",WarDevice.fan2, new String[]{"法正"}, new String[]{"奇谋法正"}),
-        ;
-        private Integer code;
-        private String name;
-        //private Boolean resonance;
-        private WarDevice warDevice;
-        private String[] generals1;
-        private String[] generals2;
-
-        Device(Integer code, String name,WarDevice warDevice, String[] generals1, String[] generals2) {
-            this.code = code;
-            this.name = name;
-            this.warDevice = warDevice;
-            this.generals1 = generals1;
-            this.generals2 = generals2;
-        }
-
-        public Integer getCode() {
-            return code;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public WarDevice getWarDevice() {
-            return warDevice;
-        }
-
-        public String[] getGenerals1() {
-            return generals1;
-        }
-
-        public String[] getGenerals2() {
-            return generals2;
-        }
-    }
 }

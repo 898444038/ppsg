@@ -6,10 +6,12 @@ import com.ming.ppsg2.entity.AppointSymbols;
 import com.ming.ppsg2.entity.ArmsBook;
 import com.ming.ppsg2.entity.Compose;
 import com.ming.ppsg2.entity.Destiny;
+import com.ming.ppsg2.entity.Device;
 import com.ming.ppsg2.entity.Generals;
 import com.ming.ppsg2.entity.Result;
 import com.ming.ppsg2.entity.Symbols;
 import com.ming.ppsg2.entity.SymbolsTop;
+import com.ming.ppsg2.entity.ThreeDimensional;
 import com.ming.ppsg2.enums.GeneralsEnum;
 import com.ming.ppsg2.utils.CountDownUtils;
 import com.ming.ppsg2.utils.DestinyData;
@@ -90,6 +92,7 @@ public class MainService {
                 //for (Map<String,String> map : items) {
                     if (StringUtils.isNotBlank(map.get("armsBook1")) && "TRUE".equalsIgnoreCase(map.get("usable"))) {
                         String name = map.get("name");
+                        String originalName = map.get("name");
                         String[] parents = map.get("generalsCode").split(",");
                         List<Integer> codes = new ArrayList<>();
                         for(String parent : parents){
@@ -257,14 +260,14 @@ public class MainService {
                         Integer destinyTroops = map.get("destinyTroops") == null ? null : Double.valueOf(map.get("destinyTroops")).intValue();
                         Object[] destinys = {destinyForce, destinyIntellect, destinyTroops, Boolean.valueOf(map.get("isDestiny")), disobeyCode, null, null, null};
 
-                        Generals generals = DestinyData.getGenerals(name, codes, level, force, intellect, troops, gender, generalsType, arms, country, isEntourage, entourages, warDevices, armsBooks, destinys, skinCode, isResonance);
+                        Generals generals = DestinyData.getGenerals(name,originalName, codes, level, force, intellect, troops, gender, generalsType, arms, country, isEntourage, entourages, warDevices, armsBooks, destinys, skinCode, isResonance);
 
                         GeneralsUtil.getMaxLevel(generals);//基础满级三维
                         GeneralsUtil.getScience(generals);//科技三维
                         GeneralsUtil.getHolyStone(generals);//四圣石三维
                         GeneralsUtil.getDestiny(generals);//命格三维(在战器前计算)
                         //GeneralsUtil.getWarDevice(generals);//战器三维
-                        GeneralsUtil.getWarDevice2(generals);//特殊战器三维
+                        //GeneralsUtil.getWarDevice2(generals);//特殊战器三维
                         GeneralsUtil.getArmsBook(generals);//兵种兵书三维
                         GeneralsUtil.getWillSoul(generals);//将魂三维
                         GeneralsUtil.getBattleArray(generals);//战阵三维
@@ -591,6 +594,210 @@ public class MainService {
         for (Result result : list){
             result.setCombatName(GeneralsEnum.Combat.getNameByCombat(result.getTotal2()));
         }
+    }
+
+    public static List<Device> handleWarDevice(List<Generals> nimingAllList) {
+        List<Device> deviceList = new ArrayList<>();
+        for (GeneralsEnum.Device dev : GeneralsEnum.Device.values()){
+            ThreeDimensional deviceBase = null;
+            ThreeDimensional deviceStrengthen = null;
+            ThreeDimensional deviceQuenching = new ThreeDimensional(0,0,0);
+            ThreeDimensional deviceExclusive = null;
+            ThreeDimensional deviceAwaken = null;//觉醒三维
+            ThreeDimensional deviceRefiner = null;//炼器95三维
+            ThreeDimensional deviceRefiner5 = null;//炼器5三维
+            ThreeDimensional deviceQiLing = null;//器灵三维
+            String quenchingName1 = "";
+            String quenchingName2 = "";
+
+            GeneralsEnum.WarDevice warDevice = dev.getWarDevice();
+
+            int force = 0;
+            int intellect = 0;
+            int troops = 0;
+
+            force = warDevice.getForce() + warDevice.getStrengthenForce();
+            intellect = warDevice.getIntellect() + warDevice.getStrengthenIntellect();
+            troops = warDevice.getTroops() + warDevice.getStrengthenTroops();
+            deviceBase = new ThreeDimensional(warDevice.getForce(),warDevice.getIntellect(),warDevice.getTroops());
+
+            deviceStrengthen = new ThreeDimensional(warDevice.getStrengthenForce(),warDevice.getStrengthenIntellect(),warDevice.getStrengthenTroops());
+
+            if(troops >= force && troops >= intellect){//troops
+                Double d= troops * warDevice.getQuenchingTroopsRate();
+                deviceQuenching.setTroops(d.intValue()*2);
+                troops += d.intValue()*2;
+                quenchingName2 = quenchingName1 = "战器的兵力值提升"+(int)(warDevice.getQuenchingTroopsRate()*100)+"%";
+            }else if(force >= intellect && force >= troops){//force
+                Double d= force * warDevice.getQuenchingForceRate();
+                deviceQuenching.setForce(d.intValue()*2);
+                force += d.intValue()*2;
+                quenchingName2 = quenchingName1 = "战器的武力值提升"+(int)(warDevice.getQuenchingForceRate()*100)+"%";
+            }else{//intellect
+                Double d= intellect * warDevice.getQuenchingIntellectRate();
+                deviceQuenching.setIntellect(d.intValue()*2);
+                quenchingName2 = quenchingName1 = "战器的智力值提升"+(int)(warDevice.getQuenchingIntellectRate()*100)+"%";
+                intellect += d.intValue()*2;
+            }
+
+            force += warDevice.getExclusiveForce();
+            intellect += warDevice.getExclusiveIntellect();
+            troops += warDevice.getExclusiveTroops();
+            deviceExclusive = new ThreeDimensional(warDevice.getExclusiveForce(),warDevice.getExclusiveIntellect(),warDevice.getExclusiveTroops());
+
+            //觉醒
+            force += warDevice.getAwakenForce();
+            intellect += warDevice.getAwakenIntellect();
+            troops += warDevice.getAwakenTroops();
+            deviceAwaken = new ThreeDimensional(warDevice.getAwakenForce(),warDevice.getAwakenIntellect(),warDevice.getAwakenTroops());
+
+            //炼器
+            force += warDevice.getRefinerForce();
+            intellect += warDevice.getRefinerIntellect();
+            troops += warDevice.getRefinerTroops();
+            deviceRefiner = new ThreeDimensional(warDevice.getRefinerForce(),warDevice.getRefinerIntellect(),warDevice.getRefinerTroops());
+
+            deviceRefiner5 = new ThreeDimensional(warDevice.getRefiner5Force(),warDevice.getRefiner5Intellect(),warDevice.getRefiner5Troops());
+
+            //器灵
+            deviceQiLing = new ThreeDimensional(0,0,0);
+
+            Device device = new Device();
+            device.setName(warDevice.getName());
+            device.setDesc(warDevice.getDesc());
+            device.setDeviceName(dev.getName());
+            device.setGenerals2(dev.getGenerals2());
+            device.setQuenchingName1(quenchingName1);
+            device.setQuenchingName2(quenchingName2);
+            device.setDeviceBaseThreeDimensional(deviceBase);
+            device.setDeviceStrengthenThreeDimensional(deviceStrengthen);
+            device.setDeviceQuenchingThreeDimensional(deviceQuenching);
+            device.setDeviceExclusiveThreeDimensional(deviceExclusive);
+            device.setDeviceAwakenThreeDimensional(deviceAwaken);
+            device.setDeviceRefinerThreeDimensional(deviceRefiner);
+            device.setDeviceRefiner5ThreeDimensional(deviceRefiner5);
+            device.setDeviceQiLingThreeDimensional(deviceQiLing);
+            deviceList.add(device);
+        }
+
+        //设置共鸣
+        List<String> resonanceList = new ArrayList<>();
+        for(Generals generals : nimingAllList){
+            if(generals.getIsResonance()){
+                resonanceList.add(generals.getOriginalName());
+            }
+        }
+        for (Device d : deviceList){
+            String[] generals2List = d.getGenerals2();
+            boolean flag = false;
+            for(String generals2 : generals2List){
+                for(String r : resonanceList){
+                    if(r.equals(generals2)){
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+            d.setResonance(flag);
+        }
+
+
+        //List<String> resonanceList = new ArrayList<>();
+        ThreeDimensional three = null;
+        for(Generals generals : nimingAllList){
+            int total = 0;
+            Device dev = null;
+            ThreeDimensional three0 = null;
+            ThreeDimensional threeDestiny = null;
+            ThreeDimensional threeQiLing = null;
+            for (Device d : deviceList){
+                int f = 0;
+                int i = 0;
+                int t = 0;
+                three = d.getDeviceBaseThreeDimensional();
+                f+=three.getForce();i+=three.getIntellect();t+=three.getTroops();
+                three = d.getDeviceStrengthenThreeDimensional();
+                f+=three.getForce();i+=three.getIntellect();t+=three.getTroops();
+                three = d.getDeviceQuenchingThreeDimensional();
+                f+=three.getForce();i+=three.getIntellect();t+=three.getTroops();
+
+                //专属
+                String[] generals2List = d.getGenerals2();
+                boolean exclusive = false;
+                for(String generals2 : generals2List){
+                    if(generals.getOriginalName().equals(generals2)){
+                        exclusive = true;
+                        break;
+                    }
+                }
+                if(exclusive){
+                    three = d.getDeviceExclusiveThreeDimensional();
+                    f+=three.getForce();i+=three.getIntellect();t+=three.getTroops();
+                }
+
+                //觉醒
+                three = d.getDeviceAwakenThreeDimensional();
+                f+=three.getForce();i+=three.getIntellect();t+=three.getTroops();
+
+                //炼器+命格
+                if(d.getResonance()){
+                    three = d.getDeviceRefinerThreeDimensional();
+                    f+=three.getForce();i+=three.getIntellect();t+=three.getTroops();
+                    ThreeDimensional threeDimensional = generals.getDestinyThreeDimensional();
+                    f+=threeDimensional.getForce()*0.7;
+                    i+=threeDimensional.getIntellect()*0.7;
+                    t+=threeDimensional.getTroops()*0.7;
+                }else{
+                    three = d.getDeviceRefiner5ThreeDimensional();
+                    f+=three.getForce();i+=three.getIntellect();t+=three.getTroops();
+                }
+
+                //器灵
+                int tf = d.getDeviceBaseThreeDimensional().getForce()+d.getDeviceStrengthenThreeDimensional().getForce();
+                int ti = d.getDeviceBaseThreeDimensional().getIntellect()+d.getDeviceStrengthenThreeDimensional().getIntellect();
+                int tt = d.getDeviceBaseThreeDimensional().getTroops()+d.getDeviceStrengthenThreeDimensional().getTroops();
+                //f+=tf*0.8;
+                //i+=ti*0.8;
+                t+=tt*0.8*3;
+
+                int totalCombat = (f+i+t)*2;
+                if(totalCombat > total){
+                    total = totalCombat;
+                    dev = d;
+                    three0 = new ThreeDimensional();
+                    three0.setForce(f);
+                    three0.setIntellect(i);
+                    three0.setTroops(t);
+                    three0.setTotalZl((f+i+t)*2);
+
+                    ThreeDimensional threeDimensional = generals.getDestinyThreeDimensional();
+                    threeDestiny = new ThreeDimensional((int)(threeDimensional.getForce()*0.7),(int)(threeDimensional.getIntellect()*0.7),(int)(threeDimensional.getTroops()*0.7));
+                    threeQiLing = new ThreeDimensional(0,0,(int)(tt*0.8*3));
+                }
+            }
+            Device device = new Device();
+            device.setName(dev.getName());
+            device.setDesc(dev.getDesc());
+            device.setDeviceName(dev.getDeviceName());
+            device.setGenerals2(dev.getGenerals2());
+            device.setResonance(dev.getResonance());
+            device.setQuenchingName1(dev.getQuenchingName1());
+            device.setQuenchingName2(dev.getQuenchingName2());
+            device.setDeviceBaseThreeDimensional(dev.getDeviceBaseThreeDimensional());
+            device.setDeviceStrengthenThreeDimensional(dev.getDeviceStrengthenThreeDimensional());
+            device.setDeviceQuenchingThreeDimensional(dev.getDeviceQuenchingThreeDimensional());
+            device.setDeviceExclusiveThreeDimensional(dev.getDeviceExclusiveThreeDimensional());
+            device.setDeviceAwakenThreeDimensional(dev.getDeviceAwakenThreeDimensional());
+            device.setDeviceRefinerThreeDimensional(dev.getDeviceRefinerThreeDimensional());
+            device.setDeviceRefiner5ThreeDimensional(dev.getDeviceRefiner5ThreeDimensional());
+            device.setDeviceRefinerDestinyThreeDimensional(threeDestiny);
+            device.setDeviceQiLingThreeDimensional(threeQiLing);
+
+            generals.setDevice2(device);
+            generals.setWarDevice2ThreeDimensional(three0);
+            GeneralsUtil.setTotal(generals,three0);
+        }
+        return deviceList;
     }
 
 

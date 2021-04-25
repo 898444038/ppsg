@@ -28,6 +28,8 @@ public class Generals {
     private String id;
     //武将名称
     private String name;
+    //原名
+    private String originalName;
     //武将唯一编码  GeneralsEnum.GeneralsCode
     private List<Integer> codes;
     //是否‘限’卡
@@ -166,6 +168,14 @@ public class Generals {
     private String remark;
 
     public Generals(){}
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
+    }
 
     public Boolean getIsResonance() {
         return isResonance;

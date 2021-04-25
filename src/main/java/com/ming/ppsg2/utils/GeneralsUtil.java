@@ -2418,6 +2418,19 @@ public class GeneralsUtil {
         intellect += warpathThreeDimensional.getIntellect();
         troops += warpathThreeDimensional.getTroops();
 
+        //战器三维
+        /*Device device = generals.getDevice2();
+        ThreeDimensional device2Three = generals.getWarDevice2ThreeDimensional();
+        if(device.getResonance()){
+            force += device2Three.getForce();
+            intellect += device2Three.getIntellect();
+            troops += device2Three.getTroops();
+        }else{
+            force += device2Three.getForce();
+            intellect += device2Three.getIntellect();
+            troops += device2Three.getTroops();
+        }
+*/
         //命格
         Destiny destiny = generals.getDestiny();
         //阵法五被动战力
@@ -2426,10 +2439,16 @@ public class GeneralsUtil {
         int destinySword = destiny.getDestinyEffect1() + destiny.getDestinyEffect2()+ destiny.getDestinyEffect3()+ destiny.getDestinyEffect4() + destiny.getMaxLevel();
         //战器三被动战力
         int warDeviceSword = 458 + 458 + 1220;
+        //器灵天赋属性战力
+        int warDeviceTf = 260+260+260;
+        //器灵成长属性战力
+        int warDeviceCz = 40*9*3;
+        //器灵套装战力
+        int warDeviceQiLing = 1920;
 
         //武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
         int total = force + intellect + troops;
-        int totalSword = (total) * 2 + battleArrayWaySword + destinySword + warDeviceSword;
+        int totalSword = (total) * 2 + battleArrayWaySword + destinySword + warDeviceSword + warDeviceQiLing;
         generals.setTotalSword2(totalSword);
         generals.setTotalForce2(force);
         generals.setTotalIntellect2(intellect);
