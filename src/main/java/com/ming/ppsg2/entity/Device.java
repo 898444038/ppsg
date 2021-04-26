@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 public class Device {
     //战器类型名称
     private String name;
+    private Integer code;
     //战器类型描述
     private String desc;
     //战器名称
@@ -39,10 +40,12 @@ public class Device {
     private ThreeDimensional deviceAwakenThreeDimensional;
     //战器炼器三维
     private ThreeDimensional deviceRefinerThreeDimensional;
+    private ThreeDimensional deviceRefiner95ThreeDimensional;
     private ThreeDimensional deviceRefiner5ThreeDimensional;
     private ThreeDimensional deviceRefinerDestinyThreeDimensional;
     //战器器灵三维
     private ThreeDimensional deviceQiLingThreeDimensional;
+    private ThreeDimensional totalThreeDimensional;
 
     public Device() {
     }
@@ -74,6 +77,30 @@ public class Device {
         BigDecimal qt = b3.multiply(rates).multiply(doubles);
         deviceQuenchingThreeDimensional.setTroops(qt.intValue());
         deviceQuenchingThreeDimensional.setTotalZl((qf.intValue()+qi.intValue()+qt.intValue())*2);
+    }
+
+    public ThreeDimensional getDeviceRefinerThreeDimensional() {
+        return deviceRefinerThreeDimensional;
+    }
+
+    public void setDeviceRefinerThreeDimensional(ThreeDimensional deviceRefinerThreeDimensional) {
+        this.deviceRefinerThreeDimensional = deviceRefinerThreeDimensional;
+    }
+
+    public ThreeDimensional getTotalThreeDimensional() {
+        return totalThreeDimensional;
+    }
+
+    public void setTotalThreeDimensional(ThreeDimensional totalThreeDimensional) {
+        this.totalThreeDimensional = totalThreeDimensional;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
     public ThreeDimensional getDeviceRefinerDestinyThreeDimensional() {
@@ -132,12 +159,12 @@ public class Device {
         this.deviceAwakenThreeDimensional = deviceAwakenThreeDimensional;
     }
 
-    public ThreeDimensional getDeviceRefinerThreeDimensional() {
-        return deviceRefinerThreeDimensional;
+    public ThreeDimensional getDeviceRefiner95ThreeDimensional() {
+        return deviceRefiner95ThreeDimensional;
     }
 
-    public void setDeviceRefinerThreeDimensional(ThreeDimensional deviceRefinerThreeDimensional) {
-        this.deviceRefinerThreeDimensional = deviceRefinerThreeDimensional;
+    public void setDeviceRefiner95ThreeDimensional(ThreeDimensional deviceRefiner95ThreeDimensional) {
+        this.deviceRefiner95ThreeDimensional = deviceRefiner95ThreeDimensional;
     }
 
     public String getName() {

@@ -1167,7 +1167,7 @@ public class GeneralsUtil {
         device.setDeviceQuenchingThreeDimensional(deviceQuenching);
         device.setDeviceExclusiveThreeDimensional(deviceExclusive);
         device.setDeviceAwakenThreeDimensional(deviceAwaken);
-        device.setDeviceRefinerThreeDimensional(deviceRefiner);
+        device.setDeviceRefiner95ThreeDimensional(deviceRefiner);
         generals.setDevice2(device);
         return three;
     }
@@ -2440,15 +2440,15 @@ public class GeneralsUtil {
         //战器三被动战力
         int warDeviceSword = 458 + 458 + 1220;
         //器灵天赋属性战力
-        int warDeviceTf = 260+260+260;
-        //器灵成长属性战力
-        int warDeviceCz = 40*9*3;
+        int warDeviceTfAndCz = 613 * 3;
+        //器灵成长属性培养战力
+        int warDeviceCz = 60*6*3;
         //器灵套装战力
         int warDeviceQiLing = 1920;
 
         //武将战力 =（武力+智力+兵力）*2+ 命格被动 + 战器三被动
         int total = force + intellect + troops;
-        int totalSword = (total) * 2 + battleArrayWaySword + destinySword + warDeviceSword + warDeviceQiLing;
+        int totalSword = (total) * 2 + battleArrayWaySword + destinySword + warDeviceSword + warDeviceQiLing + warDeviceTfAndCz + warDeviceCz;
         generals.setTotalSword2(totalSword);
         generals.setTotalForce2(force);
         generals.setTotalIntellect2(intellect);

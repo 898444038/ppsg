@@ -40,6 +40,7 @@ public class Main2 {
 //        appointGeneralsList.add(new AppointGenerals("飞将吕布"));
 //        appointGeneralsList.add(new AppointGenerals("灵雎吕姬"));
 //        appointGeneralsList.add(new AppointGenerals("河间双雄"));
+//        appointGeneralsList.add(new AppointGenerals("悦灵蔡文姬"));
 
         List<AppointExcludeGenerals> excludeGeneralsList = new ArrayList<>();
 //        excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
@@ -110,13 +111,13 @@ public class Main2 {
         List<Result> grilList = GeneralsUtil.getSimplifyList(resultList2);
         model.put("top",top);
         model.put("advert",advert);
-        if(resultList2.size()>=100){
-            list2 = resultList2.subList(0,100);//虚战力表（特殊战器）
+        if(resultList2.size()>=50){
+            list2 = resultList2.subList(0,50);//虚战力表（特殊战器）
         }else{
             list2 = resultList2;//虚战力表（特殊战器）
         }
-        if(grilResultList.size()>=100) {
-            grilList = grilResultList.subList(0, 100);//虚战力表（女队）
+        if(grilResultList.size()>=50) {
+            grilList = grilResultList.subList(0, 50);//虚战力表（女队）
         }else{
             grilList = grilResultList;
         }
