@@ -528,7 +528,7 @@ public class MainService {
         long t1 = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         try {
-            InputStream is = ExcelReaderUtil.class.getResourceAsStream("/excel/result_temp3.xlsx");
+            InputStream is = ExcelReaderUtil.class.getResourceAsStream("/excel/result_temp4.xlsx");
             OutputStream os = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\虚战力表"+sdf.format(new Date())+fileRemark+".xlsx");
             JxlsUtil.export2Excel(is,os,model);
         }catch (Exception e){

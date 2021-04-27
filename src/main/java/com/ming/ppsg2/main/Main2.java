@@ -24,9 +24,9 @@ public class Main2 {
     public static void main(String[] args) throws Exception {
         String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：\n" +
+                "更新内容：新版战器\n" +
                 "\n"+
-                "\n";
+                "特别感谢 萌皮、问情、霸王 提供的战器数据\n";
         top+= "";
         String advert = "";//广告
         String fileRemark = "";
@@ -88,7 +88,7 @@ public class Main2 {
         List<Generals> optimumEntourage = MainService.handleOptimumEntourage(generalsAll,nimingAllList,isHuanHua);
         long t1 = System.currentTimeMillis();
         //最终排列组合list
-        List<Generals> nmList = MainService.handleFinalNmList(28,nimingAllList);
+        List<Generals> nmList = MainService.handleFinalNmList(40,nimingAllList);
 
         //计算战力
         List<Result> grilResultList = new Vector<>();
