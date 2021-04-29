@@ -800,7 +800,6 @@ public class MainService {
                     Device device = new Device();
                     device.setName(d.getName());
                     device.setCode(d.getCode());
-                    device.setDesc(d.getDesc()+"|"+d.getDeviceName());
                     device.setDeviceName(d.getDeviceName());
                     device.setGenerals2(d.getGenerals2());
                     device.setResonance(d.getResonance());
@@ -819,9 +818,12 @@ public class MainService {
                     device.setDeviceRefiner5ThreeDimensional(d.getDeviceRefiner5ThreeDimensional());
                     if(device.getResonance()){
                         device.setDeviceRefinerThreeDimensional(d.getDeviceRefiner95ThreeDimensional());
+                        device.setResonanceDesc("(共鸣)");
                     }else{
                         device.setDeviceRefinerThreeDimensional(d.getDeviceRefiner5ThreeDimensional());
+                        device.setResonanceDesc("");
                     }
+                    device.setDesc(d.getDesc()+"|"+d.getDeviceName()+device.getResonanceDesc());
                     device.setDeviceRefinerDestinyThreeDimensional(threeDestiny);
                     device.setDeviceQiLingThreeDimensional(threeQiLing);
                     device.setTotalThreeDimensional(three0);
@@ -839,12 +841,15 @@ public class MainService {
 
             //并列第一战器
             String descs = "";
+            StringBuilder tops = new StringBuilder();
             for(Map.Entry<Device,Integer> map : list){
                 if(!map.getKey().getDeviceName().equals(device.getDeviceName()) && map.getValue().equals(maxCombat)){
                     descs+="("+map.getKey().getDesc()+"|"+map.getKey().getDeviceName()+")";
                 }
+                tops.append(map.getKey().getDesc()).append("：").append(map.getValue()).append("\r\n");
             }
             device.setDesc(device.getDesc()+descs);
+            device.setTops(tops.toString());
 
             //更新战器
             generals.setDevice2(device);

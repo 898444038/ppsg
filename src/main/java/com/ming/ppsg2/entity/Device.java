@@ -18,12 +18,16 @@ public class Device {
     private Integer code;
     //战器类型描述
     private String desc;
+    //排名
+    private String tops;
     //战器名称
     private String deviceName;
     //专属
     private String[] generals2;
     //是否共鸣
     private Boolean resonance;
+    //共鸣显示
+    private String resonanceDesc;
     //战器淬炼效果1名称
     private String QuenchingName1;
     //战器淬炼效果2名称
@@ -77,6 +81,22 @@ public class Device {
         BigDecimal qt = b3.multiply(rates).multiply(doubles);
         deviceQuenchingThreeDimensional.setTroops(qt.intValue());
         deviceQuenchingThreeDimensional.setTotalZl((qf.intValue()+qi.intValue()+qt.intValue())*2);
+    }
+
+    public String getResonanceDesc() {
+        return resonanceDesc;
+    }
+
+    public void setResonanceDesc(String resonanceDesc) {
+        this.resonanceDesc = resonanceDesc;
+    }
+
+    public String getTops() {
+        return tops;
+    }
+
+    public void setTops(String tops) {
+        this.tops = tops;
     }
 
     public ThreeDimensional getDeviceRefinerThreeDimensional() {
