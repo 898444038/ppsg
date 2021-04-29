@@ -810,8 +810,10 @@ public class MainService {
                     device.setDeviceQuenchingThreeDimensional(d.getDeviceQuenchingThreeDimensional());
                     if(exclusive){
                         device.setDeviceExclusiveThreeDimensional(d.getDeviceExclusiveThreeDimensional());
+                        device.setExclusiveDesc("(专属)");
                     }else{
                         device.setDeviceExclusiveThreeDimensional(new ThreeDimensional(0,0,0));
+                        device.setExclusiveDesc("");
                     }
                     device.setDeviceAwakenThreeDimensional(d.getDeviceAwakenThreeDimensional());
                     device.setDeviceRefiner95ThreeDimensional(d.getDeviceRefiner95ThreeDimensional());
@@ -823,7 +825,7 @@ public class MainService {
                         device.setDeviceRefinerThreeDimensional(d.getDeviceRefiner5ThreeDimensional());
                         device.setResonanceDesc("");
                     }
-                    device.setDesc(d.getDesc()+"|"+d.getDeviceName()+device.getResonanceDesc());
+                    device.setDesc(d.getDesc()+"|"+d.getDeviceName()+device.getExclusiveDesc()+device.getResonanceDesc());
                     device.setDeviceRefinerDestinyThreeDimensional(threeDestiny);
                     device.setDeviceQiLingThreeDimensional(threeQiLing);
                     device.setTotalThreeDimensional(three0);

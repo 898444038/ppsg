@@ -24,6 +24,8 @@ public class Device {
     private String deviceName;
     //专属
     private String[] generals2;
+    //专属显示
+    private String exclusiveDesc;
     //是否共鸣
     private Boolean resonance;
     //共鸣显示
@@ -81,6 +83,14 @@ public class Device {
         BigDecimal qt = b3.multiply(rates).multiply(doubles);
         deviceQuenchingThreeDimensional.setTroops(qt.intValue());
         deviceQuenchingThreeDimensional.setTotalZl((qf.intValue()+qi.intValue()+qt.intValue())*2);
+    }
+
+    public String getExclusiveDesc() {
+        return exclusiveDesc;
+    }
+
+    public void setExclusiveDesc(String exclusiveDesc) {
+        this.exclusiveDesc = exclusiveDesc;
     }
 
     public String getResonanceDesc() {
