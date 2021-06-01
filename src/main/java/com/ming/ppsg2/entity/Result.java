@@ -22,6 +22,7 @@ public class Result {
     private Integer qiCount;//骑兵数量
     private Integer gongCount;//弓兵数量
     private String armsNames;
+    private Boolean isGril;
 
     private List<Symbols> symbolsList;//兵符
 
@@ -46,6 +47,14 @@ public class Result {
 //    private Generals generals5;
 
     public Result() {
+    }
+
+    public Boolean getIsGril() {
+        return isGril;
+    }
+
+    public void setIsGril(Boolean isGril) {
+        this.isGril = isGril;
     }
 
     public String getCombatName() {

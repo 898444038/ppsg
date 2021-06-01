@@ -2440,7 +2440,7 @@ public class GeneralsUtil {
         //战器三被动战力
         int warDeviceSword = 458 + 458 + 1220;
         //器灵天赋属性战力
-        int warDeviceTfAndCz = 613 * 3;
+        int warDeviceTfAndCz = 660 * 3;
         //器灵成长属性培养战力
         int warDeviceCz = 60*6*3;
         //器灵套装战力
@@ -3298,6 +3298,7 @@ public class GeneralsUtil {
         Integer qiangCount = 0;//枪兵数量
         Integer qiCount = 0;//骑兵数量
         Integer gongCount = 0;//弓兵数量
+        Integer grilCount = 0;//女将数量
         List<CountryArms> countryArms1 = new ArrayList<>();
         List<CountryArms> countryArms2 = new ArrayList<>();
         for(Generals generals : generalsList){
@@ -3317,6 +3318,14 @@ public class GeneralsUtil {
             }else if(generals.getArms().equals(GeneralsEnum.Arms.arch.getCode())){
                 gongCount++;
             }
+            if(generals.getGender().equals(GeneralsEnum.Gender.gril.getCode())){
+                grilCount++;
+            }
+        }
+        if(grilCount == 5){
+            result.setIsGril(true);
+        }else{
+            result.setIsGril(false);
         }
         if(weiCount!=0){countryArms1.add(new CountryArms(weiCount,GeneralsEnum.Country.wei.getName()));}
         if(shuCount!=0){countryArms1.add(new CountryArms(shuCount,GeneralsEnum.Country.shu.getName()));}

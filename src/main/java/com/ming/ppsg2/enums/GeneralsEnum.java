@@ -428,12 +428,17 @@ public enum GeneralsEnum {
         }
     }
 
-    /*public enum BookType implements GeneralsEnumInterface {
-        jiaoLi(1,"角力",5,1),
-        qiShu(2,"骑术",),
-        duanBing(3,"短兵",),
-        fangYu(4,"防御",),
-        zhanLue(5,"战略",);
+    public enum BookType implements GeneralsEnumInterface {
+        jiao_li(1,"角力",5,1),
+        qi_shu(2,"骑术",5,1),
+        gong_shu(3,"弓术",4,2),
+        zhan_lue(4,"战略",4,2),
+        jing_zhun(5,"精准",4,6),
+        fang_yu(6,"防御",6,3),
+        qiang_shu(7,"枪术",6,3),
+        zhen_lie(8,"阵列",6,5),
+        duan_bing(9,"短兵",5,4),
+        ;
         private Integer code;
         private String name;
         private String desc;
@@ -465,7 +470,7 @@ public enum GeneralsEnum {
         public Integer getCode2() {
             return code2;
         }
-    }*/
+    }
 
     public enum ArmsBook implements GeneralsEnumInterface {
         WuFeng(1,"武锋","蓝色",160,0,0),

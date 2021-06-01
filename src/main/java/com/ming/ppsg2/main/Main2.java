@@ -22,32 +22,39 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Main2 {
 
     public static void main(String[] args) throws Exception {
-        String top = "因缺少部分卡片属性数据，以下排名中上阵武将及随从不包含：征南曹仁、暴怒张飞、桓侯张飞、讨虏黄忠、狂骨魏延、顾曲周瑜、修罗吕布\n" +
+        String top = "" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新版战器战力计算\n" +
-                "2.新增最佳战器排名\n"+
-                "特别感谢 萌皮、问情、霸王 提供的新版战器数据\n";
-        top+= "";
+                "更新内容：1.新增【御战曹仁】【厉箭韩当】【筹谋程昱】【驭灵董白】\n" +
+                "\n"+
+                "\n";
+        top+= "";//更新日志
         String advert = "";//广告
-        String fileRemark = "(新版战器)";
-        //计算：992/658/1895
-        //实际：988/654/1947
+        String fileRemark = "(御战曹仁)";//文件名备注
+        String path = "/excel/data_temp_v5.8.0.xlsx";//基础数据EXCEL
 
+        //指定阵容必须包含一个或多个武将
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
-//        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
 //        appointGeneralsList.add(new AppointGenerals("御甲张辽"));
 //        appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
+//        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
 //        appointGeneralsList.add(new AppointGenerals("飞将吕布"));
 //        appointGeneralsList.add(new AppointGenerals("灵雎吕姬"));
 //        appointGeneralsList.add(new AppointGenerals("河间双雄"));
 //        appointGeneralsList.add(new AppointGenerals("悦灵蔡文姬"));
+//        appointGeneralsList.add(new AppointGenerals("猿戏华佗"));
+//        appointGeneralsList.add(new AppointGenerals("灵刃吕玲绮"));
+//        appointGeneralsList.add(new AppointGenerals("河间双雄"));
+//        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
+//        appointGeneralsList.add(new AppointGenerals("奋威袁绍"));
 
+        //指定某个武将在阵容中，上阵及随从的最大数量
         List<AppointExcludeGenerals> excludeGeneralsList = new ArrayList<>();
 //        excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
 //        excludeGeneralsList.add(new AppointExcludeGenerals("御甲张辽",1));
 //        excludeGeneralsList.add(new AppointExcludeGenerals("桀骜孙策",1));
 //        excludeGeneralsList.add(new AppointExcludeGenerals("飞将吕布",1));
 
+        //指定阵容使用的兵符
         List<AppointSymbols> appointSymbolsList = new ArrayList<>();
 //        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.yaCi.getCode(),GeneralsEnum.SymbolsType.yaCi.getName()));
 //        appointSymbolsList.add(new AppointSymbols(GeneralsEnum.SymbolsType.cangLong.getCode(),GeneralsEnum.SymbolsType.cangLong.getName()));
@@ -55,32 +62,33 @@ public class Main2 {
 
         boolean isHuanHua = true;//随从是否有幻化
         long t1 = System.currentTimeMillis();
-        xzl(top,advert,fileRemark,appointGeneralsList,excludeGeneralsList,appointSymbolsList,isHuanHua);
+        xzl(path,top,advert,fileRemark,appointGeneralsList,excludeGeneralsList,appointSymbolsList,isHuanHua);
         long t2 = System.currentTimeMillis();
         DecimalFormat df=new DecimalFormat("0.000");
         System.out.println("共耗时："+df.format((float)(t2-t1)/1000)+"s");
-
-        //removeProp();
     }
 
-    public static void xzl(String top,String advert,String fileRemark,
+    /**
+     * 虚战力核心方法
+     */
+    public static void xzl(String path,String top,String advert,String fileRemark,
                            List<AppointGenerals> appointGeneralsList,
                            List<AppointExcludeGenerals> excludeGeneralsList,
                            List<AppointSymbols> appointSymbolsList,
                            boolean isHuanHua) throws Exception {
-        List<Generals> nimingAllList = new Vector<>();//全部
+        List<Generals> nimingAllList = new Vector<>();//全部武将
         List<Generals> generalsAll = new Vector<>();//非重复
         List<Generals> generalsAll2 = new Vector<>();//多余的，非限定
         Map<String,Destiny> destinyMap = new ConcurrentHashMap<>();//命格材料
-        //获取基础数据
-        List<Map<String,String>> lists = MainService.getExcelData(excludeGeneralsList);
+        //获取基础数据，并排除指定武将
+        List<Map<String,String>> lists = MainService.getExcelData(path,excludeGeneralsList);
         //处理基础数据
         MainService.handleExcelData(lists,appointGeneralsList,nimingAllList,generalsAll,destinyMap);
         //去除重复卡，保留异化卡
         MainService.handleNimingAllList(nimingAllList,generalsAll,generalsAll2);
         //战器排行榜
         List<Device> deviceList = MainService.handleWarDevice(nimingAllList);
-        // 计算随从加成
+        //计算随从加成
         Map<Integer,List<Generals>> map = MainService.handleEntourage(nimingAllList,generalsAll,isHuanHua);
         //随从榜
         Map<Integer,List<Generals>> allEntourage = MainService.handleEntourageBillboard(generalsAll,generalsAll2,isHuanHua);
@@ -92,14 +100,14 @@ public class Main2 {
 
         //计算战力
         List<Result> grilResultList = new Vector<>();
-        List<Result> resultList2 = MainService.handleSword(grilResultList,nmList,appointGeneralsList,appointSymbolsList,excludeGeneralsList);
+        List<Result> resultList2 = MainService.handleSword2(grilResultList,nmList,appointGeneralsList,appointSymbolsList,excludeGeneralsList);
 
         long t2 = System.currentTimeMillis();
         System.out.println("用时："+(t2-t1)+"ms , 阵容数量："+resultList2.size());
         System.out.println("---------end---------");
         System.gc();
 
-        //随从榜
+        //计算随从榜
         List<Generals> forceTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Force.getCode());
         List<Generals> intellectTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Intellect.getCode());
         List<Generals> troopsTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Troops.getCode());
@@ -109,33 +117,44 @@ public class Main2 {
         List<Result> simplifyList = GeneralsUtil.getSimplifyList(resultList2);
         List<Result> list2 = GeneralsUtil.getSimplifyList(resultList2);
         List<Result> grilList = GeneralsUtil.getSimplifyList(resultList2);
+
+        //更新日志
         model.put("top",top);
+        //广告位
         model.put("advert",advert);
+
+        //只取虚战力榜前50名
         if(resultList2.size()>=50){
             list2 = resultList2.subList(0,50);//虚战力表（特殊战器）
         }else{
             list2 = resultList2;//虚战力表（特殊战器）
         }
+
+        //只取女队虚战力榜前50名
         if(grilResultList.size()>=50) {
             grilList = grilResultList.subList(0, 50);//虚战力表（女队）
         }else{
             grilList = grilResultList;
         }
 
+        //获取战力名称
         MainService.countCombatName(simplifyList);
         MainService.countCombatName(list2);
         MainService.countCombatName(grilList);
+
         model.put("simplifyList2",simplifyList);//简表（特殊战器）
         model.put("list2",list2);//虚战力表（特殊战器）
         model.put("grilList", grilList);//虚战力表（女队）
 
-        model.put("forceTopList",forceTopList);
-        model.put("intellectTopList",intellectTopList);
-        model.put("troopsTopList",troopsTopList);
+        model.put("forceTopList",forceTopList);//武随榜
+        model.put("intellectTopList",intellectTopList);//智随榜
+        model.put("troopsTopList",troopsTopList);//兵随榜
         model.put("optimumEntourageList",optimumEntourage);//最佳随从表
-        model.put("destinyMap",destinyMap);
+        model.put("destinyMap",destinyMap);//命格
 
+        //生成excel
         MainService.createExcel(fileRemark,model);
+        //打印兵符统计
         MainService.statistics(resultList2);
     }
 
