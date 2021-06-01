@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
 
+import javax.swing.*;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -629,7 +630,7 @@ public class MainService {
     }
 
 
-    public static List<Result> handleSword2(List<Result> grilResultList, List<Generals> nmList, List<AppointGenerals> appointGeneralsList, List<AppointSymbols> appointSymbolsList, List<AppointExcludeGenerals> excludeGeneralsList) throws InterruptedException {
+    public static List<Result> handleSword2(JTextArea txaDisplay, List<Result> grilResultList, List<Generals> nmList, List<AppointGenerals> appointGeneralsList, List<AppointSymbols> appointSymbolsList, List<AppointExcludeGenerals> excludeGeneralsList) throws InterruptedException {
         List<Result> resultList2 = new Vector<>();
         long t = System.currentTimeMillis();
         List<List<Integer>> all = NumberUtil2.getNoRepeatList2(nmList,5,appointGeneralsList);
@@ -696,6 +697,8 @@ public class MainService {
             long t5 = System.currentTimeMillis();
             int number = NumberUtil2.getAutoNumber();
             System.out.println(number+"/"+size+"，耗时:"+(t5-t1));
+            //txaDisplay.append(number+"/"+size+"，耗时:"+(t5-t1));
+            //txaDisplay.setCaretPosition(txaDisplay.getText().length());
             if(number%10000 == 0){
                 System.out.println("JVM回收垃圾...");
                 System.gc();

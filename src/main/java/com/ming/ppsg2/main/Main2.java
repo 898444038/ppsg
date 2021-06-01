@@ -11,6 +11,7 @@ import com.ming.ppsg2.entity.Result;
 import com.ming.ppsg2.enums.GeneralsEnum;
 import com.ming.ppsg2.utils.GeneralsUtil;
 
+import javax.swing.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,8 +21,10 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Main2 {
-
     public static void main(String[] args) throws Exception {
+        start(null,null);
+    }
+    public static void start(Object[] selects, JTextArea txaDisplay) throws Exception {
         String top = "" +
                 "啪啪三国技术交流群：913083053\n" +
                 "更新内容：1.新增【御战曹仁】【厉箭韩当】【筹谋程昱】【驭灵董白】\n" +
@@ -34,6 +37,9 @@ public class Main2 {
 
         //指定阵容必须包含一个或多个武将
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
+        for (Object obj : selects){
+            appointGeneralsList.add(new AppointGenerals(obj.toString()));
+        }
 //        appointGeneralsList.add(new AppointGenerals("御甲张辽"));
 //        appointGeneralsList.add(new AppointGenerals("桀骜孙策"));
 //        appointGeneralsList.add(new AppointGenerals("砺战赵云"));
@@ -62,7 +68,7 @@ public class Main2 {
 
         boolean isHuanHua = true;//随从是否有幻化
         long t1 = System.currentTimeMillis();
-        xzl(path,top,advert,fileRemark,appointGeneralsList,excludeGeneralsList,appointSymbolsList,isHuanHua);
+        xzl(txaDisplay,path,top,advert,fileRemark,appointGeneralsList,excludeGeneralsList,appointSymbolsList,isHuanHua);
         long t2 = System.currentTimeMillis();
         DecimalFormat df=new DecimalFormat("0.000");
         System.out.println("共耗时："+df.format((float)(t2-t1)/1000)+"s");
@@ -71,7 +77,7 @@ public class Main2 {
     /**
      * 虚战力核心方法
      */
-    public static void xzl(String path,String top,String advert,String fileRemark,
+    public static void xzl(JTextArea jTextArea,String path,String top,String advert,String fileRemark,
                            List<AppointGenerals> appointGeneralsList,
                            List<AppointExcludeGenerals> excludeGeneralsList,
                            List<AppointSymbols> appointSymbolsList,
@@ -100,7 +106,7 @@ public class Main2 {
 
         //计算战力
         List<Result> grilResultList = new Vector<>();
-        List<Result> resultList2 = MainService.handleSword2(grilResultList,nmList,appointGeneralsList,appointSymbolsList,excludeGeneralsList);
+        List<Result> resultList2 = MainService.handleSword2(jTextArea,grilResultList,nmList,appointGeneralsList,appointSymbolsList,excludeGeneralsList);
 
         long t2 = System.currentTimeMillis();
         System.out.println("用时："+(t2-t1)+"ms , 阵容数量："+resultList2.size());
