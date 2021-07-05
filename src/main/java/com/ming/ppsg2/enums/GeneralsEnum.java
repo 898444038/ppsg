@@ -1180,7 +1180,9 @@ public enum GeneralsEnum {
     }
 
     public enum Skin implements GeneralsEnumInterface {
-        skin_1(1,"沉弈忘雪","",30,30,80),
+        skin_00(-1,"","",0,0,0),
+        skin_0(0,"","",30,30,80),
+        /*skin_1(1,"沉弈忘雪","",30,30,80),
         skin_2(2,"繁花一梦","",30,30,80),
         skin_3(3,"月落千殇","",30,30,80),
         skin_4(4,"剑影流风","",30,30,80),
@@ -1213,7 +1215,7 @@ public enum GeneralsEnum {
         skin_31(31,"雷奔云谲","奋武公孙瓒",30,30,80),
         skin_32(32,"月雅清鸣","道玄诸葛果",30,30,80),
         skin_33(33,"剑锋祭魂","剑引张郃",30,30,80),
-        ;
+        */;
         private Integer code;
         private String name;
         private String generalsName;

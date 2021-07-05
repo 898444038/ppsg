@@ -2241,7 +2241,7 @@ public class GeneralsUtil {
                     force = skin.getForce();
                     intellect = skin.getIntellect();
                     troops = skin.getTroops();
-                    three.setRemark(skin.getName());
+                    three.setRemark(generals.getSkinName());
                     break;
                 }
             }

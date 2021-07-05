@@ -26,6 +26,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -59,7 +61,7 @@ public class MainService {
         readWriteExcel.setRow(1);
         List<List<String>> dataList = readWriteExcel.readRelativeExcel(path);
         List<Map<String, String>> lists = readWriteExcel.transformMap(dataList);
-
+        lists = lists.subList(1,lists.size());
         //排除武将
         Iterator<Map<String,String>> iterator = lists.iterator();
         while (iterator.hasNext()) {
@@ -282,6 +284,11 @@ public class MainService {
                                 skinCode = skin1.getCode();
                             }
                         }
+                        if(skinCode == null && StringUtils.isNotBlank(skin) && !"无".equals(skin)){
+                            skinCode = GeneralsEnum.Skin.skin_0.getCode();
+                        }else{
+                            skinCode = GeneralsEnum.Skin.skin_00.getCode();
+                        }
 
                         boolean isDestiny = false;
                         Integer disobeyCode = null;
@@ -299,7 +306,7 @@ public class MainService {
                         Integer destinyTroops = map.get("destinyTroops") == null ? 0 : Double.valueOf(map.get("destinyTroops")).intValue();
                         Object[] destinys = {destinyForce, destinyIntellect, destinyTroops, isDestiny, disobeyCode, null, null, null};
 
-                        Generals generals = DestinyData.getGenerals(name,originalName, codes, level, force, intellect, troops, gender, generalsType, arms, country, isEntourage, entourages, warDevices, armsBooks, destinys, skinCode, isResonance);
+                        Generals generals = DestinyData.getGenerals(name,originalName, codes, level, force, intellect, troops, gender, generalsType, arms, country, isEntourage, entourages, warDevices, armsBooks, destinys, skinCode,skin, isResonance);
 
                         GeneralsUtil.getMaxLevel(generals);//基础满级三维
                         GeneralsUtil.getScience(generals);//科技三维
@@ -561,8 +568,12 @@ public class MainService {
         long t1 = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         try {
+            //当前用户桌面
+            File desktopDir = FileSystemView.getFileSystemView() .getHomeDirectory();
+            String desktopPath = desktopDir.getAbsolutePath();
+            //System.out.println(desktopPath);
             InputStream is = ExcelReaderUtil.class.getResourceAsStream("/excel/result_temp4.xlsx");
-            OutputStream os = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\虚战力表"+sdf.format(new Date())+fileRemark+".xlsx");
+            OutputStream os = new FileOutputStream(desktopPath+"\\虚战力表"+sdf.format(new Date())+fileRemark+".xlsx");
             JxlsUtil.export2Excel(is,os,model);
         }catch (Exception e){
             e.printStackTrace();

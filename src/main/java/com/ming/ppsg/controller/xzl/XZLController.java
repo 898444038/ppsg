@@ -213,11 +213,11 @@ public class XZLController {
 
             String skin = list.get(24);
             Integer skinCode = null;
-            for(GeneralsEnum.Skin skin1 : GeneralsEnum.Skin.values()){
+            /*for(GeneralsEnum.Skin skin1 : GeneralsEnum.Skin.values()){
                 if(skin1.getName().equals(skin)){
                     skinCode = skin1.getCode();
                 }
-            }
+            }*/
 
             Integer disobeyCode = null;
             for(GeneralsEnum.Destiny destiny : GeneralsEnum.Destiny.values()){

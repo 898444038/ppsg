@@ -197,7 +197,7 @@ public class DestinyData {
 
     public static Generals getGenerals(String name,String originalName,List<Integer> codes,Integer level,Integer force,Integer intellect,Integer troops,Integer gender,
         Integer generalsType,Integer arms,Integer country,Boolean isEntourage,Integer[] entourages,Integer[] warDevices,
-        Integer[][] armsBooks,Object[] destinys,Integer skinCode,Boolean isResonance
+        Integer[][] armsBooks,Object[] destinys,Integer skinCode,String skinName,Boolean isResonance
     ){
         Generals generals = new Generals();
         generals.setName(name);
@@ -251,6 +251,7 @@ public class DestinyData {
         }
         generals.setDestiny(destiny);
         generals.setSkinCode(skinCode);
+        generals.setSkinName(skinName);
 
         generals.setTotalSword(0);
         generals.setTotalForce(0);

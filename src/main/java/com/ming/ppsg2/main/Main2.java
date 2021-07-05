@@ -22,18 +22,23 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Main2 {
     public static void main(String[] args) throws Exception {
-        start(null,null);
+        start(new Object[]{},null);
+
+        //当前用户桌面
+        /*File desktopDir = FileSystemView.getFileSystemView() .getHomeDirectory();
+        String desktopPath = desktopDir.getAbsolutePath();
+        System.out.println(desktopPath);*/
     }
     public static void start(Object[] selects, JTextArea txaDisplay) throws Exception {
         String top = "" +
                 "啪啪三国技术交流群：913083053\n" +
-                "更新内容：1.新增【御战曹仁】【厉箭韩当】【筹谋程昱】【驭灵董白】\n" +
-                "\n"+
-                "\n";
+                "更新内容：1.新增幻化\n" +
+                "2.新增武将【行歌徐庶】【电掣乐进】【怒海甘宁】【弑杀华雄】\n"+
+                "3.新增共鸣\n";
         top+= "";//更新日志
         String advert = "";//广告
-        String fileRemark = "(御战曹仁)";//文件名备注
-        String path = "/excel/data_temp_v5.8.0.xlsx";//基础数据EXCEL
+        String fileRemark = "(弑杀华雄)";//文件名备注
+        String path = "/excel/data_temp_v5.8.1.xlsx";//基础数据EXCEL
 
         //指定阵容必须包含一个或多个武将
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
@@ -98,6 +103,12 @@ public class Main2 {
         Map<Integer,List<Generals>> map = MainService.handleEntourage(nimingAllList,generalsAll,isHuanHua);
         //随从榜
         Map<Integer,List<Generals>> allEntourage = MainService.handleEntourageBillboard(generalsAll,generalsAll2,isHuanHua);
+        //计算随从榜
+        List<Generals> forceTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Force.getCode());
+        List<Generals> intellectTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Intellect.getCode());
+        List<Generals> troopsTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Troops.getCode());
+        MainService.allEntourageBillboard(allEntourage,forceTopList,intellectTopList,troopsTopList);
+
         //最佳随从表
         List<Generals> optimumEntourage = MainService.handleOptimumEntourage(generalsAll,nimingAllList,isHuanHua);
         long t1 = System.currentTimeMillis();
@@ -113,11 +124,7 @@ public class Main2 {
         System.out.println("---------end---------");
         System.gc();
 
-        //计算随从榜
-        List<Generals> forceTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Force.getCode());
-        List<Generals> intellectTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Intellect.getCode());
-        List<Generals> troopsTopList = allEntourage.get(GeneralsEnum.ThreeCircles.Troops.getCode());
-        MainService.allEntourageBillboard(allEntourage,forceTopList,intellectTopList,troopsTopList);
+
 
         Map<String,Object> model = new HashMap<>();
         List<Result> simplifyList = GeneralsUtil.getSimplifyList(resultList2);

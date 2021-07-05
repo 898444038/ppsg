@@ -89,6 +89,7 @@ public class Generals {
     private Device device2;
     //幻化
     private Integer skinCode;
+    private String skinName;
 
     //120满级三维
     private ThreeDimensional maxThreeDimensional;
@@ -168,6 +169,14 @@ public class Generals {
     private String remark;
 
     public Generals(){}
+
+    public String getSkinName() {
+        return skinName;
+    }
+
+    public void setSkinName(String skinName) {
+        this.skinName = skinName;
+    }
 
     public String getOriginalName() {
         return originalName;
