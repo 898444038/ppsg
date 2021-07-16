@@ -710,7 +710,7 @@ public class MainService {
             System.out.println(number+"/"+size+"，耗时:"+(t5-t1));
             //txaDisplay.append(number+"/"+size+"，耗时:"+(t5-t1));
             //txaDisplay.setCaretPosition(txaDisplay.getText().length());
-            if(number%10000 == 0){
+            if(number%20000 == 0){
                 System.out.println("JVM回收垃圾...");
                 System.gc();
             }

@@ -33,12 +33,12 @@ public class Main2 {
         String top = "" +
                 "啪啪三国技术交流群：913083053\n" +
                 "更新内容：1.新增幻化\n" +
-                "2.新增武将【行歌徐庶】【电掣乐进】【怒海甘宁】【弑杀华雄】\n"+
-                "3.新增共鸣\n";
+                "2.新增武将【将星关羽】\n"+
+                "\n";
         top+= "";//更新日志
         String advert = "";//广告
-        String fileRemark = "(弑杀华雄)";//文件名备注
-        String path = "/excel/data_temp_v5.8.1.xlsx";//基础数据EXCEL
+        String fileRemark = "(将星关羽)";//文件名备注
+        String path = "/excel/data_temp_v5.8.2.xlsx";//基础数据EXCEL
 
         //指定阵容必须包含一个或多个武将
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
