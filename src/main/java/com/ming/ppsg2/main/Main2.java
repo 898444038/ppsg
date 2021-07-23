@@ -38,7 +38,7 @@ public class Main2 {
         top+= "";//更新日志
         String advert = "";//广告
         String fileRemark = "(将星关羽)";//文件名备注
-        String path = "/excel/data_temp_v5.8.2.xlsx";//基础数据EXCEL
+        String path = "/excel/data_temp_v5.8.3.xlsx";//基础数据EXCEL
 
         //指定阵容必须包含一个或多个武将
         List<AppointGenerals> appointGeneralsList = new ArrayList<>();
@@ -63,7 +63,7 @@ public class Main2 {
 //        excludeGeneralsList.add(new AppointExcludeGenerals("砺战赵云",1));
 //        excludeGeneralsList.add(new AppointExcludeGenerals("御甲张辽",1));
 //        excludeGeneralsList.add(new AppointExcludeGenerals("桀骜孙策",1));
-//        excludeGeneralsList.add(new AppointExcludeGenerals("飞将吕布",1));
+//        excludeGeneralsList.add(new AppointExcludeGenerals("将星关羽",1));
 
         //指定阵容使用的兵符
         List<AppointSymbols> appointSymbolsList = new ArrayList<>();
